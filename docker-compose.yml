@@ -1,0 +1,38 @@
+services:
+  # Base de Datos
+  db:
+    image: mariadb:10.11
+    container_name: lamerbox_db
+    restart: unless-stopped
+    environment:
+      MARIADB_DATABASE: lamerbox_db
+      MARIADB_ROOT_PASSWORD: root
+    networks:
+      - lamerbox-network
+
+  # Backend (Laravel)
+  backend:
+    build:
+      context: ./backend
+    container_name: lamerbox_api
+    volumes:
+      - ./backend:/var/www
+    networks:
+      - lamerbox-network
+
+  # Frontend (React)
+  frontend:
+    build:
+      context: ./frontend
+    container_name: lamerbox_ui
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    networks:
+      - lamerbox-network
+
+networks:
+  lamerbox-network:
+    driver: bridge
