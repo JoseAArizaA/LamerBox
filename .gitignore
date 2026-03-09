@@ -5,3 +5,5 @@
 /frontend/node_modules
 .docker
 *.log
+EncenderTodo.md
+Github.md
