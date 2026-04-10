@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Review;
 
 class ReviewController extends Controller
 {
@@ -11,7 +12,7 @@ class ReviewController extends Controller
      */
     public function index()
     {
-        //
+        // Aquí podrías listar todas las reviews
     }
 
     /**
@@ -19,7 +20,7 @@ class ReviewController extends Controller
      */
     public function create()
     {
-        //
+        // Formulario para crear review (si usas vistas)
     }
 
     /**
@@ -27,7 +28,14 @@ class ReviewController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Review::create([
+            'user_id' => auth()->id(),
+            'movie_id' => $request->movie_id,
+            'comment' => $request->comment,
+            'rating' => $request->rating
+        ]);
+
+        return back();
     }
 
     /**
@@ -35,7 +43,7 @@ class ReviewController extends Controller
      */
     public function show(string $id)
     {
-        //
+        // Mostrar una review concreta
     }
 
     /**
@@ -43,7 +51,7 @@ class ReviewController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        // Formulario de edición
     }
 
     /**
@@ -51,7 +59,7 @@ class ReviewController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        // Actualizar review
     }
 
     /**
@@ -59,6 +67,6 @@ class ReviewController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        // Eliminar review
     }
 }

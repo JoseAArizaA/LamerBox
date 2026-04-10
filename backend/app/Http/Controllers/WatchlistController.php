@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Watched;
+use App\Models\Pending;
 
 class WatchlistController extends Controller
 {
@@ -11,7 +13,7 @@ class WatchlistController extends Controller
      */
     public function index()
     {
-        //
+        // Aquí podrías listar películas vistas o pendientes
     }
 
     /**
@@ -27,7 +29,38 @@ class WatchlistController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $userId = auth()->id();
+        $movieId = $request->movie_id;
+        $status = $request->status; // 'watched' o 'pending'
+
+        if ($status === 'watched') {
+
+            // Guardar en vistos
+            Watched::create([
+                'user_id' => $userId,
+                'movie_id' => $movieId
+            ]);
+
+            // Quitar de pendientes si existe
+            Pending::where('user_id', $userId)
+                ->where('movie_id', $movieId)
+                ->delete();
+
+        } elseif ($status === 'pending') {
+
+            // Guardar en pendientes
+            Pending::create([
+                'user_id' => $userId,
+                'movie_id' => $movieId
+            ]);
+
+            // Quitar de vistos si existe
+            Watched::where('user_id', $userId)
+                ->where('movie_id', $movieId)
+                ->delete();
+        }
+
+        return back();
     }
 
     /**
@@ -59,6 +92,17 @@ class WatchlistController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        // Podrías usar esto para quitar de ambas listas
+        $userId = auth()->id();
+
+        Watched::where('user_id', $userId)
+            ->where('movie_id', $id)
+            ->delete();
+
+        Pending::where('user_id', $userId)
+            ->where('movie_id', $id)
+            ->delete();
+
+        return back();
     }
 }
