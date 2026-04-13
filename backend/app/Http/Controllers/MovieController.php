@@ -2,63 +2,70 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Movie;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use App\Services\TMDBService;
 
 class MovieController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    // GET: Listar todas las películas
     public function index()
     {
-        //
+        return response()->json(Movie::all(), 200);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
+    // POST: Guardar una nueva película (Solo Admin)
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'tmdb_id' => 'required|unique:movies',
+            'title' => 'required|string',
+        ]);
+
+        if ($validator->fails()) return response()->json($validator->errors(), 400);
+
+        $movie = Movie::create($request->all());
+        return response()->json($movie, 201);
     }
 
-    /**
-     * Display the specified resource.
-     */
+    // GET: Ver detalle de una película con sus reseñas
     public function show(string $id)
     {
-        //
+        $movie = Movie::with('reviews.user')->find($id);
+        if (!$movie) return response()->json(['message' => 'Pelicula no encontrada'], 404);
+        return response()->json($movie, 200);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
+    // PUT: Actualizar datos de una película
     public function update(Request $request, string $id)
     {
-        //
+        $movie = Movie::find($id);
+        if (!$movie) return response()->json(['message' => 'No encontrada'], 404);
+        
+        $movie->update($request->all());
+        return response()->json($movie, 200);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    // DELETE: Borrar una película
     public function destroy(string $id)
     {
-        //
+        $movie = Movie::find($id);
+        if (!$movie) return response()->json(['message' => 'No encontrada'], 404);
+        
+        $movie->delete();
+        return response()->json(['message' => 'Pelicula eliminada'], 200);
+    }
+
+    public function search(Request $request, TMDBService $tmdbService)
+    {
+        $query = $request->query('query');
+        
+        if (!$query) {
+            return response()->json(['message' => 'Falta el texto de búsqueda'], 400);
+        }
+
+        $results = $tmdbService->searchMovies($query);
+        return response()->json($results);
     }
 }

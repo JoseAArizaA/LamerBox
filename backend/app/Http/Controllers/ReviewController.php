@@ -2,71 +2,46 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Review;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ReviewController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    // GET: Ver reseñas de una película específica
+    public function index(Request $request)
     {
-        // Aquí podrías listar todas las reviews
+        $reviews = Review::where('movie_id', $request->movie_id)->with('user')->get();
+        return response()->json($reviews, 200);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        // Formulario para crear review (si usas vistas)
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
+    // POST: Guardar reseña
     public function store(Request $request)
     {
-        Review::create([
-            'user_id' => auth()->id(),
+        $request->validate([
+            'movie_id' => 'required|exists:movies,id',
+            'comment' => 'required',
+            'rating' => 'required|integer|min:1|max:10'
+        ]);
+
+        $review = Review::create([
+            'user_id' => Auth::id(),
             'movie_id' => $request->movie_id,
             'comment' => $request->comment,
             'rating' => $request->rating
         ]);
 
-        return back();
+        return response()->json($review, 201);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        // Mostrar una review concreta
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        // Formulario de edición
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        // Actualizar review
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
+    // DELETE: El usuario borra su propia reseña
     public function destroy(string $id)
     {
-        // Eliminar review
+        $review = Review::find($id);
+        if ($review->user_id !== Auth::id()) {
+            return response()->json(['message' => 'No autorizado'], 403);
+        }
+        $review->delete();
+        return response()->json(['message' => 'Reseña borrada'], 200);
     }
 }

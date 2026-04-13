@@ -2,36 +2,36 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Favorite; // Cambia esto por Watched o Pending en los otros
+use App\Models\Pending; 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class FavoriteController extends Controller
+class PendingController extends Controller
 {
-    // GET: Ver mis favoritos
+    // GET: Ver mis pendientes
     public function index()
     {
         $userId = Auth::id();
-        $favs = Favorite::where('user_id', $userId)->with('movie')->get();
+        $favs = Pending::where('user_id', $userId)->with('movie')->get();
         return response()->json($favs, 200);
     }
 
-    // POST: Añadir a favoritos
+    // POST: Añadir a pendientes
     public function store(Request $request)
     {
-        $fav = Favorite::firstOrCreate([
+        $fav = Pending::firstOrCreate([
             'user_id' => Auth::id(),
             'movie_id' => $request->movie_id
         ]);
         return response()->json($fav, 201);
     }
 
-    // DELETE: Quitar de favoritos (se usa el movie_id)
+    // DELETE: Quitar de pendientes (se usa el movie_id)
     public function destroy(string $movieId)
     {
-        Favorite::where('user_id', Auth::id())
+        Pending::where('user_id', Auth::id())
                 ->where('movie_id', $movieId)
                 ->delete();
-        return response()->json(['message' => 'Eliminado de favoritos'], 200);
+        return response()->json(['message' => 'Eliminado de pendientes'], 200);
     }
 }
