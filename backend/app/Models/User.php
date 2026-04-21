@@ -9,10 +9,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use App\Models\Movie;
 use App\Models\MovieList;
 use App\Models\Review;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable;
 
     protected $fillable = [
         'nickname',

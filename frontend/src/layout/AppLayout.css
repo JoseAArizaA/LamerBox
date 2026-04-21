@@ -1,0 +1,74 @@
+/* AppLayout.css */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 60px;
+  padding: 0 40px;
+  background-color: #14181c;
+  border-bottom: 1px solid #2c3440;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: #fff;
+  text-decoration: none;
+  letter-spacing: 1px;
+}
+
+.nav-links a {
+  color: var(--text-grey);
+  text-decoration: none;
+  margin-left: 20px;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.nav-links a:hover { color: #fff; }
+
+.btn-register {
+  background-color: var(--green);
+  color: #14181c;
+  padding: 6px 15px;
+  border-radius: 4px;
+  font-weight: bold;
+  text-decoration: none;
+  font-size: 0.8rem;
+}
+
+/* AppLayout.css */
+.nav-left {
+    display: flex;         /* Pone los elementos en fila */
+    align-items: baseline; /* Alinea los textos por su base */
+    gap: 25px;            /* Espacio entre el logo y los links */
+}
+
+.logo {
+    font-size: 1.6rem;
+    font-weight: 900;
+    letter-spacing: 1px;
+    text-decoration: none;
+    color: #fff;
+    margin: 0;
+}
+
+.nav-links {
+    display: flex;
+    gap: 15px;
+}
+
+.nav-links a {
+    color: #9ab;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 0.9rem;
+    text-transform: capitalize;
+}
+
+.nav-links a:hover {
+    color: #fff;
+}

@@ -11,7 +11,7 @@ class MovieListController extends Controller
     // GET: Ver todas mis listas personalizadas
     public function index()
     {
-        $lists = MovieList::where('user_id', Auth::id())->withCount('movies')->get();
+        $lists = auth()->user()->movieLists()->withCount('movies')->get();
         return response()->json($lists, 200);
     }
 
