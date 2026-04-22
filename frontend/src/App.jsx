@@ -1,35 +1,33 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Routes, Route, Navigate } from 'react-router-dom';
+import AppLayout from './layout/AppLayout';
+import WelcomePage from './pages/WelcomePage';
+import ProtectedRoute from './routing/ProtectedRoute';
+import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
+import CreateListPage from './pages/CreateListPage';
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <Routes>
+      <Route element={<AppLayout />}>
+        <Route path="/welcome" element={<WelcomePage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
 
-export default App
+        <Route path="/create-list" element={
+          <ProtectedRoute>
+            <CreateListPage />
+          </ProtectedRoute>
+        } />
+        
+        {/* Ejemplo de ruta protegida para el futuro */}
+        <Route path="/profile" element={
+          <ProtectedRoute><div style={{color: 'white'}}>Mi Perfil</div></ProtectedRoute>
+        } />
+
+        <Route path="/" element={<Navigate to="/welcome" replace />} />
+      </Route>
+    </Routes>
+  );
+}
+export default App;

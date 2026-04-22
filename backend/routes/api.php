@@ -18,12 +18,16 @@ use App\Http\Controllers\PendingController;
 |--------------------------------------------------------------------------
 */
 
-// --- RUTAS PÚBLICAS (Sin autenticación) ---
+// --- 1. RUTAS PÚBLICAS (Lo que añadió Jose + Búsqueda) ---
 Route::get('movies/search', [MovieController::class, 'search']);
+Route::post('/login', [UserController::class, 'login']);
+Route::post('/register', [UserController::class, 'register']);
+
+// Ver películas (público), pero no gestionarlas
 Route::apiResource('movies', MovieController::class)->only(['index', 'show']);
 
 
-// --- RUTAS PROTEGIDAS (Cualquier usuario logueado) ---
+// --- 2. RUTAS PROTEGIDAS (Cualquier usuario logueado - Tu estructura) ---
 Route::middleware('auth:sanctum')->group(function () {
     
     // Perfil del usuario actual
@@ -31,12 +35,14 @@ Route::middleware('auth:sanctum')->group(function () {
         return $request->user();
     });
 
-    // Recursos para usuarios comunes
+    // Recursos para usuarios comunes (Listas, Favoritos, etc.)
     Route::apiResource('favorites', FavoriteController::class);
     Route::apiResource('watched', WatchedController::class);
     Route::apiResource('pending', PendingController::class);
     Route::apiResource('lists', MovieListController::class);
-    Route::apiResource('reviews', ReviewController::class)->except(['destroy']); // No pueden borrar reviews (o solo las suyas, según tu lógica de controller)
+    
+    // Pueden escribir reviews, pero no borrarlas (protección de Miguel)
+    Route::apiResource('reviews', ReviewController::class)->except(['destroy']);
 
     // Gestión de películas en listas
     Route::post('lists/{id}/add-movie', [MovieListController::class, 'addMovie']);
@@ -44,20 +50,20 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 
-// --- RUTAS DE ADMINISTRACIÓN (Solo para usuarios con is_admin = 1) ---
+// --- 3. RUTAS DE ADMINISTRACIÓN (Solo para usuarios con is_admin = 1 - Tu creación) ---
 Route::middleware(['auth:sanctum', 'admin'])->group(function () {
     
-    // Gestión total de usuarios (Listar todos y eliminar)
+    // El Admin puede ver la lista de todos los usuarios y borrarlos
     Route::apiResource('users', UserController::class)->only(['index', 'destroy']);
     
-    // El admin sí puede borrar cualquier review
+    // El Admin tiene el poder de borrar cualquier review
     Route::delete('admin/reviews/{review}', [ReviewController::class, 'destroy']);
     
-    // Verificación de rol para el Frontend (React)
+    // El Admin puede crear, editar o borrar películas del catálogo
+    Route::apiResource('movies', MovieController::class)->except(['index', 'show']);
+
+    // Ruta espejo para que React sepa que el usuario tiene acceso al panel
     Route::get('admin/check', function() {
         return response()->json(['isAdmin' => true], 200);
     });
-
-    // Si decides añadir películas o editar el catálogo
-    Route::apiResource('movies', MovieController::class)->except(['index', 'show']);
 });

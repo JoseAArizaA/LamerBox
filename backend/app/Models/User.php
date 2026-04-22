@@ -15,10 +15,10 @@ use App\Models\Movie;
 use App\Models\MovieList;
 use App\Models\Review;
 
+
 class User extends Authenticatable
 {
-    // Añadimos HasApiTokens para que funcione con React/Sanctum
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasFactory, Notifiable;
 
     protected $fillable = [
         'nickname', // Asegúrate de que en tu DB se llame nickname y no name

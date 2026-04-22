@@ -8,9 +8,12 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Models\User;
 use App\Models\MovieList;
 use App\Models\Review;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Movie extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'tmdb_id',
         'title',
