@@ -18,24 +18,46 @@ use App\Http\Controllers\PendingController;
 |--------------------------------------------------------------------------
 */
 
-// 1. RUTAS ESPECÍFICAS (Debe ir arriba para que no choque con los IDs de los resources)
+// --- RUTAS PÚBLICAS (Sin autenticación) ---
 Route::get('movies/search', [MovieController::class, 'search']);
+Route::apiResource('movies', MovieController::class)->only(['index', 'show']);
 
-// 2. RUTAS AUTOMÁTICAS (apiResource) PARA LAS 7 ENTIDADES
-Route::apiResource('users', UserController::class);
-Route::apiResource('movies', MovieController::class);
-Route::apiResource('lists', MovieListController::class);
-Route::apiResource('reviews', ReviewController::class);
-Route::apiResource('favorites', FavoriteController::class);
-Route::apiResource('watched', WatchedController::class);
-Route::apiResource('pending', PendingController::class);
 
-// 3. RUTAS PERSONALIZADAS PARA GESTIONAR PELÍCULAS DENTRO DE LAS LISTAS
-// Estas permiten añadir o quitar una peli específica de una lista de usuario
-Route::post('lists/{id}/add-movie', [MovieListController::class, 'addMovie']);
-Route::delete('lists/{id}/remove-movie', [MovieListController::class, 'removeMovie']);
+// --- RUTAS PROTEGIDAS (Cualquier usuario logueado) ---
+Route::middleware('auth:sanctum')->group(function () {
+    
+    // Perfil del usuario actual
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    });
 
-// Ruta de prueba para verificar que el usuario está autenticado (vanguardia de Laravel)
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
+    // Recursos para usuarios comunes
+    Route::apiResource('favorites', FavoriteController::class);
+    Route::apiResource('watched', WatchedController::class);
+    Route::apiResource('pending', PendingController::class);
+    Route::apiResource('lists', MovieListController::class);
+    Route::apiResource('reviews', ReviewController::class)->except(['destroy']); // No pueden borrar reviews (o solo las suyas, según tu lógica de controller)
+
+    // Gestión de películas en listas
+    Route::post('lists/{id}/add-movie', [MovieListController::class, 'addMovie']);
+    Route::delete('lists/{id}/remove-movie', [MovieListController::class, 'removeMovie']);
+});
+
+
+// --- RUTAS DE ADMINISTRACIÓN (Solo para usuarios con is_admin = 1) ---
+Route::middleware(['auth:sanctum', 'admin'])->group(function () {
+    
+    // Gestión total de usuarios (Listar todos y eliminar)
+    Route::apiResource('users', UserController::class)->only(['index', 'destroy']);
+    
+    // El admin sí puede borrar cualquier review
+    Route::delete('admin/reviews/{review}', [ReviewController::class, 'destroy']);
+    
+    // Verificación de rol para el Frontend (React)
+    Route::get('admin/check', function() {
+        return response()->json(['isAdmin' => true], 200);
+    });
+
+    // Si decides añadir películas o editar el catálogo
+    Route::apiResource('movies', MovieController::class)->except(['index', 'show']);
+});
