@@ -29,10 +29,8 @@ Route::post('/register', [UserController::class, 'register']);
 // 2. RUTAS AUTOMÁTICAS (apiResource) PARA LAS 7 ENTIDADES
 Route::apiResource('users', UserController::class);
 Route::apiResource('movies', MovieController::class);
-Route::apiResource('reviews', ReviewController::class);
-Route::apiResource('favorites', FavoriteController::class);
-Route::apiResource('watched', WatchedController::class);
-Route::apiResource('pending', PendingController::class);
+
+
 
 // 3. RUTAS PERSONALIZADAS PARA GESTIONAR PELÍCULAS DENTRO DE LAS LISTAS
 // Estas permiten añadir o quitar una peli específica de una lista de usuario
@@ -40,6 +38,25 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('lists', MovieListController::class);
     Route::post('lists/{id}/add-movie', [MovieListController::class, 'addMovie']);
     Route::delete('lists/{id}/remove-movie', [MovieListController::class, 'removeMovie']);
+});
+
+Route::middleware('auth:sanctum')->group(function () {
+    // Rutas para Favoritos
+    Route::post('/favorites', [FavoriteController::class, 'store']);
+    Route::delete('/favorites/{movieId}', [FavoriteController::class, 'destroy']);
+
+    // Rutas para Películas Vistas
+    Route::post('/watched', [WatchedController::class, 'store']);
+    Route::delete('/watched/{movieId}', [WatchedController::class, 'destroy']);
+
+    // Rutas para Pendientes
+    Route::post('/pending', [PendingController::class, 'store']);
+    Route::delete('/pending/{movieId}', [PendingController::class, 'destroy']);
+    
+    // Rutas para Reseñas
+    Route::post('/reviews', [ReviewController::class, 'store']);
+
+    Route::get('/movies/{id}/status', [MovieController::class, 'getUserStatus']);
 });
 
 // Ruta de prueba para verificar que el usuario está autenticado (vanguardia de Laravel)

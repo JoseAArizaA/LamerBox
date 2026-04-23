@@ -6,6 +6,10 @@ use App\Models\Movie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Services\TMDBService;
+use App\Models\Favorite;
+use App\Models\Watched;
+use App\Models\Pending;
+use Illuminate\Support\Facades\Auth;
 
 class MovieController extends Controller
 {
@@ -17,9 +21,9 @@ class MovieController extends Controller
 
     // POST: Guardar una nueva película (Solo Admin)
     public function store(Request $request)
-    {
+    {   
         $validator = Validator::make($request->all(), [
-            'tmdb_id' => 'required|unique:movies',
+            'id' => 'required|unique:movies', // Validamos el ID nuevo
             'title' => 'required|string',
         ]);
 
@@ -67,5 +71,16 @@ class MovieController extends Controller
 
         $results = $tmdbService->searchMovies($query);
         return response()->json($results);
+    }
+
+    // app/Http/Controllers/MovieController.php
+    public function getUserStatus($id)
+    {
+        $userId = Auth::id();
+        return response()->json([
+            'isFavorite' => Favorite::where('user_id', $userId)->where('movie_id', $id)->exists(),
+            'isWatched' => Watched::where('user_id', $userId)->where('movie_id', $id)->exists(),
+            'isPending' => Pending::where('user_id', $userId)->where('movie_id', $id)->exists(),
+        ]);
     }
 }

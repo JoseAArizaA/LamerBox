@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // La URL de tu API de Laravel en Docker
-const API_URL = "http://localhost:8000/api";
+const API_BASE_URL = "http://localhost:8000/api";
 
 export const AuthService = {
     // Método para iniciar sesión
@@ -12,13 +12,13 @@ export const AuthService = {
 
     // Método para registrarse
     async register(nickname, email, password, password_confirmation) {
-        const response = await axios.post(`${API_URL}/register`, { nickname, email, password, password_confirmation});
+        const response = await axios.post(`${API_BASE_URL}/register`, { nickname, email, password, password_confirmation});
         return response.data;
     },
 
     // Para obtener los datos del usuario identificado
     async me(token) {
-        const response = await axios.get(`${API_URL}/me`, {
+        const response = await axios.get(`${API_BASE_URL}/me`, {
             headers: { Authorization: `Bearer ${token}` }
         });
         return response.data;

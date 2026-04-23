@@ -1,0 +1,151 @@
+/* MovieDetailPage.css */
+.movie-detail-container {
+    color: white;
+    min-height: 100vh;
+    background-color: #14181c;
+}
+
+/* El fondo gigante con degradado */
+.movie-backdrop {
+    width: 100%;
+    height: 500px;
+    background-size: cover;
+    background-position: center 20%;
+    position: relative;
+}
+
+.movie-backdrop::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Degradado para que la imagen se funda con el negro del fondo */
+    background: linear-gradient(to bottom, rgba(20, 24, 28, 0) 0%, rgba(20, 24, 28, 1) 100%);
+}
+
+/* Contenido principal */
+.movie-main-info {
+    display: flex;
+    gap: 40px;
+    padding: 0 40px;
+    margin-top: -150px; /* Sube la info sobre la imagen del fondo */
+    position: relative;
+    z-index: 10;
+}
+
+.detail-poster {
+    width: 230px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.detail-text {
+    flex: 1;
+    max-width: 800px;
+     text-align:justify;
+}
+
+.detail-text h1 {
+    font-size: 3rem;
+    margin-bottom: 10px;
+}
+
+.detail-text h1 span {
+    color: #9ab; /* El año en gris suave */
+    font-weight: normal;
+}
+
+.tagline {
+    font-style: italic;
+    color: #9ab;
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+}
+
+.overview {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #cbd5e0;
+    padding-bottom: 25px; /* Espacio interno bajo el texto */
+    margin-bottom: 25px; /* Espacio externo antes de la línea */
+}
+
+.movie-meta {
+    margin-top: 20px;
+    display: flex;
+    gap: 20px;
+}
+
+.rating-badge {
+    background: #00e054;
+    color: #14181c;
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-weight: 900;
+}
+/* MovieDetailPage.css */
+
+.detail-cast-section {
+    padding: 20px 40px 40px;
+}
+
+.actor-name {
+    font-weight: bold;
+    color: white;
+    font-size: 0.85rem;
+    margin-top: 5px;
+}
+
+.character-name {
+    font-size: 0.75rem;
+    color: #9ab; /* Gris suave para el nombre del personaje */
+}
+
+/* Reutilizamos el estilo de título de la Welcome Page */
+.section-title {
+    color: #9ab;
+    font-size: 0.85rem;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+    margin-bottom: 20px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #2c3440;
+    text-transform: uppercase;
+}
+
+.genres-list {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+.genre-badge {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 4px 12px;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Contenedor para el scroll horizontal de películas */
+.movies-slider-horizontal {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    padding: 10px 0 20px 0;
+    scroll-behavior: smooth;
+}
+
+/* Ocultamos la barra de scroll para que quede más limpio */
+.movies-slider-horizontal::-webkit-scrollbar {
+    display: none;
+}
+
+/* Aseguramos que las MovieCard no se encojan en el flex */
+.movies-slider-horizontal > div {
+    flex: 0 0 auto;
+}

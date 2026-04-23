@@ -19,7 +19,7 @@ class ReviewController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'movie_id' => 'required|exists:movies,id',
+            'movie_id' => 'required|integer',
             'comment' => 'required',
             'rating' => 'required|integer|min:1|max:10'
         ]);

@@ -1,11 +1,13 @@
 import React from 'react';
-import './MovieCard.css';
+import { Link } from 'react-router-dom';
 
 const MovieCard = ({ movie }) => {
     return (
-        <div className="movie-card">
-            <img src={movie.poster_path} alt={movie.title} />
-        </div>
+        <Link to={`/movie/${movie.id}`} className="movie-card-link">
+            <div className="movie-card">
+                <img src={movie.poster_path} alt={movie.title} />
+            </div>
+        </Link>
     );
 };
 

@@ -59,5 +59,44 @@ export const movieService = {
         } catch (error) {
             return [];
         }
+    },
+
+    // Obtener detalles de una película específica
+    getMovieDetails: async (id) => {
+        try {
+            const response = await axios.get(`${TMDB_BASE_URL}/movie/${id}?api_key=${API_KEY}&language=es-ES`);
+            return response.data;
+        } catch (error) {
+            console.error("Error al obtener detalles:", error);
+            return null;
+        }
+    },
+
+    // Obtener los actores (créditos)
+    getMovieCredits: async (id) => {
+        try {
+            const response = await axios.get(`${TMDB_BASE_URL}/movie/${id}/credits?api_key=${API_KEY}&language=es-ES`);
+            return response.data.cast.slice(0, 10); // Solo cogemos los 10 primeros actores
+        } catch (error) {
+            console.error("Error al obtener créditos:", error);
+            return [];
+        }
+    },
+
+    getSimilarMovies: async (id) => {
+    try {
+        const response = await axios.get(`${TMDB_BASE_URL}/movie/${id}/similar?api_key=${API_KEY}&language=es-ES`);
+        
+        return response.data.results.map(m => ({
+            id: m.id,
+            title: m.title,
+            poster_path: `${IMAGE_BASE_URL}${m.poster_path}`,
+            vote_average: m.vote_average,
+            release_date: m.release_date
+        }));
+    } catch (error) {
+        console.error("Error al obtener películas similares:", error);
+        return [];
     }
+}
 };

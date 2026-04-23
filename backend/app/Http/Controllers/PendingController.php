@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Pending; 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Movie;
+use Illuminate\Support\Facades\Log;
 
 class PendingController extends Controller
 {
@@ -12,18 +14,25 @@ class PendingController extends Controller
     public function index()
     {
         $userId = Auth::id();
-        $favs = Pending::where('user_id', $userId)->with('movie')->get();
-        return response()->json($favs, 200);
+        $pending = Pending::where('user_id', $userId)->with('movie')->get();
+        return response()->json($pending, 200);
     }
 
     // POST: Añadir a pendientes
     public function store(Request $request)
     {
-        $fav = Pending::firstOrCreate([
-            'user_id' => Auth::id(),
-            'movie_id' => $request->movie_id
-        ]);
-        return response()->json($fav, 201);
+        // Primero: Creamos o buscamos la película en nuestra tabla local
+        Movie::firstOrCreate(
+        ['id' => $request->movie_id],
+        ['title' => $request->title ?? 'Sin título']
+    );
+
+    // Segundo: Ahora ya podemos guardar que el usuario la ha visto
+    $pending = Pending::firstOrCreate([
+        'user_id' => Auth::id(),
+        'movie_id' => $request->movie_id
+    ]);
+        return response()->json($pending, 201);
     }
 
     // DELETE: Quitar de pendientes (se usa el movie_id)
