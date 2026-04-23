@@ -18,7 +18,7 @@ use App\Models\Review;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable;
 
     protected $fillable = [
         'nickname', // Asegúrate de que en tu DB se llame nickname y no name
