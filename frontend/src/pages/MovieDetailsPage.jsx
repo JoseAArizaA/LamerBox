@@ -1,13 +1,14 @@
+import { Link } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { movieService } from '../services/movieService';
 import './MovieDetailsPage.css';
-import usuario from '../assets/usuario.png';
 import ActionBar from '../components/ActionBar';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { authStorage } from '../auth/authStorage';
 import MovieCard from '../components/MovieCard';
+import NotFound from '../components/NoutFound';
 
 const MovieDetailPage = () => {
     const { id } = useParams();
@@ -92,15 +93,15 @@ const MovieDetailPage = () => {
                 <h2 className="section-title">Reparto Principal</h2>
                 <div className="people-slider">
                     {cast.map(actor => (
-                        <div key={actor.id} className="person-card">
+                        <Link to={`/person/${actor.id}`} key={actor.id} className="person-card">
                             <img 
                                 src={actor.profile_path 
                                     ? `https://image.tmdb.org/t/p/w185${actor.profile_path}` 
-                                    : '/path/to/default-avatar.png'} 
+                                    : '/noImagenActor.png'} 
                                 alt={actor.name} 
                             />
                             <span className="actor-name">{actor.name}</span>
-                        </div>
+                        </Link>
                     ))}
                 </div>
             </div>

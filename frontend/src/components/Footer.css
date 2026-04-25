@@ -1,0 +1,17 @@
+/* Footer.css */
+.app-footer {
+    background-color: #1b2228;
+    color: #9ab;
+    padding: 40px 0;
+    margin-top: 50px;
+    border-top: 1px solid #2c3440;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 20px;
+}

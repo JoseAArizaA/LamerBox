@@ -278,3 +278,12 @@
     border-color: #00e054;
     box-shadow: 0 0 15px rgba(0, 224, 84, 0.3);
 }
+
+.person-card {
+    text-decoration: none;
+    color: inherit;      
+}
+
+.person-card:hover .actor-name {
+    color: #00e054; 
+}

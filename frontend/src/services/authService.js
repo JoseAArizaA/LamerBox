@@ -6,7 +6,7 @@ const API_BASE_URL = "http://localhost:8000/api";
 export const AuthService = {
     // Método para iniciar sesión
     async login(email, password) {
-        const response = await axios.post(`${API_URL}/login`, { email, password });
+        const response = await axios.post(`${API_BASE_URL}/login`, { email, password });
         return response.data; // Esto devuelve el { user, token }
     },
 

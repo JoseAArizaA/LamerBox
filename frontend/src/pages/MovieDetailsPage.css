@@ -149,3 +149,13 @@
 .movies-slider-horizontal > div {
     flex: 0 0 auto;
 }
+
+
+.person-card {
+    text-decoration: none; 
+    color: inherit;      
+}
+
+.person-card:hover .actor-name {
+    color: #00e054; 
+}

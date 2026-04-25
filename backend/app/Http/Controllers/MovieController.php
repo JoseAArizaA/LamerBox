@@ -61,6 +61,7 @@ class MovieController extends Controller
         return response()->json(['message' => 'Pelicula eliminada'], 200);
     }
 
+    // GET: Buscar películas en TMDB
     public function search(Request $request, TMDBService $tmdbService)
     {
         $query = $request->query('query');
@@ -73,7 +74,7 @@ class MovieController extends Controller
         return response()->json($results);
     }
 
-    // app/Http/Controllers/MovieController.php
+    // GET: Obtener el estado de la película para el usuario autenticado
     public function getUserStatus($id)
     {
         $userId = Auth::id();

@@ -1,0 +1,157 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;600;700&display=swap');
+
+:root {
+  --nf-bg-1: #0f1318;
+  --nf-bg-2: #1b2228;
+  --nf-card: #141a20cc;
+  --nf-border: #36424f;
+  --nf-text: #e6edf3;
+  --nf-muted: #9ab;
+  --nf-accent: #00e054;
+  --nf-accent-dark: #00b142;
+  --nf-glow: #4be67f40;
+}
+
+.not-found {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background:
+    radial-gradient(1200px 500px at 50% -10%, #26313d 0%, transparent 65%),
+    linear-gradient(160deg, var(--nf-bg-1), var(--nf-bg-2));
+  color: var(--nf-text);
+  position: relative;
+  overflow: hidden;
+}
+
+.film-grain {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.16;
+  background-image:
+    radial-gradient(circle at 20% 20%, #ffffff33 0.5px, transparent 1.2px),
+    radial-gradient(circle at 80% 30%, #ffffff2b 0.5px, transparent 1.2px),
+    radial-gradient(circle at 40% 70%, #ffffff2b 0.5px, transparent 1.2px),
+    radial-gradient(circle at 70% 80%, #ffffff2b 0.5px, transparent 1.2px);
+  background-size: 220px 220px, 240px 240px, 210px 210px, 250px 250px;
+  animation: grainShift 6s linear infinite alternate;
+}
+
+.not-found-card {
+  width: min(680px, 92vw);
+  background: var(--nf-card);
+  border: 1px solid var(--nf-border);
+  border-radius: 18px;
+  padding: 28px 24px;
+  text-align: center;
+  backdrop-filter: blur(6px);
+  box-shadow:
+    0 10px 40px #00000066,
+    0 0 0 1px #ffffff08 inset;
+  position: relative;
+  z-index: 1;
+  animation: cardReveal 560ms ease-out;
+}
+
+.error-code {
+  margin: 0;
+  font-family: 'Bebas Neue', Impact, sans-serif;
+  font-size: clamp(5.5rem, 16vw, 9rem);
+  line-height: 0.9;
+  letter-spacing: 0.06em;
+  color: #f4f7fa;
+  text-shadow:
+    0 0 20px #ffffff22,
+    0 0 40px #ffffff1a;
+}
+
+#not-found-title {
+  margin: 6px 0 0;
+  font-family: 'Barlow', 'Segoe UI', sans-serif;
+  font-weight: 700;
+  font-size: clamp(1.6rem, 4vw, 2.1rem);
+  letter-spacing: 0.01em;
+}
+
+.error-message {
+  margin: 14px auto 0;
+  max-width: 52ch;
+  color: var(--nf-muted);
+  font-family: 'Barlow', 'Segoe UI', sans-serif;
+  font-size: clamp(1rem, 2.2vw, 1.1rem);
+  line-height: 1.55;
+}
+
+.cta-row {
+  margin-top: 26px;
+  display: flex;
+  justify-content: center;
+}
+
+.btn-home {
+  display: inline-block;
+  text-decoration: none;
+  font-family: 'Barlow', 'Segoe UI', sans-serif;
+  font-weight: 700;
+  font-size: 0.98rem;
+  letter-spacing: 0.02em;
+  color: #081108;
+  background: linear-gradient(180deg, #37ff84, var(--nf-accent));
+  border: 1px solid #5cff9e;
+  border-radius: 999px;
+  padding: 0.78rem 1.35rem;
+  box-shadow:
+    0 8px 18px var(--nf-glow),
+    0 2px 0 #7dffb2 inset;
+  transition: transform 160ms ease, box-shadow 180ms ease, background-color 160ms ease;
+}
+
+.btn-home:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(180deg, #43ff8c, var(--nf-accent-dark));
+  box-shadow:
+    0 12px 24px #3df18352,
+    0 2px 0 #8dffbc inset;
+}
+
+.btn-home:active {
+  transform: translateY(0);
+}
+
+.btn-home:focus-visible {
+  outline: 3px solid #f2f8ff;
+  outline-offset: 3px;
+}
+
+@keyframes grainShift {
+  from {
+    transform: translate(-6px, -4px);
+  }
+  to {
+    transform: translate(6px, 4px);
+  }
+}
+
+@keyframes cardReveal {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (max-width: 560px) {
+  .not-found-card {
+    padding: 24px 18px;
+    border-radius: 14px;
+  }
+
+  .error-message {
+    font-size: 0.98rem;
+  }
+}

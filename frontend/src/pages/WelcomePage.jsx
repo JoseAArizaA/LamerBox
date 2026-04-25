@@ -1,4 +1,4 @@
-// src/pages/WelcomePage.jsx
+import { Link } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../auth/authContext';
@@ -16,14 +16,13 @@ const WelcomePage = () => {
         upcoming: [],
         popular: [],
         people: [],
-        userLists: [] // Aquí irán tus listas de Laravel
+        userLists: [] 
     });
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchHomeData = async () => {
             try {
-                // Lanzamos todas las peticiones a la vez para que sea rápido
                 const [trend, up, pop, stars] = await Promise.all([
                     movieService.getTrending(),
                     movieService.getUpcoming(),
@@ -123,10 +122,10 @@ const WelcomePage = () => {
                     <h2 className="section-title">Estrellas del momento</h2>
                     <div className="people-slider">
                         {data.people.map(person => (
-                            <div key={person.id} className="person-card">
+                            <Link to={`/person/${person.id}`} key={person.id} className="person-card">
                                 <img src={person.image} alt={person.name} />
-                                <span>{person.name}</span>
-                            </div>
+                                <span className="actor-name">{person.name}</span>
+                            </Link>
                         ))}
                     </div>
                 </section>
