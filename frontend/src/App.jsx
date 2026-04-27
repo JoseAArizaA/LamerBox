@@ -9,6 +9,8 @@ import MovieDetailsPage from './pages/MovieDetailsPage';
 import NotFound from './components/NoutFound';
 import SearchPage from './pages/SearchPage';
 import PersonDetailsPage from './pages/PersonDetailsPage';
+import ProfilePage from './pages/ProfilePage';
+import EditProfilePage from './pages/EditProfilePage';
 
 function App() {
   return (
@@ -24,11 +26,18 @@ function App() {
         <Route path="/create-list" element={
           <ProtectedRoute> <CreateListPage /></ProtectedRoute> } />
         
-        {/* Ejemplo de ruta protegida para el futuro */}
+        {/* Rutas Protegidas */}
         <Route path="/profile" element={
-          <ProtectedRoute><div style={{color: 'white'}}>Mi Perfil</div></ProtectedRoute>
+          <ProtectedRoute> 
+            <ProfilePage />  
+          </ProtectedRoute>
         } />
 
+        <Route path="/profile/edit" element={
+          <ProtectedRoute>
+            <EditProfilePage />
+          </ProtectedRoute>
+        } />
 
         <Route path="*" element={<NotFound />} />
 

@@ -12,22 +12,17 @@ use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\WatchedController;
 use App\Http\Controllers\PendingController;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes - LamerBox
-|--------------------------------------------------------------------------
-*/
-
 // 1. RUTAS ESPECÍFICAS (Debe ir arriba para que no choque con los IDs de los resources)
 Route::get('movies/search', [MovieController::class, 'search']);
 // Ruta para que los usuarios inicien sesión
 Route::post('/login', [UserController::class, 'login']);
 // Ruta para que los usuarios se registren
 Route::post('/register', [UserController::class, 'register']);
+// Ruta para obtener las reseñas de una película específica
+Route::get('/reviews', [ReviewController::class, 'index']);
 
 
 // 2. RUTAS AUTOMÁTICAS (apiResource) PARA LAS 7 ENTIDADES
-Route::apiResource('users', UserController::class);
 Route::apiResource('movies', MovieController::class);
 
 
@@ -54,9 +49,14 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/pending/{movieId}', [PendingController::class, 'destroy']);
     
     // Rutas para Reseñas
+    Route::delete('/reviews/{id}', [ReviewController::class, 'destroy']);
     Route::post('/reviews', [ReviewController::class, 'store']);
 
+    // Ruta para obtener el estado de una película (Favorita, Vista, Pendiente)
     Route::get('/movies/{id}/status', [MovieController::class, 'getUserStatus']);
+
+    // Rutas para Usuarios (Perfil, Actualización, Borrado)
+    Route::apiResource('users', UserController::class);
 });
 
 // Ruta de prueba para verificar que el usuario está autenticado (vanguardia de Laravel)

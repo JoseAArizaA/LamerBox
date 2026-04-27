@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { authStorage } from '../auth/authStorage';
 import MovieCard from '../components/MovieCard';
 import NotFound from '../components/NoutFound';
+import CommentSection from '../components/CommentSection';
 
 const MovieDetailPage = () => {
     const { id } = useParams();
@@ -117,6 +118,7 @@ const MovieDetailPage = () => {
                     ))}
                 </div>
             </div>
+            <CommentSection movieId={id} movieTitle={movie.title} />
         </div>
     );
 };

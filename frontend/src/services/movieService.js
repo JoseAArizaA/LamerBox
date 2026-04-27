@@ -1,7 +1,8 @@
 import axios from 'axios';
+import { http } from './http';
 
-const TMDB_BASE_URL = "https://api.themoviedb.org/3";
-const API_KEY = "1857ab63bf545b49452b66b77d424ca1";
+const TMDB_BASE_URL = import.meta.env.VITE_TMDB_BASE_URL;
+const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
 
 export const movieService = {
@@ -157,6 +158,46 @@ export const movieService = {
             console.error("Error al obtener películas del actor:", error);
             return [];
         }
-    }
+    },
+
+    getLocalReviews: async (movieId) => {
+        try {
+            const response = await http.get(`/reviews?movie_id=${movieId}`); 
+            return response.data;
+        } catch (error) {
+            console.error("Error al obtener reseñas locales:", error);
+            return [];
+        }
+    },
+
+    postReview: async (reviewData) => {
+        try {
+            const response = await http.post('/reviews', reviewData);
+            return response.data;
+        } catch (error) {
+            console.error("Error al publicar la reseña:", error);
+            return null;
+        }
+    },
+
+    getTMDBReviews: async (movieId) => {
+        try {
+            const response = await axios.get(`${TMDB_BASE_URL}/movie/${movieId}/reviews?api_key=${API_KEY}&language=en-US`);
+            return response.data.results;
+        } catch (error) {
+            console.error("Error al obtener reseñas de TMDB:", error);
+            return [];
+        }
+    },
+
+    deleteReview: async (reviewId) => {
+        try {
+            const response = await http.delete(`/reviews/${reviewId}`);
+            return response.data;
+        } catch (error) {
+            console.error("Error al borrar la reseña:", error);
+            throw error;
+        }
+    },
 
 };

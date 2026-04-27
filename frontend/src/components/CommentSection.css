@@ -1,0 +1,168 @@
+/* CommentSection.css corregido para el nuevo JSX */
+
+.comments-wrapper {
+    max-width: 950px;
+    margin: 50px auto;
+    padding: 0 20px;
+    font-family: inherit;
+}
+
+.section-title {
+    color: #fff;
+    font-size: 1.4rem;
+    border-bottom: 1px solid #2c3440;
+    padding-bottom: 10px;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Formulario de comentario */
+.comment-form {
+    background-color: #1b2228;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 40px;
+}
+
+.comment-form textarea {
+    width: 100%;
+    min-height: 120px;
+    background-color: #2c3440;
+    border: 1px solid #445566;
+    border-radius: 4px;
+    color: #fff;
+    padding: 15px;
+    font-size: 1rem;
+    resize: vertical;
+    margin-bottom: 15px;
+}
+
+/* Control de select y botón */
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 15px;
+}
+
+.form-actions select {
+    background-color: #2c3440;
+    color: #fff;
+    border: 1px solid #445566;
+    padding: 8px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Listado de reviews */
+.review-card {
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 6px;
+    transition: background 0.3s ease;
+}
+
+/* Estilo para tus usuarios */
+.review-card.local-review {
+    background-color: #1b2228;
+    border-left: 4px solid #00e054; /* Tu verde neón */
+}
+
+/* Estilo para los de la API */
+.review-card.api-review {
+    background-color: transparent;
+    border: 1px solid #2c3440;
+    opacity: 0.8;
+}
+
+.review-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.username {
+    color: #00e054;
+    font-weight: 900;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+}
+
+.api-author {
+    color: #9ab;
+    font-weight: bold;
+    font-size: 0.85rem;
+}
+
+.rating-tag {
+    background-color: #00e054;
+    color: #14181c;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 0.8rem;
+}
+
+.comment-body {
+    color: #9ab;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.no-comments, .login-notice {
+    color: #678;
+    text-align: center;
+    padding: 20px;
+    font-style: italic;
+}
+
+
+/* CommentSection.css */
+
+/* 1. Ajustamos la cabecera para que el nombre y el botón se repartan el espacio */
+.review-header {
+    display: flex;
+    justify-content: space-between; /* El nombre a la izquierda, el botón a la derecha */
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+/* 2. Agrupamos el nickname y la nota para que no se separen */
+.user-info-group {
+    display: flex;
+    align-items: center;
+    gap: 12px; /* Espacio entre el nombre y el 1/10 */
+}
+
+/* 3. Estilo profesional para el botón Eliminar */
+.btn-delete {
+    background: transparent;
+    color: #9ab; /* Color gris azulado por defecto para no llamar mucho la atención */
+    border: 1px solid #445566;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 0.65rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+/* 4. Efecto al pasar el ratón (Hover) */
+.btn-delete:hover {
+    background-color: #ff4d4d; /* Se vuelve rojo para indicar peligro */
+    color: #fff;
+    border-color: #ff4d4d;
+    box-shadow: 0 0 10px rgba(255, 77, 77, 0.3);
+}
+
+/* 5. Aseguramos que los tags de nota sigan viéndose bien */
+.rating-tag {
+    background-color: #00e054; /* Tu verde neón */
+    color: #14181c;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 900;
+    font-size: 0.75rem;
+}

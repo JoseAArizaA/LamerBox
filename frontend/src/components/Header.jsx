@@ -22,7 +22,6 @@ const Header = () => {
             </div>
 
             <div className="nav-right">
-                {/* 1. SECCIÓN DE IDENTIDAD (Cambia según si hay sesión o no) */}
                 {isAuthenticated ? (
                     <div 
                         className="user-dropdown-container"
@@ -38,10 +37,10 @@ const Header = () => {
                             <div className="dropdown-menu">
                                 <Link to="/profile" className="dropdown-item"><User size={16} /> Perfil</Link>
                                 <div className="dropdown-divider"></div>
-                                <Link to="/vistas" className="dropdown-item"><CheckCircle size={16} /> Vistas</Link>
-                                <Link to="/pendientes" className="dropdown-item"><Clock size={16} /> Pendientes</Link>
-                                <Link to="/favoritas" className="dropdown-item"><Heart size={16} /> Favoritas</Link>
-                                <Link to="/mis-listas" className="dropdown-item"><List size={16} /> Mis Listas</Link>
+                                <Link to="/profile?tab=watched" className="dropdown-item"><CheckCircle size={16} /> Vistas</Link>
+                                <Link to="/profile?tab=pending" className="dropdown-item"><Clock size={16} /> Pendientes</Link>
+                                <Link to="/profile?tab=favorites" className="dropdown-item"><Heart size={16} /> Favoritas</Link>
+                                <Link to="/profile?tab=lists" className="dropdown-item"><List size={16} /> Mis Listas</Link>
                                 <div className="dropdown-divider"></div>
                                 <button onClick={logout} className="dropdown-item logout-link">
                                     <LogOut size={16} /> Salir
