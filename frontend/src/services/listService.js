@@ -1,34 +1,22 @@
 import axios from 'axios';
-import { authStorage } from '../auth/authStorage'; // Importamos tu storage
+import { authStorage } from '../auth/authStorage'; 
+import { http } from './http';
 
-const API_URL = "http://localhost:8000/api";
-
-const getAuthHeaders = () => {
-    const session = authStorage.get(); // Esto obtiene el objeto {user, token}
-    return {
-        headers: { 
-            // Accedemos a la propiedad .token del objeto
-            Authorization: `Bearer ${session?.token}` 
-        }
-    };
-};
+const API_BASE_URL = import.meta.env.VITE_API_URL;
 
 export const listService = {
-    // Llama a index()
     getUserLists: async () => {
-        const response = await axios.get(`${API_URL}/lists`, getAuthHeaders());
+        const response = await http.get('/lists'); // El token y la URL ya van incluidos
         return response.data;
     },
 
-    // Llama a store()
     createList: async (name, is_public = true) => {
-        const response = await axios.post(`${API_URL}/lists`, { name, is_public }, getAuthHeaders());
+        const response = await http.post('/lists', { name, is_public });
         return response.data;
     },
 
-    // Llama a addMovie()
     addMovieToList: async (listId, movieId) => {
-        const response = await axios.post(`${API_URL}/user/lists/${listId}/add`, { movie_id: movieId }, getAuthHeaders());
+        const response = await http.post(`/user/lists/${listId}/add`, { movie_id: movieId });
         return response.data;
     }
 };

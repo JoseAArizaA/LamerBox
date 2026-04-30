@@ -1,0 +1,93 @@
+/* Contenedor principal */
+.person-details-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    color: #fff;
+}
+
+/* Cabecera con foto e info */
+.person-header {
+    display: flex;
+    gap: 40px;
+    margin-bottom: 50px;
+    align-items: flex-start;
+}
+
+/* Foto del actor */
+.person-img {
+    width: 300px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    border: 1px solid #2c3440;
+}
+
+/* Columna de información */
+.person-info {
+    flex: 1;
+}
+
+.person-info h1 {
+    font-size: 2.8rem;
+    margin-bottom: 10px;
+    font-weight: 900;
+}
+
+.person-meta {
+    color: #9ab; /* Tu gris característico */
+    margin-bottom: 25px;
+    font-size: 1.1rem;
+}
+
+.person-info h3 {
+    color: #00e054; /* Tu verde */
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Texto de la biografía */
+.biography {
+    line-height: 1.8;
+    color: #cbd5e0;
+    text-align: justify;
+    font-size: 1.05rem;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 20px;
+    border-radius: 8px;
+}
+
+/* Sección de películas */
+.person-movies-section {
+    border-top: 1px solid #2c3440;
+    padding-top: 40px;
+}
+
+.person-movies-section h2 {
+    margin-bottom: 30px;
+    font-size: 1.8rem;
+}
+
+/* Grid para las MovieCards */
+.movies-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 25px;
+}
+
+/* Ajuste para móviles */
+@media (max-width: 768px) {
+    .person-header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    
+    .person-img {
+        width: 200px;
+    }
+    
+    .biography {
+        text-align: left;
+    }
+}

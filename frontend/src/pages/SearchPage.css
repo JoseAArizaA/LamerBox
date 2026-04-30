@@ -1,0 +1,22 @@
+.search-page-container {
+    padding: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.search-title {
+    color: #fff;
+    margin-bottom: 30px;
+    font-size: 1.8em;
+}
+
+.search-title span {
+    color: #9ab;
+    font-style: italic;
+}
+
+.movies-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 30px;
+}

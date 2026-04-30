@@ -249,3 +249,41 @@
 .empty-box:hover .plus-icon {
     color: #00e054;
 }
+
+/* Bloqueamos el tamaño del enlace para que no se estire */
+.movie-card-link {
+    text-decoration: none;
+    flex: 0 0 180px; /* Esto obliga a cada póster a medir siempre 180px de ancho */
+    transition: transform 0.2s ease-in-out;
+}
+
+/* Controlamos el tamaño de la imagen dentro del enlace */
+.movie-card img {
+    width: 100%;
+    height: 270px; /* Altura estándar para pósteres */
+    object-fit: cover; /* Evita que la imagen se deforme */
+    border-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: block;
+}
+
+/* Efecto hover: se agranda un poco al pasar el ratón */
+.movie-card-link:hover {
+    transform: scale(1.05);
+    z-index: 10;
+}
+
+/* El borde se vuelve verde neón al pasar el ratón */
+.movie-card-link:hover img {
+    border-color: #00e054;
+    box-shadow: 0 0 15px rgba(0, 224, 84, 0.3);
+}
+
+.person-card {
+    text-decoration: none;
+    color: inherit;      
+}
+
+.person-card:hover .actor-name {
+    color: #00e054; 
+}

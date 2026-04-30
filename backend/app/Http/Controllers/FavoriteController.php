@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Favorite; // Cambia esto por Watched o Pending en los otros
+use App\Models\Favorite; 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Movie; 
+use Illuminate\Support\Facades\Log;
 
 class FavoriteController extends Controller
 {
@@ -19,11 +21,18 @@ class FavoriteController extends Controller
     // POST: Añadir a favoritos
     public function store(Request $request)
     {
-        $fav = Favorite::firstOrCreate([
-            'user_id' => Auth::id(),
-            'movie_id' => $request->movie_id
-        ]);
-        return response()->json($fav, 201);
+        // Primero: Creamos o buscamos la película en nuestra tabla local
+        Movie::firstOrCreate(
+        ['id' => $request->movie_id],
+        ['title' => $request->title ?? 'Sin título']
+    );
+
+    // Segundo: Ahora ya podemos guardar que el usuario la ha visto
+    $favorite = Favorite::firstOrCreate([
+        'user_id' => Auth::id(),
+        'movie_id' => $request->movie_id
+    ]);
+        return response()->json($favorite, 201);
     }
 
     // DELETE: Quitar de favoritos (se usa el movie_id)

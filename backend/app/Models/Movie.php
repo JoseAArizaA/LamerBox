@@ -15,7 +15,7 @@ class Movie extends Model
     use HasFactory;
 
     protected $fillable = [
-        'tmdb_id',
+        'id',
         'title',
         'description',
         'year',
@@ -23,6 +23,8 @@ class Movie extends Model
         'imageUrl',
         'genre'
     ];
+
+    public $incrementing = false;
 
    // En qué listas personalizadas aparece esta peli
     public function lists(): BelongsToMany

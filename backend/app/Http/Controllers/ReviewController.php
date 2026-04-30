@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Review;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+use App\Models\Movie;
 
 class ReviewController extends Controller
 {
@@ -19,20 +21,26 @@ class ReviewController extends Controller
     // POST: Guardar reseña
     public function store(Request $request)
     {
-        $request->validate([
-            'movie_id' => 'required|exists:movies,id',
-            'comment' => 'required',
-            'rating' => 'required|integer|min:1|max:10'
-        ]);
+       $request->validate([
+        'movie_id' => 'required|integer',
+        'comment' => 'required',
+        'rating' => 'required|integer|min:1|max:10',
+        'title' => 'nullable|string'
+    ]);
 
-        $review = Review::create([
-            'user_id' => Auth::id(),
-            'movie_id' => $request->movie_id,
-            'comment' => $request->comment,
-            'rating' => $request->rating
-        ]);
+    Movie::firstOrCreate(
+        ['id' => $request->movie_id],
+        ['title' => $request->title ?? 'Sin título']
+    );
 
-        return response()->json($review, 201);
+    $review = Review::create([
+        'user_id' => Auth::id(),
+        'movie_id' => $request->movie_id,
+        'comment' => $request->comment,
+        'rating' => $request->rating
+    ]);
+
+    return response()->json($review, 201);
     }
 
     /**

@@ -17,17 +17,23 @@ class UserController extends Controller
     public function index()
     {
         // Al estar protegido por el middleware 'admin' en api.php, 
-        // ya no necesitamos el 'if' manual aquí.
+        // confiamos en la capa de seguridad de la ruta.
         return response()->json(User::all(), 200);
     }
 
     /**
-     * GET: Ver perfil detallado.
+     * GET: Ver perfil detallado con sus listas y películas.
      */
     public function show(string $id)
     {
-        $user = User::with(['favoriteMovies', 'movieLists'])->find($id);
-        
+        // Usamos la versión de Jose que trae las relaciones de películas cargadas
+        $user = User::with([
+            'favoriteMovies.movie',
+            'watchedMovies.movie', 
+            'pendingMovies.movie',
+            'movieLists'    
+        ])->find($id);
+
         if (!$user) {
             return response()->json(['message' => 'Usuario no encontrado'], 404);
         }
@@ -48,18 +54,15 @@ class UserController extends Controller
             return response()->json(['message' => 'No autorizado'], 403);
         }
 
-        // Validamos los datos nuevos asegurando que el email/nickname sea único 
-        // excepto para el usuario que se está editando.
+        // Validamos asegurando que el email/nickname sea único excepto para el usuario actual
         $request->validate([
             'nickname' => ['sometimes', 'string', Rule::unique('users')->ignore($user->id)],
             'email' => ['sometimes', 'email', Rule::unique('users')->ignore($user->id)],
             'password' => 'sometimes|string|min:6'
         ]);
 
-        // Actualizamos nickname y email
         $user->update($request->only(['nickname', 'email']));
         
-        // Si se envió una contraseña nueva, la encriptamos
         if ($request->password) {
             $user->password = Hash::make($request->password);
             $user->save();
@@ -79,7 +82,6 @@ class UserController extends Controller
         $user = User::find($id);
         if (!$user) return response()->json(['message' => 'Usuario no encontrado'], 404);
         
-        // El Admin puede borrar a cualquiera, el Usuario solo a sí mismo
         if (Auth::id() != $id && !Auth::user()->is_admin) {
             return response()->json(['message' => 'No autorizado'], 403);
         }

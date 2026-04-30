@@ -12,8 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('movies', function (Blueprint $table) {
-            $table->id(); 
-            $table->integer('tmdb_id')->unique();
+            $table->unsignedBigInteger('id')->primary();
             $table->string('title');
             $table->text('description')->nullable();
             $table->year('year')->nullable();
