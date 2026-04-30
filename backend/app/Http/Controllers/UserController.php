@@ -6,110 +6,130 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
-    // GET: Listar todos los usuarios (Solo para el Admin)
+    /**
+     * GET: Listar todos los usuarios.
+     * Acceso: Solo Administradores (Protegido por middleware 'admin' en rutas).
+     */
     public function index()
     {
-        // Solo si el usuario que pregunta es admin
-        if (!Auth::user()->is_admin) {
-            return response()->json(['message' => 'No tienes permisos'], 403);
-        }
+        // Al estar protegido por el middleware 'admin' en api.php, 
+        // ya no necesitamos el 'if' manual aquí.
         return response()->json(User::all(), 200);
     }
 
-    // GET: Ver el perfil de un usuario concreto
+    /**
+     * GET: Ver perfil detallado.
+     */
     public function show(string $id)
     {
         $user = User::with(['favoriteMovies', 'movieLists'])->find($id);
-        if (!$user) return response()->json(['message' => 'Usuario no encontrado'], 404);
+        
+        if (!$user) {
+            return response()->json(['message' => 'Usuario no encontrado'], 404);
+        }
+
         return response()->json($user, 200);
     }
 
-    // PUT: Actualizar datos (Nickname o Email)
+    /**
+     * PUT: Actualizar datos (Nickname, Email o Password).
+     */
     public function update(Request $request, string $id)
     {
         $user = User::find($id);
-        
-        // Seguridad: Solo puedes editarte a ti mismo o ser Admin
+        if (!$user) return response()->json(['message' => 'No encontrado'], 404);
+
+        // Seguridad: Solo el dueño o un Admin pueden editar
         if (Auth::id() != $id && !Auth::user()->is_admin) {
             return response()->json(['message' => 'No autorizado'], 403);
         }
 
+        // Validamos los datos nuevos asegurando que el email/nickname sea único 
+        // excepto para el usuario que se está editando.
+        $request->validate([
+            'nickname' => ['sometimes', 'string', Rule::unique('users')->ignore($user->id)],
+            'email' => ['sometimes', 'email', Rule::unique('users')->ignore($user->id)],
+            'password' => 'sometimes|string|min:6'
+        ]);
+
+        // Actualizamos nickname y email
         $user->update($request->only(['nickname', 'email']));
         
-        // Si quieren cambiar la contraseña
+        // Si se envió una contraseña nueva, la encriptamos
         if ($request->password) {
             $user->password = Hash::make($request->password);
             $user->save();
         }
 
-        return response()->json($user, 200);
+        return response()->json([
+            'message' => 'Datos actualizados correctamente',
+            'user' => $user
+        ], 200);
     }
 
-    // DELETE: Borrar cuenta
+    /**
+     * DELETE: Borrar cuenta (Admin o Dueño).
+     */
     public function destroy(string $id)
     {
         $user = User::find($id);
-        if (!$user) return response()->json(['message' => 'No encontrado'], 404);
+        if (!$user) return response()->json(['message' => 'Usuario no encontrado'], 404);
         
-        // Seguridad: Solo tú o un Admin podéis borrar la cuenta
+        // El Admin puede borrar a cualquiera, el Usuario solo a sí mismo
         if (Auth::id() != $id && !Auth::user()->is_admin) {
             return response()->json(['message' => 'No autorizado'], 403);
         }
 
         $user->delete();
-        return response()->json(['message' => 'Usuario eliminado'], 200);
+        return response()->json(['message' => 'Cuenta eliminada con éxito'], 200);
     }
 
-    // POST: Registro de nuevos usuarios
+    /**
+     * POST: Registro de nuevos usuarios.
+     */
     public function register(Request $request) 
     {
-        // 1. Validamos los datos de entrada
         $fields = $request->validate([
             'nickname' => 'required|string|unique:users,nickname',
-            'email' => 'required|string|unique:users,email',
-            'password' => 'required|string|confirmed' // Requiere password_confirmation en el front
+            'email' => 'required|string|email|unique:users,email',
+            'password' => 'required|string|confirmed|min:6'
         ]);
 
-        // 2. Creamos el usuario en la base de datos
         $user = User::create([
             'nickname' => $fields['nickname'],
             'email' => $fields['email'],
             'password' => Hash::make($fields['password']),
-            'is_admin' => false // Por defecto no son admin
+            'is_admin' => false 
         ]);
 
-        // 3. Generamos el token de acceso
         $token = $user->createToken('lamerbox_token')->plainTextToken;
 
-        // 4. Devolvemos la respuesta
         return response()->json([
             'user' => $user,
             'token' => $token
         ], 201);
     }
 
-    // POST: Inicio de sesión
+    /**
+     * POST: Inicio de sesión.
+     */
     public function login(Request $request) 
     {
         $fields = $request->validate([
-            'email' => 'required|string',
+            'email' => 'required|string|email',
             'password' => 'required|string'
         ]);
 
-        // Comprobar email
         $user = User::where('email', $fields['email'])->first();
 
-        // Comprobar contraseña
         if (!$user || !Hash::check($fields['password'], $user->password)) {
-            return response()->json([
-                'message' => 'Credenciales incorrectas'
-            ], 401);
+            return response()->json(['message' => 'Credenciales incorrectas'], 401);
         }
 
-        // Generar token
         $token = $user->createToken('lamerbox_token')->plainTextToken;
 
         return response()->json([
