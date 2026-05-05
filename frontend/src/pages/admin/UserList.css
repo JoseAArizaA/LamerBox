@@ -1,0 +1,97 @@
+.admin-table-container {
+  background-color: #1c2228;
+  border: 1px solid #2c3440;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-top: 20px;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  color: #fff;
+}
+
+.admin-table th, .admin-table td {
+  padding: 15px 20px;
+  text-align: left;
+  border-bottom: 1px solid #2c3440;
+}
+
+.admin-table th {
+  background-color: #14181c;
+  font-size: 0.9rem;
+  color: #9ab;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.admin-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.admin-table tbody tr:hover {
+  background-color: #242c35;
+}
+
+.avatar-mini {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #00e676; /* var(--green) */
+  color: #14181c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.badge-admin {
+  background-color: rgba(231, 76, 60, 0.15);
+  color: #e74c3c;
+  padding: 5px 10px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.badge-user {
+  background-color: rgba(153, 170, 187, 0.15);
+  color: #9ab;
+  padding: 5px 10px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.btn-ban {
+  background-color: #e74c3c;
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: bold;
+  font-size: 0.85rem;
+  transition: background-color 0.2s;
+}
+
+.btn-ban:hover:not(.disabled) {
+  background-color: #c0392b;
+}
+
+.btn-ban.disabled {
+  background-color: #2c3440;
+  color: #555;
+  cursor: not-allowed;
+}

@@ -10,11 +10,15 @@ use App\Models\Movie;
 
 class ReviewController extends Controller
 {
-    // GET: Ver reseñas de una película específica
+    // GET: Ver reseñas de una película específica o todas (para el admin)
     public function index(Request $request)
     {
-        // Validamos que venga el movie_id para filtrar
-        $reviews = Review::where('movie_id', $request->movie_id)->with('user')->get();
+        // Si hay movie_id, filtramos por película. Si no, devolvemos todas con su usuario.
+        if ($request->has('movie_id')) {
+            $reviews = Review::where('movie_id', $request->movie_id)->with('user')->get();
+        } else {
+            $reviews = Review::with('user')->orderBy('created_at', 'desc')->get();
+        }
         return response()->json($reviews, 200);
     }
 

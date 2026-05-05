@@ -15,7 +15,7 @@ const AdminLayout = () => {
 
       <div className="admin-body">
         {/* 2. Barra lateral (Sidebar) adaptada al diseño oscuro */}
-        <aside className="admin-sidebar">
+        <aside className="admin-sidebar"> 
           <h2>Panel Admin</h2>
           <nav className="admin-nav">
             {/* NavLink permite añadir automáticamente la clase "active" cuando la ruta coincide */}
