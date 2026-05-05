@@ -1,16 +1,15 @@
 import { Navigate, Outlet } from 'react-router-dom';
+import { useAuth } from '../auth/authContext';
 
 /**
  * Componente que protege las rutas de administración.
  * Verifica si el usuario actual tiene permisos de administrador.
  */
 const AdminGuard = () => {
-  // Simulamos la obtención del usuario actual de un contexto o estado global
-  // En una aplicación real, esto vendría de un useContext(AuthContext) o Redux
-  const currentUser = JSON.parse(localStorage.getItem('user')) || { is_admin: 0 };
+  const { user, isAuthenticated } = useAuth();
 
-  // Si no es administrador (is_admin !== 1), redirigimos a la página principal
-  if (currentUser.is_admin !== 1) {
+  // Si no está autenticado o no es administrador, redirigimos a la página principal
+  if (!isAuthenticated || user?.is_admin !== 1) {
     return <Navigate to="/" replace />;
   }
 

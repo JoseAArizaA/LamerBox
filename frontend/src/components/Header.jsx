@@ -2,7 +2,7 @@ import { Link, NavLink } from 'react-router-dom';
 import { useAuth } from '../auth/authContext';
 import React, { useState, useEffect } from 'react';
 import SearchBar from './SearchBar';
-import { ChevronDown, User, Heart, Clock, CheckCircle, List, LogOut } from 'lucide-react';
+import { ChevronDown, User, Heart, Clock, CheckCircle, List, LogOut, Shield } from 'lucide-react';
 import './Header.css';
 
 const Header = () => {
@@ -36,6 +36,9 @@ const Header = () => {
                         {isMenuOpen && (
                             <div className="dropdown-menu">
                                 <Link to="/profile" className="dropdown-item"><User size={16} /> Perfil</Link>
+                                {user.is_admin === 1 && (
+                                    <Link to="/admin" className="dropdown-item" style={{ color: '#e74c3c' }}><Shield size={16} /> Panel Admin</Link>
+                                )}
                                 <div className="dropdown-divider"></div>
                                 <Link to="/profile?tab=watched" className="dropdown-item"><CheckCircle size={16} /> Vistas</Link>
                                 <Link to="/profile?tab=pending" className="dropdown-item"><Clock size={16} /> Pendientes</Link>

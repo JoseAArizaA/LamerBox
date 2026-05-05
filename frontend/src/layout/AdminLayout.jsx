@@ -1,30 +1,44 @@
-import { Link, Outlet } from 'react-router-dom';
+import { NavLink, Outlet } from 'react-router-dom';
+import Header from '../components/Header';
+import { Users, Film, MessageSquare } from 'lucide-react';
+import './AdminLayout.css';
 
 /**
  * Layout principal para el Panel de Administración.
- * Incluye una barra lateral de navegación (Sidebar) y un área principal de contenido.
+ * Ahora incluye la cabecera general y sigue los colores de la aplicación.
  */
 const AdminLayout = () => {
   return (
-    <div style={{ display: 'flex', minHeight: '100vh', fontFamily: 'sans-serif' }}>
-      
-      {/* Barra lateral (Sidebar) */}
-      <aside style={{ width: '250px', backgroundColor: '#2c3e50', color: '#ecf0f1', padding: '20px' }}>
-        <h2>Panel Admin</h2>
-        <nav style={{ display: 'flex', flexDirection: 'column', gap: '15px', marginTop: '30px' }}>
-          {/* Enlaces de navegación usando react-router-dom */}
-          <Link to="/admin/users" style={{ color: '#ecf0f1', textDecoration: 'none' }}>👥 Usuarios</Link>
-          <Link to="/admin/movies" style={{ color: '#ecf0f1', textDecoration: 'none' }}>🎬 Películas</Link>
-          <Link to="/admin/reviews" style={{ color: '#ecf0f1', textDecoration: 'none' }}>📝 Reseñas</Link>
-        </nav>
-      </aside>
+    <div className="admin-layout-container">
+      {/* 1. Cabecera principal (la misma que usa la App) */}
+      <Header />
 
-      {/* Área principal donde se renderizan las sub-rutas */}
-      <main style={{ flex: 1, padding: '30px', backgroundColor: '#f5f6fa' }}>
-        {/* El componente Outlet inyecta el contenido de la ruta hija activa */}
-        <Outlet />
-      </main>
+      <div className="admin-body">
+        {/* 2. Barra lateral (Sidebar) adaptada al diseño oscuro */}
+        <aside className="admin-sidebar">
+          <h2>Panel Admin</h2>
+          <nav className="admin-nav">
+            {/* NavLink permite añadir automáticamente la clase "active" cuando la ruta coincide */}
+            <NavLink to="/admin/users" className={({isActive}) => isActive ? "admin-link active" : "admin-link"}>
+              <Users size={18} />
+              Usuarios
+            </NavLink>
+            <NavLink to="/admin/movies" className={({isActive}) => isActive ? "admin-link active" : "admin-link"}>
+              <Film size={18} />
+              Películas
+            </NavLink>
+            <NavLink to="/admin/reviews" className={({isActive}) => isActive ? "admin-link active" : "admin-link"}>
+              <MessageSquare size={18} />
+              Reseñas
+            </NavLink>
+          </nav>
+        </aside>
 
+        {/* 3. Área principal donde se renderizan las sub-rutas */}
+        <main className="admin-main">
+          <Outlet />
+        </main>
+      </div>
     </div>
   );
 };
