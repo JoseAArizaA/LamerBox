@@ -17,7 +17,6 @@ export const AuthService = {
 
     // Método para obtener los datos del usuario identificado
     async me() {
-        // Ya no necesitas recibir el token, http.js lo pone solo
         const response = await http.get('/me');
         return response.data;
     }

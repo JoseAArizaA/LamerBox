@@ -125,11 +125,9 @@ export const movieService = {
     // Obtener información de un actor
     getPersonDetails: async (id) => {
         try {
-            // 1. Intentamos obtener los datos en español
             const response = await axios.get(`${TMDB_BASE_URL}/person/${id}?api_key=${API_KEY}&language=es-ES`);
             let personData = response.data;
 
-            // 2. Si la biografía en español está vacía, la pedimos en inglés
             if (!personData.biography || personData.biography.trim() === "") {
                 const engResponse = await axios.get(`${TMDB_BASE_URL}/person/${id}?api_key=${API_KEY}&language=en-US`);
                 personData.biography = engResponse.data.biography;

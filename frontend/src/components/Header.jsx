@@ -49,14 +49,12 @@ const Header = () => {
                         )}
                     </div>
                 ) : (
-                    /* Si no está logueado, mostramos los botones de acceso */
                     <div className="guest-menu">
                         <NavLink to="/register" className="btn-register">Registrarse</NavLink>
                         <NavLink to="/login" className="btn-login">Iniciar Sesión</NavLink>
                     </div>
                 )}
 
-                {/* 2. SECCIÓN COMÚN (Siempre visible, estés logueado o no) */}
                 <nav className="nav-links">
                     <NavLink to="/welcome">Descubrir</NavLink>
                     <NavLink to="/movies-browser">Películas</NavLink>

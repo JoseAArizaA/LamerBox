@@ -1,141 +1,84 @@
-import { Link } from 'react-router-dom';
+// src/pages/WelcomePage.jsx
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../auth/authContext';
-import { movieService } from '../services/movieService';
+import { movieService } from '../services/movieService'; //
 import MovieCard from '../components/MovieCard';
-import { listService } from '../services/listService';
+import { Search } from 'lucide-react';
 import './WelcomePage.css';
+import SearchBar from '../components/SearchBar';
 
 const WelcomePage = () => {
-    const { isAuthenticated, user } = useAuth();
+    const { isAuthenticated } = useAuth();
     const navigate = useNavigate();
-    
-    const [data, setData] = useState({
-        trending: [],
-        upcoming: [],
-        popular: [],
-        people: [],
-        userLists: [] 
-    });
+    const [trending, setTrending] = useState([]);
+    const [people, setPeople] = useState([]);
+    const [searchQuery, setSearchQuery] = useState('');
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const fetchHomeData = async () => {
+        const fetchWelcomeData = async () => {
             try {
-                const [trend, up, pop, stars] = await Promise.all([
+                const [trend, stars] = await Promise.all([
                     movieService.getTrending(),
-                    movieService.getUpcoming(),
-                    movieService.getPopular(),
                     movieService.getPopularPeople()
                 ]);
-
-                setData({
-                    trending: trend,
-                    upcoming: up,
-                    popular: pop,
-                    people: stars,
-                    userLists: [] 
-                });
-
-            if (isAuthenticated) {
-            const userLists = await listService.getUserLists(); 
-            setData(prev => ({ ...prev, userLists: userLists }));
-            }
-            
-
+                setTrending(trend.slice(0, 6)); 
+                setPeople(stars.slice(0, 9));
             } catch (err) {
-                console.error("Error cargando la home", err);
+                console.error("Error cargando", err);
             } finally {
                 setLoading(false);
             }
         };
+        fetchWelcomeData();
+    }, []);
 
-        fetchHomeData();
-    }, [isAuthenticated]);
-
-    if (loading) return <div className="loading-screen">Cargando LamerBox...</div>;
+    if (loading) return <div className="loading-screen">Cargando...</div>;
 
     return (
-        <div className="welcome-container">
-            {/* 1. HERO SECTION */}
-            <section className="hero">
+        <div className="welcome-page-scope welcome-container">
+            <section className="welcome-hero">
+                <div className="hero-overlay"></div>
                 <div className="hero-content">
-                    <h1>Lleva la cuenta de cada película que has visto.</h1>
-                    <p>Crea tu perfil, puntúa películas y comparte con amigos.</p>
+                    <h1>Sigue cada película que veas.</h1>
+                    <h2>Lleva el control, puntúa y comparte tus listas.</h2>
+                    
+                    <div className="main-search-bar-container">
+                        <SearchBar />
+                    </div>
+
                     {!isAuthenticated && (
-                        <button className="btn-hero" onClick={() => navigate('/register')}>
-                            ¡EMPEZAR AHORA!
-                        </button>
+                        <div className="hero-cta">
+                            <button onClick={() => navigate('/register')} className="btn-join">
+                                Únete a LamerBox
+                            </button>
+                        </div>
                     )}
                 </div>
             </section>
 
-            <main className="home-content">
-                
-                {/* 2. TUS LISTAS (Solo si está logueado) */}
-                {isAuthenticated && (
-                    <section className="movie-section user-lists-section">
-                        <h2 className="section-title">Tus Listas</h2>
-                        <div className="lists-grid">
-                            {data.userLists.length > 0 ? (
-                                // SI TIENE LISTAS: Las recorremos
-                                data.userLists.map(list => (
-                                    <div key={list.id} className="list-card-preview">
-                                        <div className="list-stack"></div>
-                                        <span className="list-name">{list.name}</span>
-                                        <span className="list-count">{list.movies_count || 0} películas</span>
-                                    </div>
-                                ))
-                            ) : (
-                                // SI NO TIENE LISTAS: Mostramos el botón de crear
-                                <div className="list-card-empty" onClick={() => navigate('/create-list')}>
-                                    <div className="empty-box">
-                                        <span className="plus-icon">+</span>
-                                        <p>No tienes listas aún</p>
-                                        <small>Haz clic para crear la primera</small>
-                                    </div>
-                                </div>
-                            )}
-                        </div>
-                    </section>
-                )}
-
-                {/* 3. TENDENCIAS */}
-                <section className="movie-section">
-                    <h2 className="section-title">Tendencias de la semana</h2>
-                    <div className="movies-slider">
-                        {data.trending.map(movie => <MovieCard key={movie.id} movie={movie} />)}
+            <main className="welcome-main">
+                <section className="welcome-section">
+                    <div className="section-header">
+                        <h3>Tendencias hoy</h3>
+                        <button onClick={() => navigate('/movies')}>Ver todas</button>
+                    </div>
+                    <div className="welcome-grid">
+                        {trending.map(movie => <MovieCard key={movie.id} movie={movie} />)}
                     </div>
                 </section>
 
-                {/* 4. PRÓXIMOS ESTRENOS */}
-                <section className="movie-section">
-                    <h2 className="section-title">Próximos estrenos</h2>
-                    <div className="movies-slider">
-                        {data.upcoming.map(movie => <MovieCard key={movie.id} movie={movie} />)}
-                    </div>
-                </section>
-
-                {/* 5. ESTRELLAS DEL MOMENTO */}
-                <section className="movie-section">
-                    <h2 className="section-title">Estrellas del momento</h2>
-                    <div className="people-slider">
-                        {data.people.map(person => (
-                            <Link to={`/person/${person.id}`} key={person.id} className="person-card">
+                <section className="welcome-section">
+                    <br></br>
+                    <br></br>
+                    <p className="sub-text">Los rostros más populares del cine esta semana.</p>
+                    <div className="people-mini-grid">
+                        {people.map(person => (
+                            <div key={person.id} className="person-mini-card" onClick={() => navigate(`/person/${person.id}`)}>
                                 <img src={person.image} alt={person.name} />
-                                <span className="actor-name">{person.name}</span>
-                            </Link>
-                        ))}
-                    </div>
-                </section>
-
-                {/* 6. GÉNEROS */}
-                <section className="movie-section genres-section">
-                    <h2 className="section-title">Explorar por género</h2>
-                    <div className="genres-grid">
-                        {['Terror', 'Acción', 'Ciencia Ficción', 'Comedia', 'Drama', 'Animación'].map(g => (
-                            <button key={g} className="genre-pill">{g}</button>
+                                <span>{person.name}</span>
+                            </div>
                         ))}
                     </div>
                 </section>

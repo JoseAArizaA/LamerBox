@@ -22,14 +22,12 @@ const RegisterPage = () => {
         e.preventDefault();
         setError(null);
 
-        // Validación básica en el front
         if (formData.password !== formData.password_confirmation) {
             setError("Las contraseñas no coinciden");
             return;
         }
 
         try {
-            // Enviamos los 4 campos que espera tu Laravel
             const data = await AuthService.register(
                 formData.nickname, 
                 formData.email, 
@@ -37,8 +35,6 @@ const RegisterPage = () => {
                 formData.password_confirmation
             );
             
-            // Si el registro es ok, el backend nos devuelve el user+token
-            // Iniciamos sesión automáticamente
             login(data); 
             navigate('/welcome');
         } catch (err) {

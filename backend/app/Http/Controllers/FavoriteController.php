@@ -21,13 +21,14 @@ class FavoriteController extends Controller
     // POST: Añadir a favoritos
     public function store(Request $request)
     {
-        // Primero: Creamos o buscamos la película en nuestra tabla local
-        Movie::firstOrCreate(
+        Movie::updateOrCreate(
         ['id' => $request->movie_id],
-        ['title' => $request->title ?? 'Sin título']
+        [
+            'title' => $request->title ?? 'Sin título',
+            'imageUrl' => $request->poster_path ?? ''
+        ]
     );
 
-    // Segundo: Ahora ya podemos guardar que el usuario la ha visto
     $favorite = Favorite::firstOrCreate([
         'user_id' => Auth::id(),
         'movie_id' => $request->movie_id

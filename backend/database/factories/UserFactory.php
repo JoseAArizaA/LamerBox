@@ -25,10 +25,10 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'nickname' => fake()->userName(), // Cambiado de 'name' a 'nickname'
+            'nickname' => fake()->userName(), 
             'email' => fake()->unique()->safeEmail(),
             'password' => static::$password ??= Hash::make('password'),
-            'is_admin' => false, // Añadimos esta columna que tienes en tu tabla
+            'is_admin' => false,
             'remember_token' => Str::random(10),
         ];
     }

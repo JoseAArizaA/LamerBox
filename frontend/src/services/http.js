@@ -1,7 +1,6 @@
 import axios from "axios";
 import { authStorage } from "../auth/authStorage";
 
-// Usamos la URL de tu backend de Laravel en Docker
 const API_BASE_URL = import.meta.env.VITE_API_URL;
 
 export const http = axios.create({ baseURL: API_BASE_URL });

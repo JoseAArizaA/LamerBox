@@ -33,8 +33,7 @@ const MovieDetailPage = () => {
                 setMovie(details);
                 setCast(credits);
                 setSimilarMovies(similar);
-
-                // 2. Cargamos el estado de nuestra base de datos si hay sesión
+                
                 const session = JSON.parse(localStorage.getItem('lamerbox_session'));
                 if (session?.token) {
                     const res = await axios.get(`http://localhost:8000/api/movies/${id}/status`, {
@@ -85,7 +84,7 @@ const MovieDetailPage = () => {
                     </div>
 
                     <p className="overview">{movie.overview}</p>
-                    <ActionBar movieId={movie.id} movieTitle={movie.title} status={status} />
+                    <ActionBar movieId={movie.id} movieTitle={movie.title} moviePoster={movie.poster_path} status={status} />
                 </div>
             </div>
             
@@ -110,10 +109,8 @@ const MovieDetailPage = () => {
             {/* Películas Similares */}
             <div className="detail-cast-section">
                 <h2 className="section-title">Películas Similares</h2>
-                {/* 2. Cambiamos la clase para que use estilos de película y no de actores */}
                 <div className="movies-slider-horizontal"> 
                     {similarMovies.slice(0, 10).map(sim => (
-                        // 3. Usamos el componente MovieCard pasándole el objeto de la película
                         <MovieCard key={sim.id} movie={sim} /> 
                     ))}
                 </div>

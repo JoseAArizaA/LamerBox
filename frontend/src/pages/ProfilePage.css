@@ -82,3 +82,71 @@
     border-color: #00e054;
     background: rgba(0, 224, 84, 0.05);
 }
+
+/* Cuadrícula de listas */
+.lists-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    padding: 20px 0;
+}
+
+/* Tarjeta base */
+.list-card {
+    background: #1a1d20;
+    border: 1px solid #333;
+    border-radius: 12px;
+    padding: 25px;
+    text-align: center;
+    transition: transform 0.2s, border-color 0.2s;
+    cursor: pointer;
+    position: relative;
+}
+
+.list-card:hover {
+    transform: translateY(-5px);
+    border-color: #00ff88; /* Verde neón */
+}
+
+/* Tarjeta de creación (Borde punteado) */
+.create-list-card {
+    border: 2px dashed #444;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 180px;
+}
+
+.create-list-card .plus-icon {
+    font-size: 40px;
+    color: #00ff88;
+    margin-bottom: 10px;
+}
+
+/* Botón de gestionar */
+.btn-manage {
+    margin-top: 15px;
+    background: transparent;
+    border: 1px solid #00ff88;
+    color: #00ff88;
+    padding: 6px 15px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    cursor: pointer;
+}
+
+.btn-manage:hover {
+    background: #00ff88;
+    color: #000;
+}
+
+/* src/pages/ProfilePage.css */
+
+.profile-content-grid {
+    display: grid;
+    /* Definimos columnas de 160px constantes */
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 20px;
+    width: 100%;
+}

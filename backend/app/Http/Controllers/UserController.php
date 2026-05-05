@@ -22,10 +22,10 @@ class UserController extends Controller
     public function show(string $id)
     {
         $user = User::with([
-            'favoriteMovies.movie',
-            'watchedMovies.movie', 
-            'pendingMovies.movie',
-            'movieLists'    
+            'favoriteMovies',
+            'watchedMovies',
+            'pendingMovies',
+            'movieLists.movies'    
         ])->find($id);
 
         if (!$user) return response()->json(['message' => 'Usuario no encontrado'], 404);

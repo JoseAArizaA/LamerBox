@@ -6,14 +6,14 @@ import './SearchPage.css';
 
 const SearchPage = () => {
     const [searchParams] = useSearchParams();
-    const query = searchParams.get('q'); // Obtenemos el texto de la URL
+    const query = searchParams.get('q'); 
     const [results, setResults] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchResults = async () => {
             setLoading(true);
-            const data = await movieService.searchMovies(query); // Usamos tu método del service
+            const data = await movieService.searchMovies(query);
             setResults(data);
             setLoading(false);
         };
