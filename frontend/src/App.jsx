@@ -12,9 +12,27 @@ import PersonDetailsPage from './pages/PersonDetailsPage';
 import ProfilePage from './pages/ProfilePage';
 import EditProfilePage from './pages/EditProfilePage';
 
+// Importaciones del Panel de Administración
+import AdminGuard from './routing/AdminGuard';
+import AdminLayout from './layout/AdminLayout';
+import UserList from './pages/admin/UserList';
+import MovieDashboard from './pages/admin/MovieDashboard';
+import ReviewModeration from './pages/admin/ReviewModeration';
+
 function App() {
   return (
     <Routes>
+      {/* Rutas del Panel de Administración (Fuera del AppLayout principal) */}
+      <Route path="/admin" element={<AdminGuard />}>
+        <Route element={<AdminLayout />}>
+          <Route index element={<Navigate to="users" replace />} />
+          <Route path="users" element={<UserList />} />
+          <Route path="movies" element={<MovieDashboard />} />
+          <Route path="reviews" element={<ReviewModeration />} />
+        </Route>
+      </Route>
+
+      {/* Rutas de la Aplicación Principal */}
       <Route element={<AppLayout />}>
         <Route path="/welcome" element={<WelcomePage />} />
         <Route path="/login" element={<LoginPage />} />

@@ -78,9 +78,9 @@ const WelcomePage = () => {
                     <section className="movie-section user-lists-section">
                         <h2 className="section-title">Tus Listas</h2>
                         <div className="lists-grid">
-                            {data.userLists.length > 0 ? (
+                            {data.userLists?.length > 0 ? (
                                 // SI TIENE LISTAS: Las recorremos
-                                data.userLists.map(list => (
+                                data.userLists?.map(list => (
                                     <div key={list.id} className="list-card-preview">
                                         <div className="list-stack"></div>
                                         <span className="list-name">{list.name}</span>
@@ -105,7 +105,7 @@ const WelcomePage = () => {
                 <section className="movie-section">
                     <h2 className="section-title">Tendencias de la semana</h2>
                     <div className="movies-slider">
-                        {data.trending.map(movie => <MovieCard key={movie.id} movie={movie} />)}
+                        {data.trending?.map(movie => <MovieCard key={movie.id} movie={movie} />)}
                     </div>
                 </section>
 
@@ -113,7 +113,7 @@ const WelcomePage = () => {
                 <section className="movie-section">
                     <h2 className="section-title">Próximos estrenos</h2>
                     <div className="movies-slider">
-                        {data.upcoming.map(movie => <MovieCard key={movie.id} movie={movie} />)}
+                        {data.upcoming?.map(movie => <MovieCard key={movie.id} movie={movie} />)}
                     </div>
                 </section>
 
@@ -121,7 +121,7 @@ const WelcomePage = () => {
                 <section className="movie-section">
                     <h2 className="section-title">Estrellas del momento</h2>
                     <div className="people-slider">
-                        {data.people.map(person => (
+                        {data.people?.map(person => (
                             <Link to={`/person/${person.id}`} key={person.id} className="person-card">
                                 <img src={person.image} alt={person.name} />
                                 <span className="actor-name">{person.name}</span>
