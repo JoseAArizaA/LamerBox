@@ -31,7 +31,8 @@ const ProfilePage = () => {
         return (
             <div className="profile-container">
                 <header className="profile-header">
-                    <div className="avatar-placeholder">{profileData.nickname[0].toUpperCase()}</div>
+                    {/* Aquí está la línea corregida con optional chaining */}
+                    <div className="avatar-placeholder">{profileData?.nickname?.[0]?.toUpperCase() || 'U'}</div>
                     <div className="user-info">
                         <h1>{profileData.nickname}</h1>
                         <p>{profileData.email}</p>

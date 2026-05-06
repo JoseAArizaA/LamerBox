@@ -10,44 +10,59 @@ use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\WatchedController;
 use App\Http\Controllers\PendingController;
 
-Route::get('movies/search', [MovieController::class, 'search']);
 Route::post('/login', [UserController::class, 'login']);
 Route::post('/register', [UserController::class, 'register']);
+Route::get('movies/search', [MovieController::class, 'search']);
 Route::get('/reviews', [ReviewController::class, 'index']);
 
-Route::apiResource('movies', MovieController::class);
+Route::get('/movies/{id}', [MovieController::class, 'show']);
 
+/* --- 2. RUTAS PROTEGIDAS (Un solo grupo para todo) --- */
 Route::middleware('auth:sanctum')->group(function () {
+    
+    // Perfil y Datos de Usuario (Arregla el "Cargando...")
+    Route::get('/user', function (Request $request) { return $request->user(); });
+    Route::apiResource('users', UserController::class);
+
+    // Tus Listas y Gestión de Películas
     Route::apiResource('lists', MovieListController::class);
     Route::post('lists/{id}/add-movie', [MovieListController::class, 'addMovie']);
     Route::delete('lists/{id}/remove-movie', [MovieListController::class, 'removeMovie']);
-});
 
-Route::middleware('auth:sanctum')->group(function () {
-    // Rutas para Favoritos
-    Route::post('/favorites', [FavoriteController::class, 'store']);
-    Route::delete('/favorites/{movieId}', [FavoriteController::class, 'destroy']);
-
-    // Rutas para Películas Vistas
-    Route::post('/watched', [WatchedController::class, 'store']);
-    Route::delete('/watched/{movieId}', [WatchedController::class, 'destroy']);
-
-    // Rutas para Pendientes
-    Route::post('/pending', [PendingController::class, 'store']);
-    Route::delete('/pending/{movieId}', [PendingController::class, 'destroy']);
+    // Tus Colecciones (Favoritos, Vistos, Pendientes)
+    Route::apiResource('favorites', FavoriteController::class);
+    Route::apiResource('watched', WatchedController::class);
+    Route::apiResource('pending', PendingController::class);
     
-    // Rutas para Reseñas
-    Route::delete('/reviews/{id}', [ReviewController::class, 'destroy']);
+    // Reseñas y Estado de Película
     Route::post('/reviews', [ReviewController::class, 'store']);
-
-    // Ruta para obtener el estado de una película
+    Route::delete('/reviews/{id}', [ReviewController::class, 'destroy']);
     Route::get('/movies/{id}/status', [MovieController::class, 'getUserStatus']);
 
-    // Rutas para Usuarios
-    Route::apiResource('users', UserController::class);
-});
-
-// Ruta de prueba para verificar que el usuario está autenticado (vanguardia de Laravel)
+// Ruta de prueba para verificar autenticación
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
+
+});
+
+
+// --- 3. RUTAS DE ADMINISTRACIÓN (Solo usuarios con is_admin = 1) ---
+// Estas rutas requieren estar logueado Y superar el middleware 'admin'.
+Route::middleware(['auth:sanctum', 'admin'])->group(function () {
+    
+    // Panel de Usuarios: El admin lista a todos (index) y puede borrarlos (destroy)
+    Route::apiResource('users', UserController::class)->only(['index', 'destroy']);
+    
+    // Moderación de Reseñas: El admin puede borrar cualquier comentario inapropiado
+    Route::delete('admin/reviews/{review}', [ReviewController::class, 'destroy']);
+    
+    // Mantenimiento del Catálogo: El admin crea, actualiza y borra películas
+    // Excluimos index y show porque ya están en las rutas públicas
+    Route::apiResource('movies', MovieController::class)->except(['index', 'show']);
+
+    // Verificación de rol: Útil para que React decida si muestra el botón "Panel Admin"
+    Route::get('admin/check', function() {
+        return response()->json(['isAdmin' => true], 200);
+    });
+});

@@ -2,22 +2,26 @@
 
 namespace App\Models;
 
-use Illuminate\Foundation\Auth\User as Authenticatable;
+// --- ESTAS TRES LÍNEAS SON LAS QUE FALTABAN ---
+use Illuminate\Database\Eloquent\Factories\HasFactory; 
+use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
+// ----------------------------------------------
+
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use App\Models\Movie;
 use App\Models\MovieList;
 use App\Models\Review;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Laravel\Sanctum\HasApiTokens;
+
 
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
     protected $fillable = [
-        'nickname',
+        'nickname', // Asegúrate de que en tu DB se llame nickname y no name
         'email',
         'password',
         'is_admin',

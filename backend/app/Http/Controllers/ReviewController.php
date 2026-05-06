@@ -10,10 +10,15 @@ use App\Models\Movie;
 
 class ReviewController extends Controller
 {
-    // GET: Ver reseñas de una película específica
+    // GET: Ver reseñas de una película específica o todas (para el admin)
     public function index(Request $request)
     {
-        $reviews = Review::where('movie_id', $request->movie_id)->with('user')->get();
+        // Si hay movie_id, filtramos por película. Si no, devolvemos todas con su usuario.
+        if ($request->has('movie_id')) {
+            $reviews = Review::where('movie_id', $request->movie_id)->with('user')->get();
+        } else {
+            $reviews = Review::with('user')->orderBy('created_at', 'desc')->get();
+        }
         return response()->json($reviews, 200);
     }
 
@@ -42,14 +47,28 @@ class ReviewController extends Controller
     return response()->json($review, 201);
     }
 
-    // DELETE: El usuario borra su propia reseña
+    /**
+     * DELETE: Borrar reseña.
+     * Permitido para el autor de la reseña O para un administrador.
+     */
     public function destroy(string $id)
     {
         $review = Review::find($id);
-        if ($review->user_id !== Auth::id()) {
-            return response()->json(['message' => 'No autorizado'], 403);
+
+        // Si la reseña no existe, devolvemos 404
+        if (!$review) {
+            return response()->json(['message' => 'Reseña no encontrada'], 404);
         }
-        $review->delete();
-        return response()->json(['message' => 'Reseña borrada'], 200);
+
+        // CAPA DE SEGURIDAD MÓDULO ADMIN/USER:
+        // Permitimos borrar si el user_id coincide con el autenticado
+        // O si el usuario autenticado es administrador (is_admin == 1)
+        if ($review->user_id === Auth::id() || Auth::user()->is_admin == 1) {
+            $review->delete();
+            return response()->json(['message' => 'Reseña borrada correctamente'], 200);
+        }
+
+        // Si no es el dueño ni es admin, denegamos el acceso
+        return response()->json(['message' => 'No autorizado para borrar esta reseña'], 403);
     }
 }
