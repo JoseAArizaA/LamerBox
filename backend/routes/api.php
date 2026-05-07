@@ -28,24 +28,24 @@ Route::get('movies/search', [MovieController::class, 'search']);
 Route::apiResource('movies', MovieController::class)->only(['index', 'show']);
 Route::get('/reviews', [ReviewController::class, 'index']); // Público general para reviews
 
+
 // --- 2. RUTAS PROTEGIDAS (Usuarios Autenticados) ---
 // Requieren un token válido generado por Sanctum.
 Route::middleware('auth:sanctum')->group(function () {
     
-    // Datos del perfil del usuario logueado
-    Route::get('/user', function (Request $request) {
-        return $request->user();
-    });
+    // Perfil y Datos de Usuario (Arregla el "Cargando...")
+    Route::get('/user', function (Request $request) { return $request->user(); });
+    Route::apiResource('users', UserController::class);
 
-    // Gestión personal: Favoritos, Vistas, Pendientes y Listas
+    // Tus Listas y Gestión de Películas
+    Route::apiResource('lists', MovieListController::class);
+    Route::post('lists/{id}/add-movie', [MovieListController::class, 'addMovie']);
+    Route::delete('lists/{id}/remove-movie', [MovieListController::class, 'removeMovie']);
+
+    // Tus Colecciones (Favoritos, Vistos, Pendientes)
     Route::apiResource('favorites', FavoriteController::class);
     Route::apiResource('watched', WatchedController::class);
     Route::apiResource('pending', PendingController::class);
-    Route::apiResource('lists', MovieListController::class);
-    
-    // Gestión de películas dentro de las listas creadas por el usuario
-    Route::post('lists/{id}/add-movie', [MovieListController::class, 'addMovie']);
-    Route::delete('lists/{id}/remove-movie', [MovieListController::class, 'removeMovie']);
 
     // Reseñas: Los usuarios pueden verlas y crearlas, pero no eliminarlas (restricción de Miguel)
     Route::apiResource('reviews', ReviewController::class)->except(['index', 'destroy']);
