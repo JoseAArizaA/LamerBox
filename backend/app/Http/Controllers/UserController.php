@@ -28,10 +28,10 @@ class UserController extends Controller
     {
         // Usamos la versión de Jose que trae las relaciones de películas cargadas
         $user = User::with([
-            'favoriteMovies.movie',
-            'watchedMovies.movie', 
-            'pendingMovies.movie',
-            'movieLists'    
+            'favoriteMovies',
+            'watchedMovies',
+            'pendingMovies',
+            'movieLists.movies'    
         ])->find($id);
 
         if (!$user) {

@@ -26,7 +26,7 @@ Route::get('movies/search', [MovieController::class, 'search']);
 
 // El público general solo puede ver la lista de películas y el detalle de una.
 Route::apiResource('movies', MovieController::class)->only(['index', 'show']);
-
+Route::get('/reviews', [ReviewController::class, 'index']); // Público general para reviews
 
 // --- 2. RUTAS PROTEGIDAS (Usuarios Autenticados) ---
 // Requieren un token válido generado por Sanctum.
@@ -48,7 +48,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('lists/{id}/remove-movie', [MovieListController::class, 'removeMovie']);
 
     // Reseñas: Los usuarios pueden verlas y crearlas, pero no eliminarlas (restricción de Miguel)
-    Route::apiResource('reviews', ReviewController::class)->except(['destroy']);
+    Route::apiResource('reviews', ReviewController::class)->except(['index', 'destroy']);
+    
+    // Ruta para obtener el estado de una película
+    Route::get('/movies/{id}/status', [MovieController::class, 'getUserStatus']);
 });
 
 
@@ -56,8 +59,8 @@ Route::middleware('auth:sanctum')->group(function () {
 // Estas rutas requieren estar logueado Y superar el middleware 'admin'.
 Route::middleware(['auth:sanctum', 'admin'])->group(function () {
     
-    // Panel de Usuarios: El admin lista a todos (index) y puede borrarlos (destroy)
-    Route::apiResource('users', UserController::class)->only(['index', 'destroy']);
+    // Panel de Usuarios
+    Route::apiResource('users', UserController::class);
     
     // Moderación de Reseñas: El admin puede borrar cualquier comentario inapropiado
     Route::delete('admin/reviews/{review}', [ReviewController::class, 'destroy']);

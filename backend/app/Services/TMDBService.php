@@ -11,7 +11,6 @@ class TMDBService
 
     public function __construct()
     {
-        // Cogemos los datos de la configuración (lo haremos en el siguiente paso)
         $this->baseUrl = config('services.tmdb.base_url');
         $this->token = config('services.tmdb.token');
     }

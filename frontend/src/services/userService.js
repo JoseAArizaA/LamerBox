@@ -21,5 +21,13 @@ export const userService = {
             console.error("Error al actualizar perfil:", error);
             throw error;
         }
+    },
+
+    toggleStatus: async (endpoint, movieId, movieData, isCurrentlyActive) => {
+        if (isCurrentlyActive) {
+            return await http.delete(`/${endpoint}/${movieId}`);
+        } else {
+            return await http.post(`/${endpoint}`, movieData);
+        }
     }
 };

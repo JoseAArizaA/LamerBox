@@ -10,7 +10,7 @@
 .action-btn {
     background: transparent;
     border: none;
-    color: #9ab; /* Gris por defecto */
+    color: #9ab;
     cursor: pointer;
     display: flex;
     flex-direction: column;
@@ -27,11 +27,49 @@
 }
 
 /* COLORES ACTIVOS */
-.active-watched { color: #00e054 !important; }  /* Verde */
-.active-favorite { color: #ff0000 !important; } /* Rojo */
-.active-pending { color: #40bcf4 !important; }  /* Azul */
+.active-watched { color: #00e054 !important; }
+.active-favorite { color: #ff0000 !important; }
+.active-pending { color: #40bcf4 !important; } 
 
 .btn-list {
     color: #00e054;
-    margin-left: auto; /* Empuja el botón de lista a la derecha */
+    margin-left: auto;
+}
+
+.list-container {
+    position: relative;
+}
+
+.list-dropdown {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #1a1d20;
+    border: 1px solid #00ff88;
+    border-radius: 8px;
+    width: 200px;
+    padding: 10px;
+    margin-bottom: 15px;
+    z-index: 1000;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.7);
+}
+
+.list-dropdown button {
+    display: block;
+    width: 100%;
+    background: transparent;
+    border: none;
+    color: #fff;
+    padding: 10px;
+    text-align: left;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    transition: 0.2s;
+}
+
+.list-dropdown button:hover {
+    background: rgba(0, 255, 136, 0.1);
+    color: #00ff88;
 }

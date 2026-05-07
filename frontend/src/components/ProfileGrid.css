@@ -1,0 +1,6 @@
+.empty-text {
+    grid-column: 1 / -1; 
+    text-align: center;
+    padding: 40px;
+    color: #888;
+}

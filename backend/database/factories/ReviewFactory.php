@@ -19,8 +19,8 @@ class ReviewFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id'  => User::all()->random()->id, // Coge un usuario al azar
-            'movie_id' => Movie::all()->random()->id, // Coge una peli al azar
+            'user_id'  => User::all()->random()->id,
+            'movie_id' => Movie::all()->random()->id,
             'comment'  => fake()->paragraph(),
             'rating'   => fake()->numberBetween(1, 10),
         ];

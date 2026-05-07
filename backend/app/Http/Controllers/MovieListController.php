@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\MovieList;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Movie;
 
 class MovieListController extends Controller
 {
@@ -15,7 +16,7 @@ class MovieListController extends Controller
         return response()->json($lists, 200);
     }
 
-    // POST: Crear una nueva lista (ej: "Pelis de Acción")
+    // POST: Crear una nueva lista 
     public function store(Request $request)
     {
         $request->validate([
@@ -35,7 +36,7 @@ class MovieListController extends Controller
     // GET: Ver una lista concreta con todas sus películas
     public function show(string $id)
     {
-        $list = MovieList::with('movies')->find($id);
+       $list = MovieList::with(['user', 'movies'])->findOrFail($id);
         
         if (!$list || ($list->user_id !== Auth::id() && !$list->is_public)) {
             return response()->json(['message' => 'Lista no encontrada o privada'], 404);
@@ -69,9 +70,16 @@ class MovieListController extends Controller
     // Añadir una peli a la lista
     public function addMovie(Request $request, $listId)
     {
+            $movie = Movie::updateOrCreate(
+                ['id' => $request->movie_id],
+                [
+                    'title' => $request->title ?? 'Sin título',
+                    'imageUrl' => $request->poster_path ?? ''
+                ]
+            );
+
         $list = MovieList::where('user_id', Auth::id())->findOrFail($listId);
-        $list->movies()->syncWithoutDetaching([$request->movie_id]);
-        
+        $list->movies()->syncWithoutDetaching([$movie->id]);
         return response()->json(['message' => 'Película añadida a la lista'], 200);
     }
 

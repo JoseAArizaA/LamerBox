@@ -1,72 +1,68 @@
-import { Link } from 'react-router-dom';
+// src/pages/WelcomePage.jsx
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../auth/authContext';
 import { movieService } from '../services/movieService';
-import MovieCard from '../components/MovieCard';
 import { listService } from '../services/listService';
+import MovieCard from '../components/MovieCard';
+import { Search } from 'lucide-react';
 import './WelcomePage.css';
+import SearchBar from '../components/SearchBar';
 
 const WelcomePage = () => {
-    const { isAuthenticated, user } = useAuth();
+    const { isAuthenticated } = useAuth();
     const navigate = useNavigate();
-    
-    const [data, setData] = useState({
-        trending: [],
-        upcoming: [],
-        popular: [],
-        people: [],
-        userLists: [] 
-    });
+    const [trending, setTrending] = useState([]);
+    const [upcoming, setUpcoming] = useState([]);
+    const [people, setPeople] = useState([]);
+    const [userLists, setUserLists] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const fetchHomeData = async () => {
+        const fetchWelcomeData = async () => {
             try {
-                const [trend, up, pop, stars] = await Promise.all([
+                const [trend, stars, up] = await Promise.all([
                     movieService.getTrending(),
-                    movieService.getUpcoming(),
-                    movieService.getPopular(),
-                    movieService.getPopularPeople()
+                    movieService.getPopularPeople(),
+                    movieService.getUpcoming()
                 ]);
+                setTrending(trend.slice(0, 6)); 
+                setPeople(stars.slice(0, 9));
+                setUpcoming(up.slice(0, 6));
 
-                setData({
-                    trending: trend,
-                    upcoming: up,
-                    popular: pop,
-                    people: stars,
-                    userLists: [] 
-                });
-
-            if (isAuthenticated) {
-            const userLists = await listService.getUserLists(); 
-            setData(prev => ({ ...prev, userLists: userLists }));
-            }
-            
-
+                if (isAuthenticated) {
+                    const lists = await listService.getUserLists();
+                    setUserLists(lists || []);
+                }
             } catch (err) {
-                console.error("Error cargando la home", err);
+                console.error("Error cargando", err);
             } finally {
                 setLoading(false);
             }
         };
-
-        fetchHomeData();
+        fetchWelcomeData();
     }, [isAuthenticated]);
 
-    if (loading) return <div className="loading-screen">Cargando LamerBox...</div>;
+    if (loading) return <div className="loading-screen">Cargando...</div>;
 
     return (
-        <div className="welcome-container">
-            {/* 1. HERO SECTION */}
-            <section className="hero">
+        <div className="welcome-page-scope welcome-container">
+            <section className="welcome-hero">
+                <div className="hero-overlay"></div>
                 <div className="hero-content">
-                    <h1>Lleva la cuenta de cada película que has visto.</h1>
-                    <p>Crea tu perfil, puntúa películas y comparte con amigos.</p>
+                    <h1>Sigue cada película que veas.</h1>
+                    <h2>Lleva el control, puntúa y comparte tus listas.</h2>
+                    
+                    <div className="main-search-bar-container">
+                        <SearchBar />
+                    </div>
+
                     {!isAuthenticated && (
-                        <button className="btn-hero" onClick={() => navigate('/register')}>
-                            ¡EMPEZAR AHORA!
-                        </button>
+                        <div className="hero-cta">
+                            <button onClick={() => navigate('/register')} className="btn-join">
+                                Únete a LamerBox
+                            </button>
+                        </div>
                     )}
                 </div>
             </section>
@@ -78,9 +74,9 @@ const WelcomePage = () => {
                     <section className="movie-section user-lists-section">
                         <h2 className="section-title">Tus Listas</h2>
                         <div className="lists-grid">
-                            {data.userLists?.length > 0 ? (
+                            {userLists.length > 0 ? (
                                 // SI TIENE LISTAS: Las recorremos
-                                data.userLists?.map(list => (
+                                userLists.map(list => (
                                     <div key={list.id} className="list-card-preview">
                                         <div className="list-stack"></div>
                                         <span className="list-name">{list.name}</span>
@@ -105,7 +101,7 @@ const WelcomePage = () => {
                 <section className="movie-section">
                     <h2 className="section-title">Tendencias de la semana</h2>
                     <div className="movies-slider">
-                        {data.trending?.map(movie => <MovieCard key={movie.id} movie={movie} />)}
+                        {trending.map(movie => <MovieCard key={movie.id} movie={movie} />)}
                     </div>
                 </section>
 
@@ -113,7 +109,7 @@ const WelcomePage = () => {
                 <section className="movie-section">
                     <h2 className="section-title">Próximos estrenos</h2>
                     <div className="movies-slider">
-                        {data.upcoming?.map(movie => <MovieCard key={movie.id} movie={movie} />)}
+                        {upcoming.map(movie => <MovieCard key={movie.id} movie={movie} />)}
                     </div>
                 </section>
 
@@ -121,21 +117,11 @@ const WelcomePage = () => {
                 <section className="movie-section">
                     <h2 className="section-title">Estrellas del momento</h2>
                     <div className="people-slider">
-                        {data.people?.map(person => (
+                        {people.map(person => (
                             <Link to={`/person/${person.id}`} key={person.id} className="person-card">
                                 <img src={person.image} alt={person.name} />
-                                <span className="actor-name">{person.name}</span>
+                                <span>{person.name}</span>
                             </Link>
-                        ))}
-                    </div>
-                </section>
-
-                {/* 6. GÉNEROS */}
-                <section className="movie-section genres-section">
-                    <h2 className="section-title">Explorar por género</h2>
-                    <div className="genres-grid">
-                        {['Terror', 'Acción', 'Ciencia Ficción', 'Comedia', 'Drama', 'Animación'].map(g => (
-                            <button key={g} className="genre-pill">{g}</button>
                         ))}
                     </div>
                 </section>

@@ -11,7 +11,7 @@ const LoginPage = () => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
     
-    const { login } = useAuth(); // Función de tu contexto
+    const { login } = useAuth();
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
@@ -19,13 +19,8 @@ const LoginPage = () => {
         setError(null);
 
         try {
-            // Llamamos al servicio de autenticación
             const data = await AuthService.login(email, password);
-            
-            // Guardamos la sesión en el Contexto y LocalStorage
             login(data); 
-            
-            // Si todo va bien, volvemos a la página principal
             navigate('/welcome');
         } catch (err) {
             setError("Email o contraseña incorrectos");

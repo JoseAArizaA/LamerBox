@@ -1,35 +1,52 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { listService } from '../services/listService';
-import './CreateEditListPage.css';  
+import './CreateEditListPage.css';
 
-const CreateListPage = () => {
+const EditListPage = () => {
+    const { id } = useParams();
+    const navigate = useNavigate();
     const [name, setName] = useState('');
     const [isPublic, setIsPublic] = useState(true);
-    const [error, setError] = useState(null);
-    const navigate = useNavigate();
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchList = async () => {
+            try {
+                const list = await listService.getListDetails(id);
+                setName(list.name);
+                setIsPublic(!!list.is_public);
+                setLoading(false);
+            } catch (err) {
+                alert("No se pudo cargar la información de la lista");
+                navigate('/profile?tab=lists');
+            }
+        };
+        fetchList();
+    }, [id]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await listService.createList(name, isPublic);
+            await listService.updateList(id, name, isPublic);
+            alert("Lista actualizada correctamente");
             navigate('/profile?tab=lists');
         } catch (err) {
-            setError("No se pudo crear la lista. Inténtalo de nuevo.");
+            alert("Error al actualizar la lista");
         }
     };
+
+    if (loading) return <div className="loading-screen">Cargando datos...</div>;
 
     return (
         <div className="create-list-page">
             <form className="create-list-form" onSubmit={handleSubmit}>
-                <h2>Nueva Lista</h2>
-                {error && <p className="error-msg">{error}</p>}
+                <h2>Editar Lista</h2>
                 
                 <div className="input-group">
                     <label>Nombre de la lista</label>
                     <input 
                         type="text" 
-                        placeholder="Ej: Películas de Terror"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         required 
@@ -48,7 +65,7 @@ const CreateListPage = () => {
                 </div>
 
                 <div className="form-actions">
-                    <button type="submit" className="btn-create">Crear Lista</button>
+                    <button type="submit" className="btn-create">Editar</button>
                     <button type="button" className="btn-cancel" onClick={() => navigate('/profile?tab=lists')}>Cancelar</button>
                 </div>
             </form>
@@ -56,4 +73,4 @@ const CreateListPage = () => {
     );
 };
 
-export default CreateListPage;
+export default EditListPage;

@@ -1,0 +1,116 @@
+.list-detail-container {
+    padding: 40px 10%;
+    min-height: 80vh;
+}
+
+.list-detail-header {
+    margin-bottom: 40px;
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.btn-back {
+    background: transparent;
+    border: 1px solid #333;
+    color: #888;
+    padding: 8px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: 0.3s;
+}
+
+.btn-back:hover {
+    border-color: #00ff88;
+    color: #00ff88;
+}
+
+.list-header-info h1 {
+    font-size: 2.5rem;
+    color: #fff;
+    margin: 0;
+}
+
+.list-header-info p {
+    color: #00ff88;
+    margin-top: 5px;
+    font-weight: bold;
+}
+
+/* Rejilla de películas */
+.list-movies-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 30px;
+}
+
+.movie-in-list-container {
+    position: relative;
+    transition: transform 0.3s;
+}
+
+.movie-in-list-container:hover {
+    transform: scale(1.05);
+}
+
+/* Botón flotante para quitar película */
+.btn-remove-movie {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(255, 68, 68, 0.9);
+    color: white;
+    border: none;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0; /* Oculto por defecto */
+    transition: 0.3s;
+    z-index: 10;
+}
+
+.movie-in-list-container:hover .btn-remove-movie {
+    opacity: 1; /* Aparece al pasar el ratón */
+}
+
+.btn-remove-movie:hover {
+    background: #ff4444;
+    transform: scale(1.1);
+}
+
+.empty-list-msg {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: #666;
+    font-style: italic;
+    padding: 100px;
+}
+
+.list-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 8px;
+    color: #8ba2ad; /* Color gris suave */
+    font-size: 0.95rem;
+}
+
+.list-author strong {
+    color: #00ff88; /* El nombre del autor resaltado en verde neón */
+    cursor: pointer;
+}
+
+.list-author strong:hover {
+    text-decoration: underline;
+}
+
+.separator {
+    opacity: 0.5;
+}

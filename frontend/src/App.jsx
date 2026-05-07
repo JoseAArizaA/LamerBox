@@ -11,6 +11,8 @@ import SearchPage from './pages/SearchPage';
 import PersonDetailsPage from './pages/PersonDetailsPage';
 import ProfilePage from './pages/ProfilePage';
 import EditProfilePage from './pages/EditProfilePage';
+import EditListPage from './pages/EditListPage';
+import ListDetailPage from './pages/ListDetailPage';
 
 // Importaciones del Panel de Administración
 import AdminGuard from './routing/AdminGuard';
@@ -34,17 +36,28 @@ function App() {
 
       {/* Rutas de la Aplicación Principal */}
       <Route element={<AppLayout />}>
+        {/* Rutas Públicas */}
         <Route path="/welcome" element={<WelcomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/movie/:id" element={<MovieDetailsPage />} />
         <Route path="/search" element={<SearchPage />} />
         <Route path="/person/:id" element={<PersonDetailsPage />} />
+          <Route path="/lists/:id" element={<ListDetailPage />} />
 
+        {/* Rutas Privadas */}
         <Route path="/create-list" element={
-          <ProtectedRoute> <CreateListPage /></ProtectedRoute> } />
+          <ProtectedRoute> 
+            <CreateListPage />
+          </ProtectedRoute> 
+        } />
+
+        <Route path="/lists/:id/edit" element={
+          <ProtectedRoute> 
+            <EditListPage />
+          </ProtectedRoute> 
+        } />
         
-        {/* Rutas Protegidas */}
         <Route path="/profile" element={
           <ProtectedRoute> 
             <ProfilePage />  
@@ -57,8 +70,11 @@ function App() {
           </ProtectedRoute>
         } />
 
+
+        {/* Ruta 404 */}
         <Route path="*" element={<NotFound />} />
 
+        {/* Ruta por defecto */}
         <Route path="/" element={<Navigate to="/welcome" replace />} />
       </Route>
     </Routes>

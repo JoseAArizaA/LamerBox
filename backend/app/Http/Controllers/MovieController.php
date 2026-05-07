@@ -23,7 +23,7 @@ class MovieController extends Controller
     public function store(Request $request)
     {   
         $validator = Validator::make($request->all(), [
-            'id' => 'required|unique:movies', // Validamos el ID nuevo
+            'id' => 'required|unique:movies', 
             'title' => 'required|string',
         ]);
 

@@ -86,7 +86,6 @@ const CommentSection = ({ movieId, movieTitle }) => {
                     <p className="no-comments">Aún no hay comentarios. ¡Sé el primero!</p>
                 )}
                 
-                {/* Comentarios locales */}
                 {localReviews.map(r => (
                     <div key={r.id} className="review-card local-review">
                         <div className="review-header">
@@ -95,7 +94,6 @@ const CommentSection = ({ movieId, movieTitle }) => {
                                 <span className="rating-tag">{r.rating}/10</span>
                             </div>
 
-                            {/* BOTÓN DE BORRAR CONDICIONAL */}
                             {user && user.id === r.user_id && (
                                 <button 
                                     onClick={() => handleDelete(r.id)} 
