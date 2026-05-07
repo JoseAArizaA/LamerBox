@@ -16,7 +16,7 @@ class MovieController extends Controller
     // GET: Listar todas las películas
     public function index()
     {
-        return response()->json(Movie::all(), 200);
+        return response()->json(Movie::paginate(20), 200);
     }
 
     // POST: Guardar una nueva película (Solo Admin)

@@ -67,7 +67,7 @@ const WelcomePage = () => {
                 </div>
             </section>
 
-            <main className="home-content">
+            <main className="welcome-main home-content">
                 
                 {/* 2. TUS LISTAS (Solo si está logueado) */}
                 {isAuthenticated && (
@@ -77,7 +77,7 @@ const WelcomePage = () => {
                             {userLists.length > 0 ? (
                                 // SI TIENE LISTAS: Las recorremos
                                 userLists.map(list => (
-                                    <div key={list.id} className="list-card-preview">
+                                    <div key={list.id} className="list-card-preview" onClick={() => navigate(`/lists/${list.id}`)}>
                                         <div className="list-stack"></div>
                                         <span className="list-name">{list.name}</span>
                                         <span className="list-count">{list.movies_count || 0} películas</span>
@@ -97,31 +97,26 @@ const WelcomePage = () => {
                     </section>
                 )}
 
-                {/* 3. TENDENCIAS */}
-                <section className="movie-section">
-                    <h2 className="section-title">Tendencias de la semana</h2>
-                    <div className="movies-slider">
+                <section className="welcome-section">
+                    <div className="section-header">
+                        <h3>Tendencias hoy</h3>
+                        <button onClick={() => navigate('/movies')}>Ver todas</button>
+                    </div>
+                    <div className="welcome-grid">
                         {trending.map(movie => <MovieCard key={movie.id} movie={movie} />)}
                     </div>
                 </section>
 
-                {/* 4. PRÓXIMOS ESTRENOS */}
-                <section className="movie-section">
-                    <h2 className="section-title">Próximos estrenos</h2>
-                    <div className="movies-slider">
-                        {upcoming.map(movie => <MovieCard key={movie.id} movie={movie} />)}
-                    </div>
-                </section>
-
-                {/* 5. ESTRELLAS DEL MOMENTO */}
-                <section className="movie-section">
-                    <h2 className="section-title">Estrellas del momento</h2>
-                    <div className="people-slider">
+                <section className="welcome-section">
+                    <br></br>
+                    <br></br>
+                    <p className="sub-text">Los rostros más populares del cine esta semana.</p>
+                    <div className="people-mini-grid">
                         {people.map(person => (
-                            <Link to={`/person/${person.id}`} key={person.id} className="person-card">
+                            <div key={person.id} className="person-mini-card" onClick={() => navigate(`/person/${person.id}`)}>
                                 <img src={person.image} alt={person.name} />
                                 <span>{person.name}</span>
-                            </Link>
+                            </div>
                         ))}
                     </div>
                 </section>
