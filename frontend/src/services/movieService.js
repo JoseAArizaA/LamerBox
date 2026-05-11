@@ -267,4 +267,21 @@ export const movieService = {
         }
     },
 
+    getDiscoverAdvanced: async (params = '') => {
+        try {
+            // Filtramos por popularidad y exigimos mínimo 1500 votos para asegurar calidad
+            const response = await axios.get(
+                `${TMDB_BASE_URL}/discover/movie?api_key=${API_KEY}&language=es-ES&sort_by=popularity.desc&vote_count.gte=1500&${params}`
+            );
+            const results = response.data?.results || [];
+            return results.map(m => ({
+                id: m.id,
+                title: m.title,
+                poster_path: m.poster_path ? `${IMAGE_BASE_URL}${m.poster_path}` : null
+            }));
+        } catch (error) {
+            return [];
+        }
+    },
+
 };
