@@ -4,10 +4,13 @@ import { listService } from '../services/listService';
 import MovieCard from '../components/MovieCard';
 import { Trash2, ArrowLeft } from 'lucide-react'; 
 import './ListDetailPage.css';
+import LoadingAnimation from '../components/LoadingAnimation';
+import NotFound from '../components/NotFound';
 
 const ListDetailPage = () => {
     const { id } = useParams();
     const navigate = useNavigate();
+    
     const [list, setList] = useState(null);
     const [loading, setLoading] = useState(true);
 
@@ -23,6 +26,7 @@ const ListDetailPage = () => {
     };
 
     useEffect(() => {
+        window.scrollTo(0, 0);
         fetchListDetails();
     }, [id]);
 
@@ -39,8 +43,8 @@ const ListDetailPage = () => {
         }
     };
 
-    if (loading) return <div className="loading-screen">Cargando lista...</div>;
-    if (!list) return <div className="error-screen">No se encontró la lista</div>;
+    if (loading) return <LoadingAnimation mensaje="Cargando lista..." />;
+    if (!list) return <NotFound />;
 
     return (
         <div className="list-detail-container">

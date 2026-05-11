@@ -8,6 +8,7 @@ import MovieCard from '../components/MovieCard';
 import { Search } from 'lucide-react';
 import './WelcomePage.css';
 import SearchBar from '../components/SearchBar';
+import LoadingAnimation from '../components/LoadingAnimation';
 
 const WelcomePage = () => {
     const { isAuthenticated } = useAuth();
@@ -26,7 +27,7 @@ const WelcomePage = () => {
                     movieService.getPopularPeople(),
                     movieService.getUpcoming()
                 ]);
-                setTrending(trend.slice(0, 6)); 
+                setTrending(trend.slice(0, 18)); 
                 setPeople(stars.slice(0, 9));
                 setUpcoming(up.slice(0, 6));
 
@@ -43,7 +44,7 @@ const WelcomePage = () => {
         fetchWelcomeData();
     }, [isAuthenticated]);
 
-    if (loading) return <div className="loading-screen">Cargando...</div>;
+    if (loading) return <LoadingAnimation mensaje="Cargando datos..." />;
 
     return (
         <div className="welcome-page-scope welcome-container">
@@ -102,7 +103,7 @@ const WelcomePage = () => {
                         <h3>Tendencias hoy</h3>
                         <button onClick={() => navigate('/movies')}>Ver todas</button>
                     </div>
-                    <div className="welcome-grid">
+                    <div className="movie-carousel">
                         {trending.map(movie => <MovieCard key={movie.id} movie={movie} />)}
                     </div>
                 </section>
@@ -110,7 +111,7 @@ const WelcomePage = () => {
                 <section className="welcome-section">
                     <br></br>
                     <br></br>
-                    <p className="sub-text">Los rostros más populares del cine esta semana.</p>
+                    <p className="sub-text">Los actores más populares en este momento.</p>
                     <div className="people-mini-grid">
                         {people.map(person => (
                             <div key={person.id} className="person-mini-card" onClick={() => navigate(`/person/${person.id}`)}>

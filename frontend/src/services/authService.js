@@ -13,11 +13,5 @@ export const AuthService = {
     async register(nickname, email, password, password_confirmation) {
         const response = await http.post('/register', { nickname, email, password, password_confirmation});
         return response.data;
-    },
-
-    // Método para obtener los datos del usuario identificado
-    async me() {
-        const response = await http.get('/me');
-        return response.data;
     }
 };

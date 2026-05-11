@@ -160,3 +160,39 @@
     color: #00e054; 
 }
 
+/* --- ESTILO DE CARRUSEL UNIFICADO --- */
+.movie-carousel {
+    display: flex;
+    overflow-x: auto;
+    gap: 20px;
+    padding: 15px 20px 25px; /* Padding para que no se corte al hacer hover */
+    margin-left: -20px; /* Alineación con el título */
+    margin-right: -20px;
+    overflow-y: visible;
+    scrollbar-width: thin;
+    scrollbar-color: #00e054 #14181c;
+}
+
+.movie-carousel::-webkit-scrollbar {
+    height: 8px;
+}
+
+.movie-carousel::-webkit-scrollbar-track {
+    background: #14181c;
+    border-radius: 10px;
+}
+
+.movie-carousel::-webkit-scrollbar-thumb {
+    background-color: #00e054;
+    border-radius: 10px;
+}
+
+.carousel-item {
+    flex: 0 0 160px;
+    transition: transform 0.2s ease-in-out;
+}
+
+.carousel-item:hover {
+    transform: translateY(-5px);
+}
+

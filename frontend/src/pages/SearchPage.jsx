@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import { movieService } from '../services/movieService';
 import MovieCard from '../components/MovieCard';
 import './SearchPage.css';
+import LoadingAnimation from '../components/LoadingAnimation';
 
 const SearchPage = () => {
     const [searchParams] = useSearchParams();
@@ -21,7 +22,7 @@ const SearchPage = () => {
         if (query) fetchResults();
     }, [query]);
 
-    if (loading) return <div className="loading">Buscando películas...</div>;
+    if (loading) return <LoadingAnimation mensaje="Buscando películas..." />;
 
     return (
         <div className="search-page-container">

@@ -3,7 +3,8 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../auth/authContext';
 import { AuthService } from '../services/authService';
 import Button from '../components/Button';
-import './LoginRegisterPage.css'; 
+import './LoginRegisterPage.css';
+import LoadingAnimation from '../components/LoadingAnimation'; 
 
 const RegisterPage = () => {
     const [formData, setFormData] = useState({
@@ -13,7 +14,8 @@ const RegisterPage = () => {
         password_confirmation: ''
     });
     const [error, setError] = useState(null);
-    
+    const [loading, setLoading] = useState(false);
+
     const { login } = useAuth();
     const navigate = useNavigate();
 
@@ -27,6 +29,8 @@ const RegisterPage = () => {
             return;
         }
 
+        setLoading(true);
+
         try {
             const data = await AuthService.register(
                 formData.nickname, 
@@ -39,10 +43,12 @@ const RegisterPage = () => {
             navigate('/welcome');
         } catch (err) {
             setError("Error: El email o nickname ya están en uso");
+        } finally {
+            setLoading(false);
         }
     };
 
-
+    if (loading) return <LoadingAnimation mensaje="Registrando..." />;
 
     return (
         <div className="login-page">
@@ -90,7 +96,10 @@ const RegisterPage = () => {
                     />
                 </div>
 
-                <Button text="Registrarme" variant="primary" />
+                
+                <div className="button-container">
+                    <Button text="Registrarme" variant="primary" />
+                </div>
                 
                 <p className="auth-switch">
                     ¿Ya tienes cuenta? <Link to="/login">Inicia sesión</Link>

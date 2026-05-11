@@ -3,6 +3,8 @@ import { useParams, Link } from 'react-router-dom';
 import { movieService } from '../services/movieService';
 import MovieCard from '../components/MovieCard';
 import './PersonDetailsPage.css';
+import NotFound from '../components/NotFound';
+import LoadingAnimation from '../components/LoadingAnimation';
 
 const PersonDetailsPage = () => {
     const { id } = useParams();
@@ -12,6 +14,7 @@ const PersonDetailsPage = () => {
 
     useEffect(() => {
         const fetchData = async () => {
+            window.scrollTo(0, 0);
             setLoading(true);
             const personData = await movieService.getPersonDetails(id);
             const moviesData = await movieService.getPersonMovies(id);
@@ -22,8 +25,8 @@ const PersonDetailsPage = () => {
         fetchData();
     }, [id]);
 
-    if (loading) return <div className="loading">Cargando información del actor...</div>;
-    if (!person) return <div className="error">No se ha encontrado información.</div>;
+    if (loading) return <LoadingAnimation mensaje="Cargando información del actor..." />;
+    if (!person) return <NotFound />;
 
     return (
         <div className="person-details-container">

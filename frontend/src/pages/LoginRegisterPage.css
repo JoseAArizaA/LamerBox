@@ -55,3 +55,38 @@
   margin-bottom: 20px;
   text-align: center;
 }
+
+.auth-switch {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 0.85rem;
+  color: #9ab; /* Un gris azulado suave para que la pregunta no resalte tanto */
+}
+
+.auth-switch a {
+  color: #00e054; /* El verde vibrante que usas en los botones de LamerBox */
+  text-decoration: none; /* Quitamos el subrayado por defecto */
+  font-weight: bold;
+  margin-left: 5px;
+  transition: color 0.2s, opacity 0.2s;
+}
+
+.auth-switch a:hover {
+  color: #00b343; /* Un verde un poco más oscuro al pasar el ratón */
+  text-decoration: underline; /* El subrayado solo aparece al hacer hover */
+  opacity: 0.9;
+}
+
+/* Contenedor para centrar el botón */
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  width: 100%;
+}
+
+/* Opcional: Si quieres que el botón sea un poco más ancho y se vea mejor */
+.button-container button {
+  padding: 12px 30px; /* Más espacio interno para que no sea tan pequeño */
+  font-size: 0.9rem;
+}

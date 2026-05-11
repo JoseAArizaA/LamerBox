@@ -13,7 +13,7 @@ const CreateListPage = () => {
         e.preventDefault();
         try {
             await listService.createList(name, isPublic);
-            navigate('/profile?tab=lists');
+            navigate(-1);
         } catch (err) {
             setError("No se pudo crear la lista. Inténtalo de nuevo.");
         }
@@ -49,7 +49,7 @@ const CreateListPage = () => {
 
                 <div className="form-actions">
                     <button type="submit" className="btn-create">Crear Lista</button>
-                    <button type="button" className="btn-cancel" onClick={() => navigate('/profile?tab=lists')}>Cancelar</button>
+                    <button type="button" className="btn-cancel" onClick={() => navigate(-1)}>Cancelar</button>
                 </div>
             </form>
         </div>

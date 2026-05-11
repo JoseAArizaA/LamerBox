@@ -10,6 +10,7 @@ use App\Models\Favorite;
 use App\Models\Watched;
 use App\Models\Pending;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Review;
 
 class MovieController extends Controller
 {
@@ -74,14 +75,25 @@ class MovieController extends Controller
         return response()->json($results);
     }
 
-    // GET: Obtener el estado de la película para el usuario autenticado
-    public function getUserStatus($id)
+    // GET: Obtener contexto de una película para el usuario (favorita, vista, pendiente + reseñas)
+    public function getMovieContext($id)
     {
         $userId = Auth::id();
+        
+        $status = [
+            'isFavorite' => $userId ? Favorite::where('user_id', $userId)->where('movie_id', $id)->exists() : false,
+            'isWatched'  => $userId ? Watched::where('user_id', $userId)->where('movie_id', $id)->exists() : false,
+            'isPending'  => $userId ? Pending::where('user_id', $userId)->where('movie_id', $id)->exists() : false,
+        ];
+
+        $reviews = Review::where('movie_id', $id)
+                    ->with('user:id,nickname')
+                    ->latest()
+                    ->get();
+
         return response()->json([
-            'isFavorite' => Favorite::where('user_id', $userId)->where('movie_id', $id)->exists(),
-            'isWatched' => Watched::where('user_id', $userId)->where('movie_id', $id)->exists(),
-            'isPending' => Pending::where('user_id', $userId)->where('movie_id', $id)->exists(),
-        ]);
+            'status' => $status,
+            'reviews' => $reviews
+        ], 200);
     }
 }

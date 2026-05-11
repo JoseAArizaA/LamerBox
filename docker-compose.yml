@@ -11,6 +11,8 @@ services:
       - "3306:3306"
     networks:
       - lamerbox-network
+    volumes:
+      - db_data:/var/lib/mysql
 
   # Backend (Laravel)
   backend:
@@ -18,13 +20,18 @@ services:
       context: ./backend
     container_name: lamerbox_api
     working_dir: /var/www
-    command: php artisan serve --host=0.0.0.0 --port=8000 
+    command: php artisan serve --host=0.0.0.0 --port=8000
+    environment:
+      - PHP_CLI_SERVER_WORKERS=4
     ports:
       - "8000:8000"
     volumes:
       - ./backend:/var/www
     networks:
       - lamerbox-network
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
 
   # Frontend (React)
   frontend:
@@ -48,3 +55,6 @@ services:
 networks:
   lamerbox-network:
     driver: bridge
+
+volumes:
+  db_data:

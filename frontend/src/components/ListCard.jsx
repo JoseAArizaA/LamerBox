@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { Film, Globe, Lock } from 'lucide-react';
 import './ListCard.css';
 
-const ListCard = ({ list, isCreateCard = false, onDelete }) => {
+// Añadimos 'showActions' para decidir si mostrar botones
+const ListCard = ({ list, isCreateCard = false, onDelete, showActions = true }) => {
     const navigate = useNavigate();
 
     if (isCreateCard) {
@@ -36,29 +37,30 @@ const ListCard = ({ list, isCreateCard = false, onDelete }) => {
                 <p>{movieCount} {movieCount === 1 ? 'película' : 'películas'}</p>
             </div>
 
-            <div className="list-actions">
-                <button 
-                    className="btn-manage" 
-                    onClick={(e) => {
-                        e.stopPropagation();
-                        navigate(`/lists/${list.id}/edit`);
-                    }}
-                >
-                    Gestionar
-                </button>
+            {/* SOLO mostramos acciones si se indica y es nuestra lista */}
+            {showActions && (
+                <div className="list-actions">
+                    <button 
+                        className="btn-manage" 
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            navigate(`/lists/${list.id}/edit`);
+                        }}
+                    >
+                        Gestionar
+                    </button>
 
-                <button 
-                    className="btn-delete-list" 
-                    onClick={(e) => {
-                        e.stopPropagation();
-                        if(window.confirm("¿Seguro que quieres borrar la lista?")) {
+                    <button 
+                        className="btn-delete-list" 
+                        onClick={(e) => {
+                            e.stopPropagation();
                             onDelete(list.id);
-                        }
-                    }}
-                >
-                    Eliminar
-                </button>
-            </div>
+                        }}
+                    >
+                        Eliminar
+                    </button>
+                </div>
+            )}
         </div>
     );
 };

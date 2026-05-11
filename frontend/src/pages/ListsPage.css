@@ -1,0 +1,226 @@
+.lists-page-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.lists-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+    border-bottom: 1px solid #2c3440;
+    padding-bottom: 20px;
+}
+
+.btn-create-list {
+    background-color: #00e054;
+    color: #14181c;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-create-list:hover {
+    background-color: #00b343;
+}
+
+.lists-section {
+    margin-bottom: 60px;
+}
+
+.section-title {
+    color: #9ab;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 25px;
+}
+
+.lists-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 30px;
+}
+
+/* EFECTO STACK (Capa sobre capa) */
+.list-card-item {
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.2s;
+}
+
+.list-card-item:hover {
+    transform: translateY(-5px);
+}
+
+.list-stack {
+    position: relative;
+    height: 180px; /* Un poco más alto */
+    margin-bottom: 15px;
+    perspective: 1000px;
+}
+
+.stack-layer {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.layer-3 { top: -12px; transform: scale(0.85); opacity: 0.4; z-index: 1; background-size: cover; }
+.layer-2 { top: -6px; transform: scale(0.92); opacity: 0.7; z-index: 2; background-size: cover; }
+
+.list-poster-main {
+    position: relative;
+    z-index: 3;
+    background-size: cover;
+    background-position: center;
+    background-color: #2c3440;
+    width: 100%;
+    height: 100%;
+    border-radius: 6px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.5);
+    border: 1px solid rgba(255,255,255,0.1);
+    display: flex;
+    align-items: flex-end; /* Texto abajo */
+    padding: 15px;
+}
+
+.list-poster-main.community {
+    background: linear-gradient(45deg, #14181c, #2c3440);
+}
+
+.list-poster-main span {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: white;
+}
+
+.list-info h3 {
+    margin: 0 0 5px 0;
+    font-size: 1.1rem;
+}
+
+.list-info p {
+    margin: 0;
+    color: #9ab;
+    font-size: 0.9rem;
+}
+
+.movie-count {
+    color: #00e054 !important;
+    font-weight: bold;
+}
+
+.list-name-inner {
+    background: rgba(0,0,0,0.7);
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    width: 100%;
+}
+
+/* HERO SECTION ESTILO MOVIESPAGE */
+.lists-hero {
+    background: linear-gradient(145deg, #181c24, #2c3440); /* Degradado oscuro */
+    padding: 40px;
+    border-radius: 12px;
+    margin-bottom: 40px;
+    text-align: center;
+    border: 1px solid #2c3440;
+}
+
+.lists-hero h1 {
+    font-size: 2.5rem;
+    color: #00df81; /* Verde característico de LamerBox */
+    margin-bottom: 10px;
+}
+
+.lists-hero p {
+    color: #9ab; /* Gris suave para el subtítulo */
+    font-size: 1.1rem;
+}
+
+
+/* Grid especial para las sugerencias (más grandes) */
+.api-suggested-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 40px;
+}
+
+.api-stack-card {
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.api-stack-card:hover {
+    transform: translateY(-8px);
+}
+
+.list-stack {
+    position: relative;
+    height: 380px; /* Aumentamos la altura para que parezcan pósters verticales */
+    margin-bottom: 15px;
+}
+
+.list-poster-main {
+    z-index: 3;
+    background-size: cover;
+    background-position: center;
+    background-color: #2c3440;
+    width: 100%;
+    height: 100%; /* Ahora ocupará los 380px */
+    border-radius: 8px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.stack-layer {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    background-size: cover;
+    background-position: center;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.layer-3 { top: -12px; transform: scale(0.85); opacity: 0.3; z-index: 1; }
+.layer-2 { top: -6px; transform: scale(0.92); opacity: 0.6; z-index: 2; }
+
+.list-poster-main {
+    z-index: 3;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+}
+
+.stack-overlay {
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: 0.3s;
+    border-radius: 8px;
+}
+
+.api-stack-card:hover .stack-overlay {
+    opacity: 1;
+}
+
+.api-stack-info h3 {
+    color: #00df81; /* Verde LamerBox */
+    margin: 10px 0 5px 0;
+}
+
+.api-stack-info p {
+    color: #9ab;
+    font-size: 0.85rem;
+}

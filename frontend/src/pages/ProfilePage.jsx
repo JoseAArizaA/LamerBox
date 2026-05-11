@@ -5,6 +5,9 @@ import { userService } from '../services/userService';
 import MovieCard from '../components/MovieCard';
 import './ProfilePage.css';
 import ProfileGrid from '../components/ProfileGrid';
+import NotFound from '../components/NotFound';
+import LoadingAnimation from '../components/LoadingAnimation';
+import { listService } from '../services/listService';
 
 const ProfilePage = () => {
         const { user: authUser } = useAuth();
@@ -14,6 +17,7 @@ const ProfilePage = () => {
         const [profileData, setProfileData] = useState(null);
         const [isEditing, setIsEditing] = useState(false); 
         const [editForm, setEditForm] = useState({ nickname: "", email: "" });
+        const [loading, setLoading] = useState(true);
 
         useEffect(() => {
             const tab = searchParams.get('tab');
@@ -22,11 +26,22 @@ const ProfilePage = () => {
 
         useEffect(() => {
             if (authUser?.id) {
-                userService.getProfile(authUser.id).then(setProfileData);
+                setLoading(true);
+                userService.getProfile(authUser.id)
+                    .then(data => {
+                        setProfileData(data);
+                        setLoading(false);
+                    })
+                    .catch((err) => {
+                        console.error("Error al cargar el perfil", err);
+                        setLoading(false);
+                    });
             }
         }, [authUser]);
 
-        if (!profileData) return <div className="loading">Cargando perfil...</div>;
+        if (loading) return <LoadingAnimation mensaje="Cargando perfil..." />;
+        if (!profileData) return <NotFound />;
+
 
         return (
             <div className="profile-container">

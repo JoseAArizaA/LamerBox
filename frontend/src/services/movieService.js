@@ -11,11 +11,13 @@ export const movieService = {
     getTrending: async () => {
         try {
             const response = await axios.get(`${TMDB_BASE_URL}/trending/movie/week?api_key=${API_KEY}&language=es-ES`);
-            const results = response.data?.results || []; // <-- SALVAVIDAS
+            const results = response.data?.results || []; 
             return results.map(m => ({
                 id: m.id,
                 title: m.title,
-                poster_path: `${IMAGE_BASE_URL}${m.poster_path}`
+                poster_path: m.poster_path ? `${IMAGE_BASE_URL}${m.poster_path}` : null,
+                backdrop_path: m.backdrop_path ? `https://image.tmdb.org/t/p/original${m.backdrop_path}` : null,
+                overview: m.overview
             }));
         } catch (error) {
             console.error("Error al obtener películas en tendencia:", error);
@@ -27,7 +29,7 @@ export const movieService = {
     getUpcoming: async () => {
         try {
             const response = await axios.get(`${TMDB_BASE_URL}/movie/upcoming?api_key=${API_KEY}&language=es-ES`);
-            const results = response.data?.results || []; // <-- SALVAVIDAS
+            const results = response.data?.results || []; 
             return results.map(m => ({
                 id: m.id,
                 title: m.title,
@@ -39,11 +41,11 @@ export const movieService = {
         }
     },
 
-    // Obtener personas populares (actores/directores)
+    // Obtener personas populares
     getPopularPeople: async () => {
         try {
             const response = await axios.get(`${TMDB_BASE_URL}/person/popular?api_key=${API_KEY}&language=es-ES`);
-            const results = response.data?.results || []; // <-- SALVAVIDAS
+            const results = response.data?.results || [];
             return results.map(p => ({
                 id: p.id,
                 name: p.name,
@@ -51,6 +53,65 @@ export const movieService = {
             }));
         } catch (error) {
             console.error("Error al obtener a las personas:", error);
+            return [];
+        }
+    },
+
+    // Obtener novedades
+    getNowPlaying: async () => {
+        try {
+            const response = await axios.get(`${TMDB_BASE_URL}/movie/now_playing?api_key=${API_KEY}&language=es-ES`);
+            const results = response.data?.results || [];
+            return results.map(m => ({
+                id: m.id,
+                title: m.title,
+                poster_path: `${IMAGE_BASE_URL}${m.poster_path}`
+            }));
+        } catch (error) {
+            console.error("Error al obtener novedades:", error);
+            return [];
+        }
+    },
+
+    // Obtener lista de géneros
+    getGenres: async () => {
+        try {
+            const response = await axios.get(`${TMDB_BASE_URL}/genre/movie/list?api_key=${API_KEY}&language=es-ES`);
+            return response.data?.genres || [];
+        } catch (error) {
+            console.error("Error al obtener géneros:", error);
+            return [];
+        }
+    },
+
+    // Obtener películas por género
+    getMoviesByGenre: async (genreId) => {
+        try {
+            const response = await axios.get(`${TMDB_BASE_URL}/discover/movie?api_key=${API_KEY}&with_genres=${genreId}&language=es-ES`);
+            const results = response.data?.results || [];
+            return results.map(m => ({
+                id: m.id,
+                title: m.title,
+                poster_path: `${IMAGE_BASE_URL}${m.poster_path}`
+            }));
+        } catch (error) {
+            console.error("Error al obtener películas por género:", error);
+            return [];
+        }
+    },
+
+    // Obtener películas mejor valoradas (Top Rated)
+    getTopRated: async () => {
+        try {
+            const response = await axios.get(`${TMDB_BASE_URL}/movie/top_rated?api_key=${API_KEY}&language=es-ES`);
+            const results = response.data?.results || [];
+            return results.map(m => ({
+                id: m.id,
+                title: m.title,
+                poster_path: `${IMAGE_BASE_URL}${m.poster_path}`
+            }));
+        } catch (error) {
+            console.error("Error al obtener películas mejor valoradas:", error);
             return [];
         }
     },
@@ -85,8 +146,8 @@ export const movieService = {
     getMovieCredits: async (id) => {
         try {
             const response = await axios.get(`${TMDB_BASE_URL}/movie/${id}/credits?api_key=${API_KEY}&language=es-ES`);
-            const cast = response.data?.cast || []; // <-- SALVAVIDAS
-            return cast.slice(0, 12); 
+            const cast = response.data?.cast || [];
+            return cast.slice(0, 8); 
         } catch (error) {
             console.error("Error al obtener créditos:", error);
             return [];
@@ -96,7 +157,7 @@ export const movieService = {
     getSimilarMovies: async (id) => {
         try {
             const response = await axios.get(`${TMDB_BASE_URL}/movie/${id}/similar?api_key=${API_KEY}&language=es-ES`);
-            const results = response.data?.results || []; // <-- SALVAVIDAS
+            const results = response.data?.results || [];
             return results.map(m => ({
                 id: m.id,
                 title: m.title,
@@ -114,7 +175,7 @@ export const movieService = {
     searchMovies: async (query) => {
         try {
             const response = await axios.get(`${TMDB_BASE_URL}/search/movie?api_key=${API_KEY}&query=${query}&language=es-ES`);
-            const results = response.data?.results || []; // <-- SALVAVIDAS
+            const results = response.data?.results || [];
             return results.map(m => ({
                 id: m.id,
                 title: m.title,
@@ -165,16 +226,6 @@ export const movieService = {
         }
     },
 
-    getLocalReviews: async (movieId) => {
-        try {
-            const response = await http.get(`/reviews?movie_id=${movieId}`); 
-            return response.data;
-        } catch (error) {
-            console.error("Error al obtener reseñas locales:", error);
-            return [];
-        }
-    },
-
     postReview: async (reviewData) => {
         try {
             const response = await http.post('/reviews', reviewData);
@@ -203,6 +254,16 @@ export const movieService = {
         } catch (error) {
             console.error("Error al borrar la reseña:", error);
             throw error;
+        }
+    },
+
+    getMovieContext: async (id) => {
+        try {
+            const response = await http.get(`/movies/${id}/context`);
+            return response.data;
+        } catch (error) {
+            console.error("Error al obtener contexto local:", error);
+            return { status: null, reviews: [] };
         }
     },
 

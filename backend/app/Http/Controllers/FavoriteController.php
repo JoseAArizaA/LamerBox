@@ -13,9 +13,7 @@ class FavoriteController extends Controller
     // GET: Ver mis favoritos
     public function index()
     {
-        $userId = Auth::id();
-        $favs = Favorite::where('user_id', $userId)->with('movie')->get();
-        return response()->json($favs, 200);
+        return response()->json(Auth::user()->favoriteMovies, 200);
     }
 
     // POST: Añadir a favoritos

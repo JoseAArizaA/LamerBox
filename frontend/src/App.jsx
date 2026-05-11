@@ -6,25 +6,26 @@ import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import CreateListPage from './pages/CreateListPage';
 import MovieDetailsPage from './pages/MovieDetailsPage';
-import NotFound from './components/NoutFound';
+import NotFound from './components/NotFound';
 import SearchPage from './pages/SearchPage';
 import PersonDetailsPage from './pages/PersonDetailsPage';
 import ProfilePage from './pages/ProfilePage';
 import EditProfilePage from './pages/EditProfilePage';
 import EditListPage from './pages/EditListPage';
 import ListDetailPage from './pages/ListDetailPage';
-
-// Importaciones del Panel de Administración
+import MoviesPage from './pages/MoviesPage';
+import ListsPage from './pages/ListsPage';
 import AdminGuard from './routing/AdminGuard';
 import AdminLayout from './layout/AdminLayout';
 import UserList from './pages/admin/UserList';
 import MovieDashboard from './pages/admin/MovieDashboard';
 import ReviewModeration from './pages/admin/ReviewModeration';
 
+
 function App() {
   return (
     <Routes>
-      {/* Rutas del Panel de Administración (Fuera del AppLayout principal) */}
+      {/* Rutas del Panel de Administración */}
       <Route path="/admin" element={<AdminGuard />}>
         <Route element={<AdminLayout />}>
           <Route index element={<Navigate to="users" replace />} />
@@ -43,7 +44,9 @@ function App() {
         <Route path="/movie/:id" element={<MovieDetailsPage />} />
         <Route path="/search" element={<SearchPage />} />
         <Route path="/person/:id" element={<PersonDetailsPage />} />
-          <Route path="/lists/:id" element={<ListDetailPage />} />
+        <Route path="/lists/:id" element={<ListDetailPage />} />
+        <Route path="/movies" element={<MoviesPage />} />
+        <Route path="/lists" element={<ListsPage />} />
 
         {/* Rutas Privadas */}
         <Route path="/create-list" element={
