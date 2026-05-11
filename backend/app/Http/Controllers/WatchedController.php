@@ -13,9 +13,7 @@ class WatchedController extends Controller
     // GET: Ver mis vistas
     public function index()
     {
-        $userId = Auth::id();
-        $watched = Watched::where('user_id', $userId)->with('movie')->get();
-        return response()->json($watched, 200);
+        return response()->json(Auth::user()->watchedMovies, 200);
     }
 
     // POST: Añadir a vistas

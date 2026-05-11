@@ -23,6 +23,7 @@ export const userService = {
         }
     },
 
+    // Estado de la película (Favorita, Vista, Pendiente)
     toggleStatus: async (endpoint, movieId, movieData, isCurrentlyActive) => {
         if (isCurrentlyActive) {
             return await http.delete(`/${endpoint}/${movieId}`);

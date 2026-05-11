@@ -16,6 +16,17 @@ class MovieListController extends Controller
         return response()->json($lists, 200);
     }
 
+    // GET: Ver las listas públicas de otros usuarios
+    public function indexPublic()
+    {
+        return MovieList::where('is_public', true)
+        ->with('user:id,nickname') 
+        ->withCount('movies')      
+        ->latest()                 
+        ->take(10)                 
+        ->get();
+    }
+
     // POST: Crear una nueva lista 
     public function store(Request $request)
     {

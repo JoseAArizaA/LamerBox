@@ -13,9 +13,7 @@ class PendingController extends Controller
     // GET: Ver mis pendientes
     public function index()
     {
-        $userId = Auth::id();
-        $pending = Pending::where('user_id', $userId)->with('movie')->get();
-        return response()->json($pending, 200);
+        return response()->json(Auth::user()->pendingMovies, 200);
     }
 
     // POST: Añadir a pendientes

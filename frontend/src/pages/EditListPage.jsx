@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { listService } from '../services/listService';
 import './CreateEditListPage.css';
+import LoadingAnimation from '../components/LoadingAnimation';
 
 const EditListPage = () => {
     const { id } = useParams();
@@ -19,7 +20,7 @@ const EditListPage = () => {
                 setLoading(false);
             } catch (err) {
                 alert("No se pudo cargar la información de la lista");
-                navigate('/profile?tab=lists');
+                navigate(-1);
             }
         };
         fetchList();
@@ -30,13 +31,13 @@ const EditListPage = () => {
         try {
             await listService.updateList(id, name, isPublic);
             alert("Lista actualizada correctamente");
-            navigate('/profile?tab=lists');
+            navigate(-1);
         } catch (err) {
             alert("Error al actualizar la lista");
         }
     };
 
-    if (loading) return <div className="loading-screen">Cargando datos...</div>;
+    if (loading) return <LoadingAnimation mensaje="Cargando lista..." />;
 
     return (
         <div className="create-list-page">
@@ -66,7 +67,7 @@ const EditListPage = () => {
 
                 <div className="form-actions">
                     <button type="submit" className="btn-create">Editar</button>
-                    <button type="button" className="btn-cancel" onClick={() => navigate('/profile?tab=lists')}>Cancelar</button>
+                    <button type="button" className="btn-cancel" onClick={() => navigate('-1')}>Cancelar</button>
                 </div>
             </form>
         </div>

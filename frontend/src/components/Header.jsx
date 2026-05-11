@@ -60,8 +60,8 @@ const Header = () => {
 
                 <nav className="nav-links">
                     <NavLink to="/welcome">Descubrir</NavLink>
-                    <NavLink to="/movies-browser">Películas</NavLink>
-                    <NavLink to="/community-lists">Listas</NavLink>
+                    <NavLink to="/movies">Películas</NavLink>
+                    <NavLink to="/lists">Listas</NavLink>
                 </nav>
 
                 <div className="nav-search-wrapper">

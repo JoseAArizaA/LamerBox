@@ -5,11 +5,13 @@ import { AuthService } from '../services/authService';
 import Button from '../components/Button';
 import { Link } from 'react-router-dom';
 import './LoginRegisterPage.css';
+import LoadingAnimation from '../components/LoadingAnimation';
 
 const LoginPage = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(false);
     
     const { login } = useAuth();
     const navigate = useNavigate();
@@ -17,6 +19,7 @@ const LoginPage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError(null);
+        setLoading(true);
 
         try {
             const data = await AuthService.login(email, password);
@@ -24,8 +27,12 @@ const LoginPage = () => {
             navigate('/welcome');
         } catch (err) {
             setError("Email o contraseña incorrectos");
+        } finally {
+            setLoading(false);
         }
     };
+
+    if (loading) return <LoadingAnimation mensaje="Validando credenciales..." />;
 
     return (
         <div className="login-page">
@@ -43,7 +50,9 @@ const LoginPage = () => {
                     <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
                 </div>
 
-                <Button text="Entrar" variant="primary" />
+                <div className="button-container">
+                    <Button text="Entrar" variant="primary" />
+                </div>
                 <p className="auth-switch">
                     ¿No tienes cuenta? <Link to="/register">Regístrate gratis</Link>
                 </p>

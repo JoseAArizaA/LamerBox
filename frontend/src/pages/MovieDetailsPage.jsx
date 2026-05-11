@@ -8,51 +8,60 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { authStorage } from '../auth/authStorage';
 import MovieCard from '../components/MovieCard';
-import NotFound from '../components/NoutFound';
+import NotFound from '../components/NotFound';
 import CommentSection from '../components/CommentSection';
+import LoadingAnimation from '../components/LoadingAnimation';
 
 const MovieDetailPage = () => {
     const { id } = useParams();
-    const navigate = useNavigate();
     const [movie, setMovie] = useState(null);
     const [cast, setCast] = useState([]);
     const [similarMovies, setSimilarMovies] = useState([]);
-    const [loading, setLoading] = useState(true);
     const [status, setStatus] = useState({ isFavorite: false, isWatched: false, isPending: false });
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const fetchAllData = async () => {
-            setLoading(true);
-            try {
-                const [details, credits, similar] = await Promise.all([
-                    movieService.getMovieDetails(id),
-                    movieService.getMovieCredits(id),
-                    movieService.getSimilarMovies(id) 
-                ]);
-                
-                setMovie(details);
-                setCast(credits);
-                setSimilarMovies(similar);
-                
-                const session = JSON.parse(localStorage.getItem('lamerbox_session'));
-                if (session?.token) {
-                    const res = await axios.get(`http://localhost:8000/api/movies/${id}/status`, {
-                        headers: { Authorization: `Bearer ${session.token}` }
-                    });
-                    setStatus(res.data);
-                }
-            } catch (error) {
-                console.error("Error cargando datos:", error);
-            } finally {
-                setLoading(false);
-            }
-        };
+    const fetchAllData = async () => {
+        window.scrollTo(0, 0);
+        setLoading(true);
+        try {
+            // 1. Definimos las llamadas básicas de TMDB (públicas)
+            const promises = [
+                movieService.getMovieDetails(id),
+                movieService.getMovieCredits(id),
+                movieService.getSimilarMovies(id)
+            ];
 
-        fetchAllData();
+            // 2. SOLO si hay usuario, añadimos la llamada al contexto de Laravel
+            // Usamos authStorage para verificar si hay un token antes de pedir datos privados
+            const session = authStorage.get();
+            if (session?.token) {
+                promises.push(movieService.getMovieContext(id));
+            }
+
+            const results = await Promise.all(promises);
+            
+            // Asignamos los resultados por orden
+            setMovie(results[0]);
+            setCast(results[1]);
+            setSimilarMovies(results[2]);
+            
+            // Si el cuarto resultado existe, es el contexto local
+            if (results[3] && results[3].status) {
+                setStatus(results[3].status);
+            }
+
+        } catch (error) {
+            console.error("Error en MovieDetails:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
+    fetchAllData();
     }, [id]);
 
-    if (loading) return <div className="loading">Cargando...</div>;
-    if (!movie) return <div className="error">No se encontró la película.</div>;
+    if (loading) return <LoadingAnimation mensaje="Cargando detalles de la película..." />;
+    if (!movie) return <NotFound />;
 
     return (
         <div className="movie-detail-container">
@@ -71,10 +80,9 @@ const MovieDetailPage = () => {
                 <div className="detail-text">
                     <h1>{movie.title} <span>({movie.release_date?.substring(0, 4)})</span></h1>
                     
-                    {/* Sección de Géneros */}
                     <div className="genres-list">
-                        {movie.genres?.map(genero => (
-                            <span key={genero.id} className="genre-badge">{genero.name}</span>
+                        {movie.genres?.map(gen => (
+                            <span key={gen.id} className="genre-badge">{gen.name}</span>
                         ))}
                     </div>
                     
@@ -88,16 +96,13 @@ const MovieDetailPage = () => {
                 </div>
             </div>
             
-            {/* Reparto */}
             <div className="detail-cast-section">
                 <h2 className="section-title">Reparto Principal</h2>
-                <div className="people-slider">
+                <div className="movie-carousel">
                     {cast.map(actor => (
-                        <Link to={`/person/${actor.id}`} key={actor.id} className="person-card">
+                        <Link to={`/person/${actor.id}`} key={actor.id} className="carousel-item person-card">
                             <img 
-                                src={actor.profile_path 
-                                    ? `https://image.tmdb.org/t/p/w185${actor.profile_path}` 
-                                    : '/noImagenActor.png'} 
+                                src={actor.profile_path ? `https://image.tmdb.org/t/p/w185${actor.profile_path}` : '/noImagenActor.png'} 
                                 alt={actor.name} 
                             />
                             <span className="actor-name">{actor.name}</span>
@@ -106,15 +111,17 @@ const MovieDetailPage = () => {
                 </div>
             </div>
 
-            {/* Películas Similares */}
             <div className="detail-cast-section">
                 <h2 className="section-title">Películas Similares</h2>
-                <div className="movies-slider-horizontal"> 
-                    {similarMovies.slice(0, 10).map(sim => (
-                        <MovieCard key={sim.id} movie={sim} /> 
+                <div className="movie-carousel"> 
+                    {similarMovies.slice(0, 8).map(sim => (
+                        <div key={sim.id} className="carousel-item">
+                            <MovieCard movie={sim} /> 
+                        </div>
                     ))}
                 </div>
             </div>
+            
             <CommentSection movieId={id} movieTitle={movie.title} />
         </div>
     );

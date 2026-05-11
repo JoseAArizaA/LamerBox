@@ -1,0 +1,131 @@
+.movies-explorer {
+    min-height: 100vh;
+    padding: 40px 0;
+    color: white;
+}
+
+.explorer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.movie-section {
+    margin-bottom: 50px;
+}
+
+.section-title {
+    font-size: 1.5rem;
+    color: #9ab; /* Ese gris clarito que queda tan bien */
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #2c3440;
+    padding-bottom: 10px;
+    font-weight: 400; /* Para que no sea tan gruesa la letra */
+}
+
+/* CARRUSEL HORIZONTAL */
+.movie-carousel {
+    display: flex;
+    overflow-x: auto; /* Permite el scroll horizontal */
+    gap: 15px;
+    padding-bottom: 15px;
+    scrollbar-width: thin; /* Para navegadores modernos */
+    scrollbar-color: #00df81 #14181c;
+}
+
+/* Estilo para que las MovieCards no se encojan */
+.carousel-item {
+    flex: 0 0 160px; /* Ancho fijo para cada póster */
+    transition: transform 0.2s;
+}
+
+.carousel-item:hover {
+    transform: translateY(-5px);
+}
+
+/* BOTONES DE GÉNERO */
+.genre-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 30px;
+}
+
+.genre-pill {
+    background: #14181c;
+    color: #9ab;
+    border: 1px solid #456;
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.3s;
+}
+
+.genre-pill:hover, .genre-pill.active {
+    background: #00df81;
+    color: black;
+    border-color: #00df81;
+}
+
+.genre-subtitle {
+    color: #00df81;
+    margin-bottom: 15px;
+    font-weight: 300;
+}
+
+.mini-loader {
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #9ab;
+}
+
+.explorer-hero {
+    background: linear-gradient(145deg, #181c24, #2c3440);
+    padding: 40px;
+    border-radius: 12px;
+    margin-bottom: 40px;
+    text-align: center;
+    border: 1px solid #2c3440;
+}
+
+.explorer-hero h1 {
+    font-size: 2.5rem;
+    color: #00df81;
+    margin-bottom: 10px;
+}
+
+.explorer-hero p {
+    color: #9ab;
+    font-size: 1.1rem;
+}
+
+.genre-pill {
+    background: #1c2430;
+    color: #fff;
+    border: 1px solid #2c3440;
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.genre-pill:hover, 
+.genre-pill.active {
+    background: #00df81;
+    color: #000;
+    border-color: #00df81;
+    font-weight: bold;
+}
+
+.genre-subtitle {
+    color: #00df81;
+    margin-top: 25px;
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+    font-weight: 500;
+}

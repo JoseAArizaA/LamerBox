@@ -12,12 +12,10 @@ class UserController extends Controller
 {
     /**
      * GET: Listar todos los usuarios.
-     * Acceso: Solo Administradores (Protegido por middleware 'admin' en rutas).
+     * Acceso: Solo Administradores.
      */
     public function index()
     {
-        // Al estar protegido por el middleware 'admin' en api.php, 
-        // confiamos en la capa de seguridad de la ruta.
         return response()->json(User::all(), 200);
     }
 
@@ -26,18 +24,19 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        // Usamos la versión de Jose que trae las relaciones de películas cargadas
         $user = User::with([
-            'favoriteMovies',
-            'watchedMovies',
-            'pendingMovies',
-            'movieLists.movies'    
+            'movieLists' => function($query) {
+                $query->withCount('movies');
+            }, 
+            'favoriteMovies', 
+            'watchedMovies', 
+            'pendingMovies'
         ])->find($id);
 
         if (!$user) {
             return response()->json(['message' => 'Usuario no encontrado'], 404);
         }
-
+        
         return response()->json($user, 200);
     }
 
@@ -54,7 +53,6 @@ class UserController extends Controller
             return response()->json(['message' => 'No autorizado'], 403);
         }
 
-        // Validamos asegurando que el email/nickname sea único excepto para el usuario actual
         $request->validate([
             'nickname' => ['sometimes', 'string', Rule::unique('users')->ignore($user->id)],
             'email' => ['sometimes', 'email', Rule::unique('users')->ignore($user->id)],

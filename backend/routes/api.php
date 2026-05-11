@@ -17,6 +17,8 @@ Route::get('/reviews', [ReviewController::class, 'index']);
 
 Route::get('/movies/{id}', [MovieController::class, 'show']);
 
+Route::get('/lists/public', [MovieListController::class, 'indexPublic']);
+
 /* --- 2. RUTAS PROTEGIDAS (Un solo grupo para todo) --- */
 Route::middleware('auth:sanctum')->group(function () {
     
@@ -37,13 +39,7 @@ Route::middleware('auth:sanctum')->group(function () {
     // Reseñas y Estado de Película
     Route::post('/reviews', [ReviewController::class, 'store']);
     Route::delete('/reviews/{id}', [ReviewController::class, 'destroy']);
-    Route::get('/movies/{id}/status', [MovieController::class, 'getUserStatus']);
-
-// Ruta de prueba para verificar autenticación
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
-
+    Route::get('/movies/{id}/context', [MovieController::class, 'getMovieContext']);
 });
 
 
