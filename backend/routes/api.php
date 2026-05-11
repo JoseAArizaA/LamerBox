@@ -28,7 +28,7 @@ Route::get('movies/search', [MovieController::class, 'search']);
 Route::apiResource('movies', MovieController::class)->only(['index', 'show']);
 Route::get('/reviews', [ReviewController::class, 'index']); // Público general para reviews
 
-Route::get('/movies/{id}', [MovieController::class, 'show']);
+
 
 // --- 2. RUTAS PROTEGIDAS (Usuarios Autenticados) ---
 // Requieren un token válido generado por Sanctum.
@@ -47,17 +47,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('favorites', FavoriteController::class);
     Route::apiResource('watched', WatchedController::class);
     Route::apiResource('pending', PendingController::class);
+
+    // Reseñas: Los usuarios pueden verlas y crearlas, pero no eliminarlas (restricción de Miguel)
+    Route::apiResource('reviews', ReviewController::class)->except(['index', 'destroy']);
     
-    // Reseñas y Estado de Película
-    Route::post('/reviews', [ReviewController::class, 'store']);
-    Route::delete('/reviews/{id}', [ReviewController::class, 'destroy']);
+    // Ruta para obtener el estado de una película
     Route::get('/movies/{id}/status', [MovieController::class, 'getUserStatus']);
-
-// Ruta de prueba para verificar autenticación
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
-
 });
 
 
