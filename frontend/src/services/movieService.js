@@ -25,22 +25,6 @@ export const movieService = {
         }
     },
 
-    // Obtener películas próximas a estrenarse
-    getUpcoming: async () => {
-        try {
-            const response = await axios.get(`${TMDB_BASE_URL}/movie/upcoming?api_key=${API_KEY}&language=es-ES`);
-            const results = response.data?.results || []; 
-            return results.map(m => ({
-                id: m.id,
-                title: m.title,
-                poster_path: `${IMAGE_BASE_URL}${m.poster_path}`
-            }));
-        } catch (error) {
-            console.error("Error al obtener las películas próximas:", error);
-            return [];
-        }
-    },
-
     // Obtener personas populares
     getPopularPeople: async () => {
         try {
@@ -257,6 +241,16 @@ export const movieService = {
         }
     },
 
+    getLocalReviews: async (id) => {
+        try {
+            const response = await http.get(`/movies/${id}/context`);
+            return response.data.reviews || [];
+        } catch (error) {
+            console.error("Error al obtener reseñas locales:", error);
+            return [];
+        }
+    },
+
     getMovieContext: async (id) => {
         try {
             const response = await http.get(`/movies/${id}/context`);
@@ -265,23 +259,6 @@ export const movieService = {
             console.error("Error al obtener contexto local:", error);
             return { status: null, reviews: [] };
         }
-    },
-
-    getDiscoverAdvanced: async (params = '') => {
-        try {
-            // Filtramos por popularidad y exigimos mínimo 1500 votos para asegurar calidad
-            const response = await axios.get(
-                `${TMDB_BASE_URL}/discover/movie?api_key=${API_KEY}&language=es-ES&sort_by=popularity.desc&vote_count.gte=1500&${params}`
-            );
-            const results = response.data?.results || [];
-            return results.map(m => ({
-                id: m.id,
-                title: m.title,
-                poster_path: m.poster_path ? `${IMAGE_BASE_URL}${m.poster_path}` : null
-            }));
-        } catch (error) {
-            return [];
-        }
-    },
+    }
 
 };

@@ -1,12 +1,10 @@
-/* Estilos globales */
 .app-container {
   min-height: 100vh;
-  background-color: #14181c; /* El oscuro de Letterboxd */
+  background-color: #14181c; 
   color: #9ab;
   font-family: sans-serif;
 }
 
-/* Estilos del Navbar [cite: 1967] */
 .navbar {
   display: flex;
   justify-content: space-between;

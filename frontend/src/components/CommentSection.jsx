@@ -3,24 +3,28 @@ import { useAuth } from '../auth/authContext';
 import { movieService } from '../services/movieService';
 import './CommentSection.css';
 
-const CommentSection = ({ movieId, movieTitle }) => {
+const CommentSection = ({ movieId, movieTitle , initialReviews = [] }) => {
     const { isAuthenticated, user } = useAuth();
-    const [localReviews, setLocalReviews] = useState([]);
     const [tmdbReviews, setTmdbReviews] = useState([]);
     const [text, setText] = useState("");
     const [rating, setRating] = useState(10);
+    const [localReviews, setLocalReviews] = useState(initialReviews);
 
     useEffect(() => {
-        const loadData = async () => {
-            const [local, tmdb] = await Promise.all([
-                movieService.getLocalReviews(movieId),
-                movieService.getTMDBReviews(movieId)
-            ]);
-            setLocalReviews(local || []);
-            setTmdbReviews(tmdb || []);
+        const loadTMDBData = async () => {
+            try {
+                const tmdb = await movieService.getTMDBReviews(movieId);
+                setTmdbReviews(tmdb || []);
+            } catch (err) {
+                console.error("Error al cargar reseñas de TMDB", err);
+            }
         };
-        loadData();
+        loadTMDBData();
     }, [movieId]);
+
+    useEffect(() => {
+        setLocalReviews(initialReviews);
+    }, [initialReviews]);
 
     const handleSend = async (e) => {
         e.preventDefault();

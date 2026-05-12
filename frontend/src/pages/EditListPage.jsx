@@ -67,7 +67,7 @@ const EditListPage = () => {
 
                 <div className="form-actions">
                     <button type="submit" className="btn-create">Editar</button>
-                    <button type="button" className="btn-cancel" onClick={() => navigate('-1')}>Cancelar</button>
+                    <button type="button" className="btn-cancel" onClick={() => navigate(-1)}>Cancelar</button>
                 </div>
             </form>
         </div>

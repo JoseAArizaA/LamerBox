@@ -494,22 +494,19 @@
     border: none;
 }
 
-/* --- AÑADIDOS PARA EL CARRUSEL (Estilo MoviesPage) --- */
 
 .welcome-page-scope .movie-carousel {
     display: flex;
     overflow-x: auto;
-    padding-top: 15px; /* Espacio arriba para que no se corte al subir */
+    padding-top: 15px;
     
-    /* 1. Añadimos espacio a los lados dentro del carrusel */
     padding-left: 20px;
     padding-right: 20px;
     
-    /* 2. Usamos margen negativo para que el carrusel siga alineado con los títulos */
     margin-left: -20px;
     margin-right: -20px;
 
-    overflow-y: visible; /* Permite que el efecto hover se vea fuera del área */
+    overflow-y: visible;
     gap: 15px;
     padding-bottom: 20px;
     margin-bottom: 30px;
@@ -518,7 +515,6 @@
     scrollbar-color: #00df81 #14181c;
 }
 
-/* Configuración de la barra para Chrome/Edge/Safari */
 .welcome-page-scope .movie-carousel::-webkit-scrollbar {
     height: 8px;
 }
@@ -533,9 +529,8 @@
     border-radius: 10px;
 }
 
-/* Evita que las carátulas se encojan y permite que se vean bien en fila */
 .welcome-page-scope .carousel-item {
-    flex: 0 0 160px; /* Tamaño idéntico al de MoviesPage */
+    flex: 0 0 160px;
     transition: transform 0.2s;
 }
 

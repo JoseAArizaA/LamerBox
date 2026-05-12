@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { getAllReviews, deleteReview } from '../../services/adminService';
 import { Trash2 } from 'lucide-react';
-import './UserList.css'; // Reutilizamos estilos
+import './UserList.css';
 
 /**
  * Componente para moderar las reseñas dejadas por los usuarios.

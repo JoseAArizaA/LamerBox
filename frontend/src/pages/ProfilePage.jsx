@@ -19,12 +19,8 @@ const ProfilePage = () => {
         const [editForm, setEditForm] = useState({ nickname: "", email: "" });
         const [loading, setLoading] = useState(true);
 
-        useEffect(() => {
-            const tab = searchParams.get('tab');
-            if (tab) setActiveTab(tab);
-        }, [searchParams]);
 
-        useEffect(() => {
+        const fetchUserData = () => {
             if (authUser?.id) {
                 setLoading(true);
                 userService.getProfile(authUser.id)
@@ -37,6 +33,15 @@ const ProfilePage = () => {
                         setLoading(false);
                     });
             }
+        };
+
+        useEffect(() => {
+            const tab = searchParams.get('tab');
+            if (tab) setActiveTab(tab);
+        }, [searchParams]);
+
+        useEffect(() => {
+            fetchUserData();
         }, [authUser]);
 
         if (loading) return <LoadingAnimation mensaje="Cargando perfil..." />;
@@ -46,7 +51,6 @@ const ProfilePage = () => {
         return (
             <div className="profile-container">
                 <header className="profile-header">
-                    {/* Aquí está la línea corregida con optional chaining */}
                     <div className="avatar-placeholder">{profileData?.nickname?.[0]?.toUpperCase() || 'U'}</div>
                     <div className="user-info">
                         <h1>{profileData.nickname}</h1>
@@ -62,7 +66,7 @@ const ProfilePage = () => {
                     <button className={activeTab === 'lists' ? 'active' : ''} onClick={() => setActiveTab('lists')}>Mis Listas</button>
                 </nav>
 
-                <ProfileGrid activeTab={activeTab} profileData={profileData} />
+                <ProfileGrid activeTab={activeTab} profileData={profileData} onRefresh={fetchUserData} />
             </div>
         );
 };

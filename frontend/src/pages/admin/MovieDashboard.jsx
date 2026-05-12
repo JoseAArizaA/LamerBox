@@ -6,12 +6,19 @@ const MovieDashboard = () => {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const fetchTMDBMovies = async () => {
+
+  const [isCreating, setIsCreating] = useState(false);
+  const [newMovieId, setNewMovieId] = useState('');
+  const [newMovieTitle, setNewMovieTitle] = useState('');
+
+  const [editingId, setEditingId] = useState(null);
+  const [editTitle, setEditTitle] = useState('');
+
+  const fetchMovies = async () => {
     try {
-      const apiKey = import.meta.env.VITE_TMDB_API_KEY;
-      const baseUrl = import.meta.env.VITE_TMDB_BASE_URL;
-      const response = await axios.get(`${baseUrl}/movie/popular?api_key=${apiKey}&language=es-ES`);
-      setMovies(response.data.results);
+      const data = await getMovies();
+      setMovies(data.data || data);
+ origin/prueba
     } catch (error) {
       console.error("Error al obtener películas de TMDB:", error);
     } finally {

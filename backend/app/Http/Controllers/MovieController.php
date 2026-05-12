@@ -83,7 +83,7 @@ class MovieController extends Controller
     // GET: Obtener contexto de una película para el usuario (favorita, vista, pendiente + reseñas)
     public function getMovieContext($id)
     {
-        $userId = Auth::id();
+        $userId = auth('sanctum')->id();
         
         $status = [
             'isFavorite' => $userId ? Favorite::where('user_id', $userId)->where('movie_id', $id)->exists() : false,

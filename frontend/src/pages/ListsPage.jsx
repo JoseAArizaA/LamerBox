@@ -38,7 +38,7 @@ const ListsPage = () => {
                 setCommunityLists(publicData.filter(l => l.user_id !== user.id).slice(0, 8));
             } else {
                 setMyLists([]);
-                setCommunityLists(publicData.slice(0, 8));
+                setCommunityLists(publicData.slice(0, 9));
             }
         } catch (error) {
             console.error("Error al cargar listas:", error);

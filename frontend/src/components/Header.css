@@ -1,4 +1,3 @@
-/* Header.css */
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -42,12 +41,10 @@
     color: #fff;
 }
 
-/* 4. Damos aire al buscador para que no se pegue a "Listas" */
 .nav-search-wrapper {
-    margin-left: 15px; /* Añade un pequeño hueco extra antes de la barra */
+    margin-left: 15px; 
 }
 
-/* Parte derecha: Usuario y Botones */
 .nav-right {
     display: flex;
     align-items: center;
@@ -90,14 +87,11 @@
     font-size: 0.9rem;
 }
 
-
-/* Header.css */
-
 .user-dropdown-container {
     position: relative;
     display: flex;
-    align-items: center; /* Alinea el nombre "Admin" con el resto */
-    padding: 0; /* Quitamos el padding asimétrico que lo rompía */
+    align-items: center;
+    padding: 0; 
     cursor: pointer;
 }
 
@@ -110,7 +104,6 @@
     cursor: pointer;
 }
 
-/* El contenedor del menú */
 .dropdown-menu {
     position: absolute;
     top: 100%; 
@@ -123,28 +116,27 @@
     display: flex;
     flex-direction: column;
     padding: 8px 0;
-    margin-top: 10px; /* Separación visual */
+    margin-top: 10px;
     border: 1px solid #445566;
 }
 
 .dropdown-menu::before {
     content: '';
     position: absolute;
-    top: -15px; /* Cubre el hueco entre el nombre y el menú */
+    top: -15px; 
     left: 0;
     right: 0;
     height: 15px;
     background: transparent;
 }
 
-/* Cada opción del menú */
 .dropdown-item {
     display: flex;
     align-items: center;
     gap: 12px;
     padding: 12px 20px;
-    color: #9ab !important; /* Forzamos tu gris azulado */
-    text-decoration: none !important; /* Quitamos el subrayado azul */
+    color: #9ab !important; 
+    text-decoration: none !important; 
     font-size: 0.9rem;
     transition: all 0.2s ease;
     background: none;
@@ -159,17 +151,15 @@
     color: #fff !important;
 }
 
-/* La línea separadora */
 .dropdown-divider {
     height: 1px;
     background-color: #1b2228;
     margin: 5px 0;
 }
 
-/* Arreglo específico para el botón de salir */
 .logout-link {
     font-family: inherit;
-    border-top: 1px solid #1b2228; /* Separación extra */
+    border-top: 1px solid #1b2228;
 }
 
 /* Header.css */
@@ -178,12 +168,11 @@
     display: flex;
     align-items: center;
     gap: 15px; 
-    border-right: 1px solid #2c3440; /* La línea vertical */
-    padding-right: 25px; /* Espacio antes de la línea */
+    border-right: 1px solid #2c3440;
+    padding-right: 25px;
     margin-right: 0;
 }
 
-/* El botón verde (Registrarse) */
 .btn-register {
     background-color: #00e054;
     color: #14181c !important;
@@ -191,19 +180,18 @@
     border-radius: 3px;
     font-weight: 900;
     text-decoration: none;
-    font-size: 0.75rem; /* Tamaño más contenido y elegante */
+    font-size: 0.75rem;
     text-transform: uppercase;
     letter-spacing: 1px;
     transition: background-color 0.2s ease;
 }
 
 .btn-register:hover {
-    background-color: #00c04a; /* Un verde más intenso al pasar el ratón */
+    background-color: #00c04a;
 }
 
-/* El botón de Iniciar Sesión (Texto) */
 .btn-login {
-    color: #9ab; /* Empezamos con tu gris azulado */
+    color: #9ab;
     text-decoration: none;
     font-size: 0.75rem;
     font-weight: 900;
@@ -213,10 +201,9 @@
 }
 
 .btn-login:hover {
-    color: #fff; /* Se ilumina en blanco al pasar el ratón */
+    color: #fff;
 }
 
-/* Ajuste general de la navegación para que coincida en tamaño */
 .nav-links a {
     font-size: 0.8rem;
     letter-spacing: 1px;

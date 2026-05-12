@@ -23,7 +23,7 @@ class MovieListController extends Controller
         ->with('user:id,nickname') 
         ->withCount('movies')      
         ->latest()                 
-        ->take(10)                 
+        ->take(9)                 
         ->get();
     }
 
