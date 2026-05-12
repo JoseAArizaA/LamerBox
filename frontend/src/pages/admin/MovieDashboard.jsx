@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { getMovies, createMovie, updateMovie, deleteMovie } from '../../services/adminService';
 import { Trash2, Edit2, Plus, Save, X } from 'lucide-react';
-import './UserList.css'; 
+import './UserList.css';
 
 const MovieDashboard = () => {
   const [movies, setMovies] = useState([]);
@@ -81,8 +81,8 @@ const MovieDashboard = () => {
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h1>Gestión de Películas</h1>
-        <button 
-          className="btn-primary" 
+        <button
+          className="btn-primary"
           style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '8px 16px', borderRadius: '8px', border: 'none', cursor: 'pointer', backgroundColor: '#3498db', color: 'white' }}
           onClick={() => setIsCreating(!isCreating)}
         >
@@ -91,32 +91,32 @@ const MovieDashboard = () => {
         </button>
       </div>
 
-      <p>Total de películas en caché local: {movies.length}</p>
+      <p>Total de películas: {movies.length}</p>
 
       {isCreating && (
         <div style={{ background: '#2c3e50', padding: '20px', borderRadius: '8px', marginBottom: '20px', display: 'flex', gap: '15px', alignItems: 'flex-end' }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', flex: 1 }}>
             <label style={{ color: '#9ab', fontSize: '14px' }}>ID de TMDB</label>
-            <input 
-              type="number" 
-              value={newMovieId} 
-              onChange={e => setNewMovieId(e.target.value)} 
+            <input
+              type="number"
+              value={newMovieId}
+              onChange={e => setNewMovieId(e.target.value)}
               placeholder="Ej: 550"
               style={{ padding: '10px', borderRadius: '4px', border: '1px solid #34495e', background: '#1a252f', color: 'white' }}
             />
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', flex: 2 }}>
             <label style={{ color: '#9ab', fontSize: '14px' }}>Título</label>
-            <input 
-              type="text" 
-              value={newMovieTitle} 
-              onChange={e => setNewMovieTitle(e.target.value)} 
+            <input
+              type="text"
+              value={newMovieTitle}
+              onChange={e => setNewMovieTitle(e.target.value)}
               placeholder="Ej: El Club de la Lucha"
               style={{ padding: '10px', borderRadius: '4px', border: '1px solid #34495e', background: '#1a252f', color: 'white' }}
             />
           </div>
-          <button 
-            className="btn-primary" 
+          <button
+            className="btn-primary"
             onClick={handleCreate}
             style={{ padding: '10px 20px', borderRadius: '4px', border: 'none', cursor: 'pointer', backgroundColor: '#2ecc71', color: 'white', fontWeight: 'bold' }}
           >
@@ -141,9 +141,9 @@ const MovieDashboard = () => {
                 <td style={{ color: '#9ab' }}>#{movie.id}</td>
                 <td>
                   {editingId === movie.id ? (
-                    <input 
-                      type="text" 
-                      value={editTitle} 
+                    <input
+                      type="text"
+                      value={editTitle}
                       onChange={e => setEditTitle(e.target.value)}
                       style={{ padding: '6px', borderRadius: '4px', border: '1px solid #3498db', background: '#1a252f', color: 'white', width: '100%' }}
                     />
@@ -156,13 +156,13 @@ const MovieDashboard = () => {
                   <div style={{ display: 'flex', gap: '8px' }}>
                     {editingId === movie.id ? (
                       <>
-                        <button 
+                        <button
                           style={{ padding: '6px 12px', borderRadius: '4px', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px', backgroundColor: '#2ecc71', color: 'white' }}
                           onClick={() => handleSaveEdit(movie.id)}
                         >
                           <Save size={16} /> Guardar
                         </button>
-                        <button 
+                        <button
                           style={{ padding: '6px 12px', borderRadius: '4px', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px', backgroundColor: '#e74c3c', color: 'white' }}
                           onClick={() => setEditingId(null)}
                         >
@@ -171,14 +171,14 @@ const MovieDashboard = () => {
                       </>
                     ) : (
                       <>
-                        <button 
+                        <button
                           style={{ padding: '6px 12px', borderRadius: '4px', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px', backgroundColor: '#f39c12', color: 'white' }}
                           onClick={() => startEditing(movie)}
                         >
                           <Edit2 size={16} /> Editar
                         </button>
-                        <button 
-                          className="btn-ban" 
+                        <button
+                          className="btn-ban"
                           onClick={() => handleDelete(movie.id, movie.title)}
                         >
                           <Trash2 size={16} /> Borrar
@@ -189,7 +189,7 @@ const MovieDashboard = () => {
                 </td>
               </tr>
             ))}
-            
+
             {movies.length === 0 && (
               <tr>
                 <td colSpan="4" style={{ textAlign: 'center', padding: '30px', color: '#9ab' }}>
