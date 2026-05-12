@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { Film, Globe, Lock } from 'lucide-react';
 import './ListCard.css';
 
-// Añadimos 'showActions' para decidir si mostrar botones
 const ListCard = ({ list, isCreateCard = false, onDelete, showActions = true }) => {
     const navigate = useNavigate();
 
@@ -37,7 +36,6 @@ const ListCard = ({ list, isCreateCard = false, onDelete, showActions = true }) 
                 <p>{movieCount} {movieCount === 1 ? 'película' : 'películas'}</p>
             </div>
 
-            {/* SOLO mostramos acciones si se indica y es nuestra lista */}
             {showActions && (
                 <div className="list-actions">
                     <button 

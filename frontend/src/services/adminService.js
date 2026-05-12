@@ -8,7 +8,6 @@ import { http } from './http';
 // --- USUARIOS ---
 
 export const getUsers = async () => {
-  // La ruta en Laravel es /api/users para el middleware admin
   const response = await http.get('/users');
   return response.data;
 };
@@ -26,7 +25,6 @@ export const deleteUser = async (id) => {
 // --- PELÍCULAS ---
 
 export const getMovies = async () => {
-  // La ruta en Laravel es /api/movies
   const response = await http.get('/movies');
   return response.data;
 };

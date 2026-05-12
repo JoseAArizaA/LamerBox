@@ -34,7 +34,7 @@ class FavoriteController extends Controller
         return response()->json($favorite, 201);
     }
 
-    // DELETE: Quitar de favoritos (se usa el movie_id)
+    // DELETE: Quitar de favoritos
     public function destroy(string $movieId)
     {
         Favorite::where('user_id', Auth::id())

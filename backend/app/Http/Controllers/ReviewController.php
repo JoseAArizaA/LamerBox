@@ -13,7 +13,6 @@ class ReviewController extends Controller
     // GET: Ver reseñas de una película específica o todas (para el admin)
     public function index(Request $request)
     {
-        // Si hay movie_id, filtramos por película. Si no, devolvemos todas con su usuario.
         if ($request->has('movie_id')) {
             $reviews = Review::where('movie_id', $request->movie_id)->with('user')->get();
         } else {
@@ -55,7 +54,6 @@ class ReviewController extends Controller
     {
         $review = Review::find($id);
 
-        // Si la reseña no existe, devolvemos 404
         if (!$review) {
             return response()->json(['message' => 'Reseña no encontrada'], 404);
         }

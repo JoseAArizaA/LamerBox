@@ -64,13 +64,11 @@ const MoviesPage = () => {
         <div className="movies-explorer">
             <div className="explorer-container">
                 
-                {/* HERO SECTION */}
                 <section className="explorer-hero">
                     <h1>Explora el Catálogo</h1>
                     <p>Descubre todo tipo de películas.</p>
                 </section>
 
-                {/* POPULAR MOVIES SECTION */}
                 <section className="movie-section">
                     <h2 className="section-title">Películas Populares</h2>
                     <div className="movie-carousel">
@@ -82,7 +80,6 @@ const MoviesPage = () => {
                     </div>
                 </section>
 
-                {/* NOW PLAYING MOVIES SECTION */}
                 <section className="movie-section">
                     <h2 className="section-title">Novedades en Cartelera</h2>
                     <div className="movie-carousel">
@@ -94,7 +91,6 @@ const MoviesPage = () => {
                     </div>
                 </section>
 
-                {/* TOP RATED MOVIES SECTION */}
                 <section className="movie-section">
                     <h2 className="section-title">Mejor Valoradas</h2>
                     <div className="movie-carousel">
@@ -105,8 +101,7 @@ const MoviesPage = () => {
                         ))}
                     </div>
                 </section>
-
-                {/* EXPLORE BY GENRE SECTION */}
+                
                 <section className="movie-section">
                     <h2 className="section-title">Explorar por Género</h2>
                     <div className="genre-pills">

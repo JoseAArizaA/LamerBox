@@ -8,11 +8,10 @@
 
 .movie-card img {
     width: 100%;
-    /* LA MAGIA: Forzamos proporción de cine (2 de ancho por 3 de alto) */
     aspect-ratio: 2 / 3; 
     border-radius: 4px;
     border: 1px solid #2c3440;
-    object-fit: cover; /* Evita que la imagen se estire */
+    object-fit: cover;
     display: block;
 }
 

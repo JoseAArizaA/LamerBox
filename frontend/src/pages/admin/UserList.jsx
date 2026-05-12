@@ -12,7 +12,6 @@ const UserList = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Obtener la lista de usuarios al montar el componente
   const fetchUsers = async () => {
     try {
       const data = await getUsers();
@@ -49,7 +48,6 @@ const UserList = () => {
     if (window.confirm(`¿Estás seguro de que quieres banear permanentemente a ${nickname}? Esta acción borrará su cuenta.`)) {
       try {
         await deleteUser(id);
-        // Eliminamos al usuario de la vista sin necesidad de recargar la página entera
         setUsers(users.filter(u => u.id !== id));
       } catch (error) {
         console.error("Error al banear usuario:", error);
@@ -106,7 +104,6 @@ const UserList = () => {
                       </button>
                     )}
                     
-                    {/* Evitamos que el administrador se banee a sí mismo o a otros administradores */}
                     {user.is_admin === 1 ? (
                       <button className="btn-ban disabled" disabled title="No puedes banear a un administrador">
                         <Trash2 size={16} /> Banear

@@ -2,8 +2,6 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
-// Importación de controladores
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\MovieListController;
@@ -12,29 +10,24 @@ use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\WatchedController;
 use App\Http\Controllers\PendingController;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes - LamerBox
-|--------------------------------------------------------------------------
-*/
-
 // --- 1. RUTAS PÚBLICAS ---
 // Estas rutas son accesibles sin necesidad de estar logueado.
 Route::post('/login', [UserController::class, 'login']);
 Route::post('/register', [UserController::class, 'register']);
 Route::get('movies/search', [MovieController::class, 'search']);
-
-// El público general solo puede ver la lista de películas y el detalle de una.
+Route::get('/movies/{id}/context', [MovieController::class, 'getMovieContext']);
+Route::get('lists/view/{id}', [MovieListController::class, 'show']); 
+Route::get('lists/public', [MovieListController::class, 'indexPublic']);
 Route::apiResource('movies', MovieController::class)->only(['index', 'show']);
-Route::get('/reviews', [ReviewController::class, 'index']); // Público general para reviews
+Route::get('/reviews', [ReviewController::class, 'index']);
+
 
 
 
 // --- 2. RUTAS PROTEGIDAS (Usuarios Autenticados) ---
-// Requieren un token válido generado por Sanctum.
 Route::middleware('auth:sanctum')->group(function () {
     
-    // Perfil y Datos de Usuario (Arregla el "Cargando...")
+    // Perfil y Datos de Usuario
     Route::get('/user', function (Request $request) { return $request->user(); });
     Route::apiResource('users', UserController::class);
 
@@ -43,25 +36,20 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('lists/{id}/add-movie', [MovieListController::class, 'addMovie']);
     Route::delete('lists/{id}/remove-movie', [MovieListController::class, 'removeMovie']);
 
-    // Tus Colecciones (Favoritos, Vistos, Pendientes)
+    // Colecciones (Favoritos, Vistos, Pendientes)
     Route::apiResource('favorites', FavoriteController::class);
     Route::apiResource('watched', WatchedController::class);
     Route::apiResource('pending', PendingController::class);
 
-    // Reseñas: Los usuarios pueden verlas y crearlas, pero no eliminarlas (restricción de Miguel)
-    Route::apiResource('reviews', ReviewController::class)->except(['index', 'destroy']);
+    // Reseñas: Crear, Editar y Borrar tus propios comentarios
+    Route::apiResource('reviews', ReviewController::class)->except(['index']);
     
-    // Ruta para obtener el estado de una película
-    Route::get('/movies/{id}/status', [MovieController::class, 'getUserStatus']);
+    
 });
 
 
-// --- 3. RUTAS DE ADMINISTRACIÓN (Solo usuarios con is_admin = 1) ---
-// Estas rutas requieren estar logueado Y superar el middleware 'admin'.
+// RUTAS DE ADMINISTRACIÓN 
 Route::middleware(['auth:sanctum', 'admin'])->group(function () {
-    
-    // Panel de Usuarios
-    Route::apiResource('users', UserController::class);
     
     // Moderación de Reseñas: El admin puede borrar cualquier comentario inapropiado
     Route::delete('admin/reviews/{review}', [ReviewController::class, 'destroy']);

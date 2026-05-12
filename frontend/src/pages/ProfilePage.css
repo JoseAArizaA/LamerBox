@@ -1,5 +1,3 @@
-/* src/pages/ProfilePage.css */
-
 .profile-container {
     max-width: 1100px;
     margin: 40px auto;
@@ -16,7 +14,7 @@
 .avatar-placeholder {
     width: 100px;
     height: 100px;
-    background: #00e054; /* Tu verde neón */
+    background: #00e054; 
     color: #14181c;
     font-size: 3rem;
     font-weight: bold;
@@ -47,7 +45,7 @@
 
 .profile-nav button.active {
     color: #fff;
-    border-bottom-color: #00e054; /* Verde neón */
+    border-bottom-color: #00e054; 
 }
 
 .profile-content-grid {
@@ -56,7 +54,6 @@
     gap: 20px;
 }
 
-/* Tarjetas de listas */
 .list-item-card {
     background: #1b2228;
     padding: 20px;
@@ -67,7 +64,7 @@
 .btn-edit-profile {
     display: inline-block;
     margin-top: 15px;
-    color: #9ab; /* Color gris azulado suave */
+    color: #9ab;
     text-decoration: none;
     font-size: 0.85rem;
     font-weight: bold;
@@ -78,12 +75,11 @@
 }
 
 .btn-edit-profile:hover {
-    color: #00e054; /* Tu verde neón */
+    color: #00e054;
     border-color: #00e054;
     background: rgba(0, 224, 84, 0.05);
 }
 
-/* Cuadrícula de listas */
 .lists-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -91,7 +87,6 @@
     padding: 20px 0;
 }
 
-/* Tarjeta base */
 .list-card {
     background: #1a1d20;
     border: 1px solid #333;
@@ -105,10 +100,9 @@
 
 .list-card:hover {
     transform: translateY(-5px);
-    border-color: #00ff88; /* Verde neón */
+    border-color: #00ff88; 
 }
 
-/* Tarjeta de creación (Borde punteado) */
 .create-list-card {
     border: 2px dashed #444;
     display: flex;
@@ -124,7 +118,6 @@
     margin-bottom: 10px;
 }
 
-/* Botón de gestionar */
 .btn-manage {
     margin-top: 15px;
     background: transparent;
@@ -141,11 +134,9 @@
     color: #000;
 }
 
-/* src/pages/ProfilePage.css */
 
 .profile-content-grid {
     display: grid;
-    /* Definimos columnas de 160px constantes */
     grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
     gap: 20px;
     width: 100%;

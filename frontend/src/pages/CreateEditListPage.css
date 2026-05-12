@@ -3,11 +3,11 @@
     justify-content: center;
     align-items: center;
     min-height: 80vh;
-    background-color: #14181c; /* Fondo general oscuro */
+    background-color: #14181c;
 }
 
 .create-list-form {
-    background-color: #2c3440; /* Color del modal en la imagen */
+    background-color: #2c3440; 
     padding: 40px;
     border-radius: 12px;
     width: 100%;
@@ -31,7 +31,7 @@
 }
 
 .input-group label {
-    color: #8ba2ad; /* Color azul grisáceo de las etiquetas */
+    color: #8ba2ad;
     font-size: 0.85rem;
     font-weight: bold;
     text-transform: uppercase;
@@ -55,7 +55,6 @@
     border-color: #00e054;
 }
 
-/* Sección Checkbox centrada */
 .checkbox-group label {
     display: flex;
     flex-direction: column;
@@ -67,10 +66,9 @@
     width: 20px;
     height: 20px;
     margin-bottom: 10px;
-    accent-color: #00e054; /* Color del check verde */
+    accent-color: #00e054; 
 }
 
-/* Contenedor de botones en fila */
 .form-actions {
     display: flex;
     gap: 10px;
@@ -90,7 +88,7 @@
 }
 
 .btn-create {
-    background-color: #00e054; /* Verde neón */
+    background-color: #00e054; 
     color: #000000;
 }
 
@@ -99,7 +97,7 @@
 }
 
 .btn-cancel {
-    background-color: #abb8c3; /* Color gris claro para cancelar */
+    background-color: #abb8c3;
     color: #2c3440;
 }
 

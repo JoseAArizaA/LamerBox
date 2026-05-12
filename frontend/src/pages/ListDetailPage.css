@@ -40,7 +40,6 @@
     font-weight: bold;
 }
 
-/* Rejilla de películas */
 .list-movies-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
@@ -56,7 +55,6 @@
     transform: scale(1.05);
 }
 
-/* Botón flotante para quitar película */
 .btn-remove-movie {
     position: absolute;
     top: 10px;
@@ -71,13 +69,13 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    opacity: 0; /* Oculto por defecto */
+    opacity: 0;
     transition: 0.3s;
     z-index: 10;
 }
 
 .movie-in-list-container:hover .btn-remove-movie {
-    opacity: 1; /* Aparece al pasar el ratón */
+    opacity: 1; 
 }
 
 .btn-remove-movie:hover {
@@ -98,12 +96,12 @@
     align-items: center;
     gap: 10px;
     margin-top: 8px;
-    color: #8ba2ad; /* Color gris suave */
+    color: #8ba2ad;
     font-size: 0.95rem;
 }
 
 .list-author strong {
-    color: #00ff88; /* El nombre del autor resaltado en verde neón */
+    color: #00ff88;
     cursor: pointer;
 }
 

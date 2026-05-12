@@ -1,11 +1,9 @@
-/* MovieDetailPage.css */
 .movie-detail-container {
     color: white;
     min-height: 100vh;
     background-color: #14181c;
 }
 
-/* El fondo gigante con degradado */
 .movie-backdrop {
     width: 100%;
     height: 500px;
@@ -21,16 +19,14 @@
     left: 0;
     width: 100%;
     height: 100%;
-    /* Degradado para que la imagen se funda con el negro del fondo */
     background: linear-gradient(to bottom, rgba(20, 24, 28, 0) 0%, rgba(20, 24, 28, 1) 100%);
 }
 
-/* Contenido principal */
 .movie-main-info {
     display: flex;
     gap: 40px;
     padding: 0 40px;
-    margin-top: -150px; /* Sube la info sobre la imagen del fondo */
+    margin-top: -150px;
     position: relative;
     z-index: 10;
 }
@@ -54,7 +50,7 @@
 }
 
 .detail-text h1 span {
-    color: #9ab; /* El año en gris suave */
+    color: #9ab; 
     font-weight: normal;
 }
 
@@ -69,8 +65,8 @@
     font-size: 1.1rem;
     line-height: 1.6;
     color: #cbd5e0;
-    padding-bottom: 25px; /* Espacio interno bajo el texto */
-    margin-bottom: 25px; /* Espacio externo antes de la línea */
+    padding-bottom: 25px; 
+    margin-bottom: 25px;
 }
 
 .movie-meta {
@@ -86,7 +82,6 @@
     border-radius: 4px;
     font-weight: 900;
 }
-/* MovieDetailPage.css */
 
 .detail-cast-section {
     padding: 20px 40px 40px;
@@ -101,10 +96,9 @@
 
 .character-name {
     font-size: 0.75rem;
-    color: #9ab; /* Gris suave para el nombre del personaje */
+    color: #9ab; 
 }
 
-/* Reutilizamos el estilo de título de la Welcome Page */
 .section-title {
     color: #9ab;
     font-size: 0.85rem;
@@ -131,7 +125,6 @@
     border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-/* Contenedor para el scroll horizontal de películas */
 .movies-slider-horizontal {
     display: flex;
     gap: 20px;
@@ -140,12 +133,10 @@
     scroll-behavior: smooth;
 }
 
-/* Ocultamos la barra de scroll para que quede más limpio */
 .movies-slider-horizontal::-webkit-scrollbar {
     display: none;
 }
 
-/* Aseguramos que las MovieCard no se encojan en el flex */
 .movies-slider-horizontal > div {
     flex: 0 0 auto;
 }
@@ -160,13 +151,12 @@
     color: #00e054; 
 }
 
-/* --- ESTILO DE CARRUSEL UNIFICADO --- */
 .movie-carousel {
     display: flex;
     overflow-x: auto;
     gap: 20px;
-    padding: 15px 20px 25px; /* Padding para que no se corte al hacer hover */
-    margin-left: -20px; /* Alineación con el título */
+    padding: 15px 20px 25px;
+    margin-left: -20px;
     margin-right: -20px;
     overflow-y: visible;
     scrollbar-width: thin;

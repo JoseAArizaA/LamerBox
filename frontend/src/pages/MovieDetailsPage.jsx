@@ -19,36 +19,29 @@ const MovieDetailPage = () => {
     const [similarMovies, setSimilarMovies] = useState([]);
     const [status, setStatus] = useState({ isFavorite: false, isWatched: false, isPending: false });
     const [loading, setLoading] = useState(true);
+    const [reviews, setReviews] = useState([]);
 
-    useEffect(() => {
+   useEffect(() => {
     const fetchAllData = async () => {
         window.scrollTo(0, 0);
         setLoading(true);
         try {
-            // 1. Definimos las llamadas básicas de TMDB (públicas)
             const promises = [
                 movieService.getMovieDetails(id),
                 movieService.getMovieCredits(id),
-                movieService.getSimilarMovies(id)
+                movieService.getSimilarMovies(id),
+                movieService.getMovieContext(id) 
             ];
-
-            // 2. SOLO si hay usuario, añadimos la llamada al contexto de Laravel
-            // Usamos authStorage para verificar si hay un token antes de pedir datos privados
-            const session = authStorage.get();
-            if (session?.token) {
-                promises.push(movieService.getMovieContext(id));
-            }
 
             const results = await Promise.all(promises);
             
-            // Asignamos los resultados por orden
             setMovie(results[0]);
             setCast(results[1]);
             setSimilarMovies(results[2]);
             
-            // Si el cuarto resultado existe, es el contexto local
-            if (results[3] && results[3].status) {
-                setStatus(results[3].status);
+            if (results[3]) {
+                if (results[3].status) setStatus(results[3].status);
+                if (results[3].reviews) setReviews(results[3].reviews);
             }
 
         } catch (error) {
@@ -58,7 +51,7 @@ const MovieDetailPage = () => {
         }
     };
     fetchAllData();
-    }, [id]);
+}, [id]);
 
     if (loading) return <LoadingAnimation mensaje="Cargando detalles de la película..." />;
     if (!movie) return <NotFound />;
@@ -122,7 +115,7 @@ const MovieDetailPage = () => {
                 </div>
             </div>
             
-            <CommentSection movieId={id} movieTitle={movie.title} />
+            <CommentSection movieId={id} movieTitle={movie.title} initialReviews={reviews} />
         </div>
     );
 };

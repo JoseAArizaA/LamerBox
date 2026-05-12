@@ -7,19 +7,16 @@ const MovieDashboard = () => {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // States for creating a movie
   const [isCreating, setIsCreating] = useState(false);
   const [newMovieId, setNewMovieId] = useState('');
   const [newMovieTitle, setNewMovieTitle] = useState('');
 
-  // States for editing
   const [editingId, setEditingId] = useState(null);
   const [editTitle, setEditTitle] = useState('');
 
   const fetchMovies = async () => {
     try {
       const data = await getMovies();
-      // data might be paginated, check if data.data exists
       setMovies(data.data || data);
     } catch (error) {
       console.error("Error al obtener películas:", error);

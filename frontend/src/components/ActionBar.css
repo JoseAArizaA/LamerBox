@@ -26,7 +26,6 @@
     color: white;
 }
 
-/* COLORES ACTIVOS */
 .active-watched { color: #00e054 !important; }
 .active-favorite { color: #ff0000 !important; }
 .active-pending { color: #40bcf4 !important; } 

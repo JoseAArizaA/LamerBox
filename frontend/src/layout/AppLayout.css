@@ -1,4 +1,3 @@
-/* AppLayout.css */
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -40,11 +39,10 @@
   font-size: 0.8rem;
 }
 
-/* AppLayout.css */
 .nav-left {
-    display: flex;         /* Pone los elementos en fila */
-    align-items: baseline; /* Alinea los textos por su base */
-    gap: 25px;            /* Espacio entre el logo y los links */
+    display: flex;         
+    align-items: baseline;
+    gap: 25px;         
 }
 
 .logo {
