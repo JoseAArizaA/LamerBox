@@ -2,225 +2,127 @@
     max-width: 1100px;
     margin: 0 auto;
     padding: 40px 20px;
+    color: #fff;
 }
 
-.lists-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 40px;
-    border-bottom: 1px solid #2c3440;
-    padding-bottom: 20px;
+.lists-hero {
+    background: linear-gradient(145deg, #181c24, #2c3440);
+    padding: 60px 40px;
+    border-radius: 16px;
+    margin-bottom: 50px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
-.btn-create-list {
-    background-color: #00e054;
-    color: #14181c;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background 0.2s;
+.lists-hero h1 {
+    font-size: 3rem;
+    color: #00df81;
+    margin-bottom: 15px;
+    font-weight: 800;
 }
 
-.btn-create-list:hover {
-    background-color: #00b343;
+.lists-hero p {
+    color: #9ab;
+    font-size: 1.2rem;
 }
 
 .lists-section {
-    margin-bottom: 60px;
+    margin-bottom: 70px;
 }
 
 .section-title {
     color: #9ab;
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 25px;
+    letter-spacing: 2px;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #2c3440;
+    padding-bottom: 12px;
+    font-weight: 600;
 }
 
 .lists-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 30px;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 35px;
 }
 
-/* EFECTO STACK (Capa sobre capa) */
-.list-card-item {
-    text-decoration: none;
-    color: inherit;
-    transition: transform 0.2s;
-}
-
-.list-card-item:hover {
-    transform: translateY(-5px);
-}
-
-.list-stack {
-    position: relative;
-    height: 180px; /* Un poco más alto */
-    margin-bottom: 15px;
-    perspective: 1000px;
-}
-
-.stack-layer {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    border-radius: 8px;
-    border: 1px solid rgba(255,255,255,0.1);
-}
-
-.layer-3 { top: -12px; transform: scale(0.85); opacity: 0.4; z-index: 1; background-size: cover; }
-.layer-2 { top: -6px; transform: scale(0.92); opacity: 0.7; z-index: 2; background-size: cover; }
-
-.list-poster-main {
-    position: relative;
-    z-index: 3;
-    background-size: cover;
-    background-position: center;
-    background-color: #2c3440;
-    width: 100%;
-    height: 100%;
-    border-radius: 6px;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.5);
-    border: 1px solid rgba(255,255,255,0.1);
+.featured-list-group {
     display: flex;
-    align-items: flex-end; /* Texto abajo */
-    padding: 15px;
+    flex-direction: column;
+    gap: 20px;
 }
 
-.list-poster-main.community {
-    background: linear-gradient(45deg, #14181c, #2c3440);
-}
-
-.list-poster-main span {
-    font-weight: bold;
-    font-size: 1.1rem;
-    color: white;
-}
-
-.list-info h3 {
-    margin: 0 0 5px 0;
-    font-size: 1.1rem;
-}
-
-.list-info p {
-    margin: 0;
-    color: #9ab;
-    font-size: 0.9rem;
-}
-
-.movie-count {
-    color: #00e054 !important;
-    font-weight: bold;
-}
-
-.list-name-inner {
-    background: rgba(0,0,0,0.7);
-    padding: 5px 10px;
-    border-radius: 4px;
-    font-size: 0.9rem;
-    width: 100%;
-}
-
-/* HERO SECTION ESTILO MOVIESPAGE */
-.lists-hero {
-    background: linear-gradient(145deg, #181c24, #2c3440); /* Degradado oscuro */
-    padding: 40px;
-    border-radius: 12px;
-    margin-bottom: 40px;
-    text-align: center;
-    border: 1px solid #2c3440;
-}
-
-.lists-hero h1 {
-    font-size: 2.5rem;
-    color: #00df81; /* Verde característico de LamerBox */
-    margin-bottom: 10px;
-}
-
-.lists-hero p {
-    color: #9ab; /* Gris suave para el subtítulo */
-    font-size: 1.1rem;
-}
-
-
-/* Grid especial para las sugerencias (más grandes) */
-.api-suggested-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 40px;
-}
-
-.api-stack-card {
+.featured-list-card {
+    display: flex;
+    align-items: center;
+    padding: 25px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 15px;
     cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.featured-list-card:hover {
+    background: rgba(255, 255, 255, 0.07);
+    border-color: #00df81;
+    transform: translateX(15px);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+}
+
+.poster-stack {
+    position: relative;
+    width: 240px;
+    height: 150px;
+    margin-right: 40px;
+    flex-shrink: 0;
+}
+
+.stack-poster {
+    position: absolute;
+    height: 100%;
+    width: auto;
+    border-radius: 6px;
+    box-shadow: 5px 0 15px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     transition: transform 0.3s ease;
 }
 
-.api-stack-card:hover {
-    transform: translateY(-8px);
+.poster-0 { left: 0; z-index: 5; transform: scale(1); }
+.poster-1 { left: 35px; z-index: 4; transform: scale(0.96); opacity: 0.9; }
+.poster-2 { left: 70px; z-index: 3; transform: scale(0.92); opacity: 0.8; }
+.poster-3 { left: 105px; z-index: 2; transform: scale(0.88); opacity: 0.7; }
+.poster-4 { left: 140px; z-index: 1; transform: scale(0.84); opacity: 0.6; }
+
+.list-content {
+    flex: 1;
 }
 
-.list-stack {
-    position: relative;
-    height: 380px; /* Aumentamos la altura para que parezcan pósters verticales */
+.list-title {
+    font-size: 1.8rem;
+    color: #fff;
+    margin: 0 0 8px 0;
+    font-weight: 700;
+}
+
+.list-metadata {
+    display: inline-block;
+    font-size: 0.9rem;
+    color: #00df81;
+    background: rgba(0, 223, 129, 0.1);
+    padding: 4px 12px;
+    border-radius: 20px;
     margin-bottom: 15px;
+    font-weight: 700;
+    text-transform: uppercase;
 }
 
-.list-poster-main {
-    z-index: 3;
-    background-size: cover;
-    background-position: center;
-    background-color: #2c3440;
-    width: 100%;
-    height: 100%; /* Ahora ocupará los 380px */
-    border-radius: 8px;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.5);
-    border: 1px solid rgba(255,255,255,0.1);
-}
-
-.stack-layer {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    border-radius: 8px;
-    background-size: cover;
-    background-position: center;
-    border: 1px solid rgba(255,255,255,0.1);
-}
-
-.layer-3 { top: -12px; transform: scale(0.85); opacity: 0.3; z-index: 1; }
-.layer-2 { top: -6px; transform: scale(0.92); opacity: 0.6; z-index: 2; }
-
-.list-poster-main {
-    z-index: 3;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.5);
-}
-
-.stack-overlay {
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.4);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transition: 0.3s;
-    border-radius: 8px;
-}
-
-.api-stack-card:hover .stack-overlay {
-    opacity: 1;
-}
-
-.api-stack-info h3 {
-    color: #00df81; /* Verde LamerBox */
-    margin: 10px 0 5px 0;
-}
-
-.api-stack-info p {
+.list-description {
     color: #9ab;
-    font-size: 0.85rem;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    margin: 0;
+    max-width: 600px;
 }
