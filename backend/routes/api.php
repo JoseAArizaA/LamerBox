@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
+// Importación de controladores
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\MovieListController;
@@ -10,16 +12,26 @@ use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\WatchedController;
 use App\Http\Controllers\PendingController;
 
+/*
+|--------------------------------------------------------------------------
+| API Routes - LamerBox
+|--------------------------------------------------------------------------
+*/
+
+// --- 1. RUTAS PÚBLICAS ---
+// Estas rutas son accesibles sin necesidad de estar logueado.
 Route::post('/login', [UserController::class, 'login']);
 Route::post('/register', [UserController::class, 'register']);
 Route::get('movies/search', [MovieController::class, 'search']);
-Route::get('/reviews', [ReviewController::class, 'index']);
 
-Route::get('/movies/{id}', [MovieController::class, 'show']);
+// El público general solo puede ver la lista de películas y el detalle de una.
+Route::apiResource('movies', MovieController::class)->only(['index', 'show']);
+Route::get('/reviews', [ReviewController::class, 'index']); // Público general para reviews
 
-Route::get('/lists/public', [MovieListController::class, 'indexPublic']);
 
-/* --- 2. RUTAS PROTEGIDAS (Un solo grupo para todo) --- */
+
+// --- 2. RUTAS PROTEGIDAS (Usuarios Autenticados) ---
+// Requieren un token válido generado por Sanctum.
 Route::middleware('auth:sanctum')->group(function () {
     
     // Perfil y Datos de Usuario (Arregla el "Cargando...")
@@ -35,11 +47,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('favorites', FavoriteController::class);
     Route::apiResource('watched', WatchedController::class);
     Route::apiResource('pending', PendingController::class);
+
+    // Reseñas: Los usuarios pueden verlas y crearlas, pero no eliminarlas (restricción de Miguel)
+    Route::apiResource('reviews', ReviewController::class)->except(['index', 'destroy']);
     
-    // Reseñas y Estado de Película
-    Route::post('/reviews', [ReviewController::class, 'store']);
-    Route::delete('/reviews/{id}', [ReviewController::class, 'destroy']);
-    Route::get('/movies/{id}/context', [MovieController::class, 'getMovieContext']);
+    // Ruta para obtener el estado de una película
+    Route::get('/movies/{id}/status', [MovieController::class, 'getUserStatus']);
 });
 
 
@@ -47,8 +60,8 @@ Route::middleware('auth:sanctum')->group(function () {
 // Estas rutas requieren estar logueado Y superar el middleware 'admin'.
 Route::middleware(['auth:sanctum', 'admin'])->group(function () {
     
-    // Panel de Usuarios: El admin lista a todos (index) y puede borrarlos (destroy)
-    Route::apiResource('users', UserController::class)->only(['index', 'destroy']);
+    // Panel de Usuarios
+    Route::apiResource('users', UserController::class);
     
     // Moderación de Reseñas: El admin puede borrar cualquier comentario inapropiado
     Route::delete('admin/reviews/{review}', [ReviewController::class, 'destroy']);

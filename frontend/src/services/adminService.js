@@ -13,6 +13,11 @@ export const getUsers = async () => {
   return response.data;
 };
 
+export const updateUser = async (id, data) => {
+  const response = await http.put(`/users/${id}`, data);
+  return response.data;
+};
+
 export const deleteUser = async (id) => {
   const response = await http.delete(`/users/${id}`);
   return response.data;

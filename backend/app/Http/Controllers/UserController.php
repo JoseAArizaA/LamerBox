@@ -56,10 +56,16 @@ class UserController extends Controller
         $request->validate([
             'nickname' => ['sometimes', 'string', Rule::unique('users')->ignore($user->id)],
             'email' => ['sometimes', 'email', Rule::unique('users')->ignore($user->id)],
-            'password' => 'sometimes|string|min:6'
+            'password' => 'sometimes|string|min:6',
+            'is_admin' => 'sometimes|boolean'
         ]);
 
-        $user->update($request->only(['nickname', 'email']));
+        $dataToUpdate = $request->only(['nickname', 'email']);
+        if (Auth::user()->is_admin && $request->has('is_admin')) {
+            $dataToUpdate['is_admin'] = $request->boolean('is_admin');
+        }
+        
+        $user->update($dataToUpdate);
         
         if ($request->password) {
             $user->password = Hash::make($request->password);
