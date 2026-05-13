@@ -4,3 +4,18 @@
     padding: 40px;
     color: #888;
 }
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+  .empty-text {
+    padding: 30px 20px;
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .empty-text {
+    padding: 20px 15px;
+    font-size: 0.85rem;
+  }
+}

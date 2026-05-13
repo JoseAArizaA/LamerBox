@@ -20,3 +20,39 @@
     outline: 2px solid #00e054;
     z-index: 10;
 }
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 1024px) {
+  .movie-card img {
+    height: 250px;
+  }
+}
+
+@media (max-width: 768px) {
+  .movie-card {
+    transition: transform 0.15s ease-in-out;
+  }
+
+  .movie-card img {
+    height: 240px;
+    border-radius: 3px;
+  }
+
+  .movie-card:hover {
+    transform: scale(1.03);
+  }
+}
+
+@media (max-width: 480px) {
+  .movie-card img {
+    aspect-ratio: 2 / 3;
+    height: auto;
+    border-radius: 2px;
+    border: 1px solid #1c2228;
+  }
+
+  .movie-card:hover {
+    transform: scale(1.02);
+    outline: 1px solid #00e054;
+  }
+}

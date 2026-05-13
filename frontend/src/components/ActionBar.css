@@ -72,3 +72,71 @@
     background: rgba(0, 255, 136, 0.1);
     color: #00ff88;
 }
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+  .action-bar {
+    gap: 20px;
+    padding: 15px 0;
+    margin: 20px 0;
+  }
+
+  .action-btn {
+    gap: 6px;
+    font-size: 0.65rem;
+  }
+
+  .action-btn svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .list-dropdown {
+    width: 180px;
+    padding: 8px;
+  }
+
+  .list-dropdown button {
+    padding: 8px;
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .action-bar {
+    gap: 15px;
+    padding: 12px 0;
+    margin: 15px 0;
+    flex-wrap: wrap;
+  }
+
+  .action-btn {
+    gap: 4px;
+    font-size: 0.6rem;
+    padding: 5px;
+  }
+
+  .action-btn svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .btn-list {
+    margin-left: auto;
+  }
+
+  .list-container {
+    position: relative;
+  }
+
+  .list-dropdown {
+    width: 160px;
+    padding: 6px;
+    margin-bottom: 12px;
+  }
+
+  .list-dropdown button {
+    padding: 6px;
+    font-size: 0.8rem;
+  }
+}

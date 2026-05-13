@@ -186,3 +186,193 @@
     transform: translateY(-5px);
 }
 
+/* ========== RESPONSIVE ========== */
+@media (max-width: 1024px) {
+  .movie-backdrop {
+    height: 400px;
+  }
+
+  .movie-main-info {
+    gap: 30px;
+    padding: 0 30px;
+    margin-top: -120px;
+  }
+
+  .detail-poster {
+    width: 200px;
+  }
+
+  .detail-text h1 {
+    font-size: 2.5rem;
+  }
+
+  .overview {
+    font-size: 1rem;
+  }
+
+  .detail-cast-section {
+    padding: 20px 30px 30px;
+  }
+}
+
+@media (max-width: 768px) {
+  .movie-backdrop {
+    height: 300px;
+  }
+
+  .movie-main-info {
+    flex-direction: column;
+    gap: 20px;
+    padding: 0 20px;
+    margin-top: -100px;
+    align-items: center;
+    text-align: center;
+  }
+
+  .detail-poster {
+    width: 180px;
+  }
+
+  .detail-text {
+    flex: 1;
+    max-width: 100%;
+    text-align: left;
+  }
+
+  .detail-text h1 {
+    font-size: 2rem;
+  }
+
+  .detail-text h1 span {
+    display: block;
+    font-size: 0.8em;
+    margin-top: 5px;
+  }
+
+  .tagline {
+    font-size: 1rem;
+  }
+
+  .overview {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    text-align: justify;
+  }
+
+  .movie-meta {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .detail-cast-section {
+    padding: 20px;
+  }
+
+  .section-title {
+    font-size: 0.8rem;
+    margin-bottom: 15px;
+  }
+
+  .movies-slider-horizontal {
+    gap: 15px;
+    padding: 10px 0 15px 0;
+  }
+
+  .carousel-item {
+    flex: 0 0 140px;
+  }
+}
+
+@media (max-width: 480px) {
+  .movie-detail-container {
+    background-color: #14181c;
+  }
+
+  .movie-backdrop {
+    height: 220px;
+  }
+
+  .movie-backdrop::after {
+    background: linear-gradient(to bottom, rgba(20, 24, 28, 0.3) 0%, rgba(20, 24, 28, 1) 100%);
+  }
+
+  .movie-main-info {
+    flex-direction: column;
+    gap: 15px;
+    padding: 0 15px;
+    margin-top: -80px;
+  }
+
+  .detail-poster {
+    width: 150px;
+    border-radius: 6px;
+  }
+
+  .detail-text h1 {
+    font-size: 1.5rem;
+  }
+
+  .detail-text h1 span {
+    font-size: 0.75rem;
+  }
+
+  .tagline {
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+  }
+
+  .overview {
+    font-size: 0.85rem;
+    line-height: 1.4;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+  }
+
+  .movie-meta {
+    gap: 8px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+  }
+
+  .rating-badge {
+    padding: 3px 8px;
+    font-size: 0.8rem;
+  }
+
+  .detail-cast-section {
+    padding: 15px;
+  }
+
+  .section-title {
+    font-size: 0.75rem;
+    margin-bottom: 12px;
+  }
+
+  .genres-list {
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+
+  .genre-badge {
+    font-size: 0.7rem;
+    padding: 3px 8px;
+  }
+
+  .actor-name {
+    font-size: 0.75rem;
+  }
+
+  .character-name {
+    font-size: 0.65rem;
+  }
+
+  .movies-slider-horizontal {
+    gap: 10px;
+    padding: 8px 0 12px 0;
+  }
+
+  .carousel-item {
+    flex: 0 0 110px;
+  }
+}
+

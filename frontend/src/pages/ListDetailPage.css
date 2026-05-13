@@ -112,3 +112,133 @@
 .separator {
     opacity: 0.5;
 }
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 1024px) {
+  .list-detail-container {
+    padding: 30px 5%;
+  }
+
+  .list-detail-header {
+    gap: 20px;
+    margin-bottom: 30px;
+  }
+
+  .list-header-info h1 {
+    font-size: 2.2rem;
+  }
+
+  .list-movies-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 25px;
+  }
+}
+
+@media (max-width: 768px) {
+  .list-detail-container {
+    padding: 25px 15px;
+  }
+
+  .list-detail-header {
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 25px;
+    align-items: flex-start;
+  }
+
+  .btn-back {
+    width: 100%;
+    justify-content: center;
+    padding: 8px 20px;
+  }
+
+  .list-header-info h1 {
+    font-size: 1.8rem;
+  }
+
+  .list-header-info p {
+    font-size: 0.95rem;
+    margin-top: 4px;
+  }
+
+  .list-meta {
+    font-size: 0.9rem;
+    margin-top: 6px;
+  }
+
+  .list-movies-grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 20px;
+  }
+
+  .btn-remove-movie {
+    width: 30px;
+    height: 30px;
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .list-detail-container {
+    padding: 15px 10px;
+    min-height: 70vh;
+  }
+
+  .list-detail-header {
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .btn-back {
+    width: 100%;
+    padding: 8px 15px;
+    font-size: 0.8rem;
+  }
+
+  .list-header-info h1 {
+    font-size: 1.4rem;
+    margin: 0;
+  }
+
+  .list-header-info p {
+    font-size: 0.85rem;
+    margin-top: 3px;
+  }
+
+  .list-meta {
+    font-size: 0.8rem;
+    gap: 8px;
+    margin-top: 5px;
+    flex-wrap: wrap;
+  }
+
+  .list-author strong {
+    font-size: 0.8rem;
+  }
+
+  .separator {
+    display: none;
+  }
+
+  .empty-list-msg {
+    padding: 50px 20px;
+    font-size: 0.85rem;
+  }
+
+  .list-movies-grid {
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    gap: 12px;
+  }
+
+  .movie-in-list-container {
+    position: relative;
+  }
+
+  .btn-remove-movie {
+    width: 28px;
+    height: 28px;
+    top: 5px;
+    right: 5px;
+  }
+}

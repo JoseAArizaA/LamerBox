@@ -537,3 +537,122 @@
 .welcome-page-scope .carousel-item:hover {
     transform: translateY(-5px);
 }
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 1024px) {
+  .welcome-page-scope .welcome-main {
+    padding: 30px 15px 80px;
+  }
+
+  .welcome-page-scope .welcome-hero {
+    height: 400px;
+  }
+
+  .welcome-page-scope .hero-content h1 {
+    font-size: 2.5rem;
+  }
+
+  .welcome-page-scope .welcome-grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .welcome-page-scope .welcome-hero {
+    height: 300px;
+  }
+
+  .welcome-page-scope .hero-content h1 {
+    font-size: 2rem;
+  }
+
+  .welcome-page-scope .hero-content h2 {
+    font-size: 1rem;
+  }
+
+  .welcome-page-scope .main-search-bar {
+    max-width: 100%;
+  }
+
+  .welcome-page-scope .main-search-bar input {
+    font-size: 0.9rem;
+    padding: 12px;
+  }
+
+  .welcome-page-scope .welcome-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 15px;
+  }
+
+  .welcome-page-scope .people-mini-grid {
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+    gap: 15px;
+  }
+
+  .welcome-page-scope .section-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .welcome-page-scope .movie-carousel {
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-left: -15px;
+    margin-right: -15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .welcome-page-scope .welcome-hero {
+    height: 220px;
+  }
+
+  .welcome-page-scope .hero-content h1 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+  }
+
+  .welcome-page-scope .hero-content h2 {
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+  }
+
+  .welcome-page-scope .main-search-bar-container {
+    margin: 15px auto;
+  }
+
+  .welcome-page-scope .main-search-bar input {
+    font-size: 0.8rem;
+    padding: 10px;
+  }
+
+  .welcome-page-scope .main-search-bar button {
+    padding: 0 15px;
+  }
+
+  .welcome-page-scope .welcome-grid {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 10px;
+  }
+
+  .welcome-page-scope .people-mini-grid {
+    grid-template-columns: repeat(auto-fill, minmax(75px, 1fr));
+    gap: 10px;
+  }
+
+  .welcome-page-scope .person-mini-card img {
+    width: 70px;
+    height: 70px;
+  }
+
+  .welcome-page-scope .section-header h3 {
+    font-size: 0.8rem;
+  }
+
+  .welcome-page-scope .section-header button {
+    font-size: 0.7rem;
+    padding: 6px 12px;
+  }
+}

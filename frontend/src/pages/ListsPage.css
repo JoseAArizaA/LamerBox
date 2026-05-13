@@ -126,3 +126,157 @@
     margin: 0;
     max-width: 600px;
 }
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 1024px) {
+  .lists-page-container {
+    max-width: 100%;
+    padding: 30px 20px;
+  }
+
+  .lists-hero {
+    padding: 40px 30px;
+    margin-bottom: 40px;
+  }
+
+  .lists-hero h1 {
+    font-size: 2.5rem;
+  }
+
+  .lists-grid {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 30px;
+  }
+}
+
+@media (max-width: 768px) {
+  .lists-page-container {
+    max-width: 100%;
+    padding: 20px 15px;
+  }
+
+  .lists-hero {
+    padding: 30px 20px;
+    margin-bottom: 30px;
+    border-radius: 12px;
+  }
+
+  .lists-hero h1 {
+    font-size: 2rem;
+    margin-bottom: 12px;
+  }
+
+  .lists-hero p {
+    font-size: 1.05rem;
+  }
+
+  .section-title {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+  }
+
+  .lists-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 25px;
+  }
+
+  .featured-list-card {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+  }
+
+  .poster-stack {
+    width: 200px;
+    height: 130px;
+    margin-right: 0;
+    margin-bottom: 15px;
+  }
+
+  .list-title {
+    font-size: 1.5rem;
+  }
+
+  .list-metadata {
+    font-size: 0.85rem;
+  }
+
+  .list-description {
+    font-size: 0.95rem;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .lists-page-container {
+    padding: 15px 10px;
+  }
+
+  .lists-hero {
+    padding: 25px 15px;
+    margin-bottom: 25px;
+  }
+
+  .lists-hero h1 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+  }
+
+  .lists-hero p {
+    font-size: 0.95rem;
+  }
+
+  .lists-section {
+    margin-bottom: 50px;
+  }
+
+  .section-title {
+    font-size: 1rem;
+    margin-bottom: 15px;
+    padding-bottom: 8px;
+  }
+
+  .lists-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 15px;
+  }
+
+  .featured-list-card {
+    padding: 15px;
+    margin-bottom: 10px;
+  }
+
+  .featured-list-card:hover {
+    transform: translateY(5px);
+  }
+
+  .poster-stack {
+    width: 150px;
+    height: 100px;
+    margin-bottom: 12px;
+  }
+
+  .poster-0 { left: 0; }
+  .poster-1 { left: 25px; }
+  .poster-2 { left: 50px; }
+  .poster-3 { left: 75px; }
+  .poster-4 { left: 100px; }
+
+  .list-title {
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+  }
+
+  .list-metadata {
+    font-size: 0.75rem;
+    padding: 3px 8px;
+  }
+
+  .list-description {
+    font-size: 0.85rem;
+    line-height: 1.4;
+    max-width: 100%;
+  }
+}

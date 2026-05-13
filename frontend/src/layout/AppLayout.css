@@ -70,3 +70,169 @@
 .nav-links a:hover {
     color: #fff;
 }
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 1024px) {
+  .navbar {
+    padding: 0 30px;
+    height: 55px;
+  }
+
+  .nav-left {
+    gap: 20px;
+  }
+
+  .logo {
+    font-size: 1.4rem;
+  }
+
+  .nav-links {
+    gap: 12px;
+  }
+
+  .nav-links a {
+    font-size: 0.85rem;
+  }
+
+  .nav-right {
+    gap: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    padding: 0 20px;
+    height: 50px;
+    flex-wrap: wrap;
+  }
+
+  .nav-left {
+    gap: 15px;
+    flex-basis: 100%;
+  }
+
+  .logo {
+    font-size: 1.2rem;
+  }
+
+  .nav-links {
+    gap: 10px;
+    order: 3;
+    flex-basis: 100%;
+    padding-top: 10px;
+    border-top: 1px solid #2c3440;
+  }
+
+  .nav-links a {
+    font-size: 0.8rem;
+  }
+
+  .nav-search-wrapper {
+    margin-left: 0;
+  }
+
+  .nav-right {
+    gap: 15px;
+    order: 2;
+    margin-left: auto;
+  }
+
+  .user-menu {
+    gap: 10px;
+  }
+
+  .user-name {
+    font-size: 0.8rem;
+  }
+
+  .btn-logout, .btn-login {
+    font-size: 0.8rem;
+  }
+
+  .btn-register {
+    padding: 6px 12px;
+    font-size: 0.75rem;
+  }
+
+  .guest-menu {
+    gap: 10px;
+    padding-right: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar {
+    padding: 0 12px;
+    height: 45px;
+  }
+
+  .nav-left {
+    gap: 10px;
+    flex-basis: 100%;
+    padding: 8px 0;
+  }
+
+  .logo {
+    font-size: 1rem;
+    letter-spacing: -0.5px;
+  }
+
+  .nav-links {
+    gap: 8px;
+    padding-top: 8px;
+    flex-wrap: wrap;
+  }
+
+  .nav-links a {
+    font-size: 0.75rem;
+    text-transform: capitalize;
+  }
+
+  .nav-search-wrapper {
+    width: 100%;
+    margin-left: 0;
+    order: 4;
+    flex-basis: 100%;
+    padding-top: 8px;
+  }
+
+  .nav-right {
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .user-menu {
+    gap: 8px;
+  }
+
+  .user-name {
+    display: none;
+  }
+
+  .btn-logout, .btn-login {
+    font-size: 0.7rem;
+    padding: 4px 8px;
+  }
+
+  .btn-register {
+    padding: 5px 10px;
+    font-size: 0.7rem;
+  }
+
+  .guest-menu {
+    gap: 8px;
+    padding-right: 10px;
+    border-right: 1px solid #2c3440;
+  }
+
+  .dropdown-menu {
+    min-width: 150px;
+    font-size: 0.8rem;
+  }
+
+  .dropdown-item {
+    gap: 10px;
+    padding: 10px 15px;
+    font-size: 0.8rem;
+  }
+}
