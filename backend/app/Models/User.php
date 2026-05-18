@@ -21,7 +21,7 @@ class User extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable;
 
     protected $fillable = [
-        'nickname', // Asegúrate de que en tu DB se llame nickname y no name
+        'nickname',
         'email',
         'password',
         'is_admin',
